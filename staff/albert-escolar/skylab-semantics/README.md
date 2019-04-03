@@ -283,14 +283,14 @@
 
 ## Profesorado
 
-html
+    html
 
-head
+    head
     title
         img /
 
 
-body
+    body
     pa button
     header
         h1  
@@ -633,10 +633,10 @@ body
 
 ## ¿Por que?
 
-html
-  head
-    title
-  body
+    html
+      head    
+      title
+    body
     p
       button
         header
@@ -849,10 +849,10 @@ html
 
 ## Empresas
 
-html
-  head
-    title
-  body
+     html
+     head
+     title
+    body
     p
       button
         header
@@ -1396,14 +1396,14 @@ html
     
 ## Contacto
 
-html
+    html
 
-head
+    head
     title
         no
             img
 
-body
+    body
     no
         p
             a
