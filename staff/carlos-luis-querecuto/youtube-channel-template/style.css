@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+body{
+    margin: 0;
+}
+
+h1,h2,h3,h4,h5{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+p{
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+}
+
+a{
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    color: gray;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#menu{
+
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#navigator{
+    background-color: red;
+    height: 7vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+#banner{
+    width: 100%;
+    height: 70px;
+    background-color: darkgray;
+}
+
+#videoblock{
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+}
+
+.usernamenav{
+    display: inline-block;
+    color: white;
+}
+
+.videoimage{
+    height: 130px;
+    width: 200px;
+}
+
+.videoitem{
+    box-sizing: border-box;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+h5,h4,p {
+    margin: 2px;
+}
+
+.textdes   {
+    margin: 0;
+    padding: 10px;
+}
+
+#username{
+    padding-top: 30px;
+    margin-left: 20px;
+}
+
+.useritems{
+    padding-left: 8px;
+    margin-bottom: 0px;
+}
+
+#suscribe{
+    padding-left: 5px;
+    padding-right:  5px;
+    color: red;
+    font-family: helvetica;
+    text-decoration: none;
+    text-transform: uppercase;    
+}
+
+#user{
+    margin: 0;
+    height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+
+#userblock{
+    background-color: white;
+    border-bottom: 5px solid lightgray;
+}
+
+#logo{
+    height: 40px;
+    width: 40px;
+    fill: white;
+}
+
+#icons{
+    height: 30px;
+    width: 30px;
+    
+}
+
+#photo{
+    position: absolute;
+    top: 60px;
+    margin: 5vw;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 5px solid white;
+}
+
+.desktopsidebar{
+    display: none;
+}
+
+#tools{
+    padding: 15px;
+}
+svg{
+    padding: 5px;
+    margin-left: 3px;
+    height: 100vw;
+    width: 100vw;
+}
+
+@media screen and (min-width: 768px) {
+    #logo{
+        fill: red;
+    }
+
+    .desktopsidebar{
+        display: flex;
+    }
+
+    #navigator{
+        background-color: white;
+        height: 7vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+    }
+}
