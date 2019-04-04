@@ -1,0 +1,139 @@
+body{
+    max-width: 700px;
+    min-width: 300px;
+    margin:0px;
+    font-family: Verdana;
+    font-size: 12px;
+}
+section{
+    margin: 0px;
+}
+i{
+    font-size: 15px;
+    font-style: normal;
+}
+.fab.fa-youtube{
+        font-size: 22px;
+
+}
+.nav.container{
+    background-color:#cc181e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px;
+    color:white;
+    padding: 10px;
+    flex-wrap: nowrap;
+}
+.fotoportada{
+    margin: 0px;
+    width: 100%;
+    background-repeat:no-repeat;
+    background-size:cover;
+    justify-content: flex-start;
+}
+.subscription{
+    color:#cc181e;
+    text-align: center;
+    justify-content: flex-start;
+    font-size: 15px;
+    font-family: Verdana;  
+}
+.subscribe{
+    padding-right: 150px;
+    padding-top: 10px;
+}
+.cover{
+    margin: 0px;
+}
+h3{
+    margin: 0px;
+}
+.h3{
+margin-left: 10px;
+margin-top: 10px;
+color:gray;
+}
+h2{
+    margin: 0px;
+}
+h1{
+    margin: 0px;
+    padding-top: 35px;
+    text-align: center;
+    color:black;
+    font-size: 15px;
+    font-family: Verdana;
+}
+h4{
+    margin:0px;
+}
+h5{
+    margin:0px;
+    padding-top:5px;
+    color: gray; 
+}
+.home{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    font-size: 15px;
+    border-bottom: 2px inset grey;
+    box-shadow: 3px;  
+    margin-bottom: 5px;
+}
+.borderHome{
+    border-bottom: 2px solid #cc181e;
+}
+.fas.fa-chevron-circle-down{
+    color:black;
+    background-color: white;
+}
+.mainvideo{
+    text-align: center;
+    
+}
+.picMainVideo{
+    width: 300px;
+    height: 200px;
+}
+.mainVideoTitle{
+    padding-left: 35px;
+    padding-top: 5px;
+    margin-bottom: 10px;
+    font-size: 10px;
+    color:gray
+}
+.mainvideo1{
+    border-bottom: 1px solid grey;
+}
+.imgArticle{
+    width: 150px;
+    height: 110px;
+}
+.kindlist1{
+    list-style: none;
+    margin-left:-30px;
+}
+article{
+    display: flex;
+    justify-content: flex-start;
+}
+.video{
+    padding-right: 5px;
+}
+.videodescription{
+    display: flex;
+    flex-direction: column;
+}
+.showMore{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.section{
+    border-bottom: 1px solid grey;
+    margin-bottom: 10px;
+}
