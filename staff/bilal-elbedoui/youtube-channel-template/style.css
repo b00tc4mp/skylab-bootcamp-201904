@@ -1,9 +1,10 @@
 body{
-    max-width: 700px;
-    min-width: 300px;
+    min-width: 375px;
     margin:0px;
-    font-family: Verdana;
     font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+    color:#111;
+
 }
 section{
     margin: 0px;
@@ -13,14 +14,13 @@ i{
     font-style: normal;
 }
 .fab.fa-youtube{
-        font-size: 22px;
-
+    font-size: 22px;
 }
 .nav.container{
-    background-color:#cc181e;
+    background-color:#e62117;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     margin: 0px;
     color:white;
     padding: 10px;
@@ -33,16 +33,33 @@ i{
     background-size:cover;
     justify-content: flex-start;
 }
+.profilePic{
+    border-radius: 50px;
+    background-color:red; 
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top:85px;
+    left:20px;
+    margin
+}
 .subscription{
-    color:#cc181e;
-    text-align: center;
+    color:#e62117;
     justify-content: flex-start;
     font-size: 15px;
-    font-family: Verdana;  
+    padding-left: 50px;
 }
 .subscribe{
-    padding-right: 150px;
+    display: flex;
+    justify-content:flex-start; 
+}
+.subscribe0{
     padding-top: 10px;
+    text-align: left;
+}
+.subscribe1{
+    padding-top: 10px;
+    padding-left: 5px;
 }
 .cover{
     margin: 0px;
@@ -61,13 +78,13 @@ h2{
 h1{
     margin: 0px;
     padding-top: 35px;
-    text-align: center;
+    text-align: left;
     color:black;
     font-size: 15px;
-    font-family: Verdana;
 }
 h4{
     margin:0px;
+
 }
 h5{
     margin:0px;
@@ -86,29 +103,33 @@ h5{
     margin-bottom: 5px;
 }
 .borderHome{
-    border-bottom: 2px solid #cc181e;
+    border-bottom: 2px solid #e62117;
 }
 .fas.fa-chevron-circle-down{
     color:black;
     background-color: white;
 }
 .mainvideo{
-    text-align: center;
-    
+    display: flex;   
 }
 .picMainVideo{
+    margin-top: 15px;
     width: 300px;
     height: 200px;
 }
 .mainVideoTitle{
-    padding-left: 35px;
-    padding-top: 5px;
-    margin-bottom: 10px;
-    font-size: 10px;
-    color:gray
+    padding-top: 10px;
+    margin-bottom: 15px;
+    font-size: 11px;
+    color:gray;
+    
 }
 .mainvideo1{
     border-bottom: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    padding-left:10px;
+
 }
 .imgArticle{
     width: 150px;
@@ -136,4 +157,9 @@ article{
 .section{
     border-bottom: 1px solid grey;
     margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 600px) {
+
+  
 }
