@@ -17,58 +17,74 @@
 
 
 @media only screen and (min-width: 1366px)
+    body 
+        background-color: #070c0d
+
     .main
+        width: 100%
+        height: 100vh
+        display: grid
+        grid-template-columns: 15% 85%
+        grid-template-rows: 90% 10%
 
         &__header > a > .button 
             display: none
 
-        &__logo
-            position: absolute
-            top: 0
-            min-width: 100%
-            display: grid
-            grid-template-columns: 1fr 1fr 10fr
-            grid-template-areas: "L T N N N N N N N N N N"
-            height: 15%
-
+        &__icon
+            transform: scale(0.5)
+            margin: 0
+        
         &__logo > h2 
             display: inline
             color: white
-            align-self: center
-            grid-area: T
-        
-        &__nav
-            background-color: yellow
-            top: 0
-            height: 100% 
-            grid-area: N
-            display: flex
-            align-self: center
+            justify-self: center
 
         &__article
-            display: flex
-            
+            display: flex  
 
         &__aside
-            position: absolute
-            top: 15%
+            grid-area: S
             display: flex
+            height: 100%
+            width: 100%
+
+        &__nav
+            display: flex
+            justify-content: space-around
+            padding: 1.5em
+            text-decoration: none
+
+        &__aside > .aside > .aside__a > .a__text:hover
+            transform: scale(1.1)
+            text-decoration: underline
+
+        
+        &__navp:hover
+            transform: scale(1.1)
+            text-decoration: underline
 
         &__sectiondiv
-            height: 100%
-            position: absolute
+            background-color: #2a454b
             overflow: scroll
-            top: 15%
-            left: 18%
+            overflow-x: hidden
 
         &__section
             width: 100%
-            align-self: start
-
+            background-color: #2a454b
+            
+        
         &__footer
-            position: absolute
-            display: flex
+            grid-area: 2 / 1 / 2 / span 2
 
+        &__player
+            display: flex
+            justify-content: flex-end
+            background-color: #282828
+        
+        &__playerspan 
+            height: 100%            
+            justify-content: end
+  
         &__fmobile
             display: none
 

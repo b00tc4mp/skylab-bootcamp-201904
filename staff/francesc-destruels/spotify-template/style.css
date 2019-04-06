@@ -4,6 +4,8 @@ body {
   font-family: proxima-nova, sans-serif; }
 
 a {
+  color: white;
+  text-align: center;
   text-decoration: none; }
 
 * {
@@ -17,11 +19,7 @@ a {
   align-content: flex-end; }
   .aside__contentdiv {
     height: 72.5%;
-    width: 15%;
-    background-color: blue; }
-  .aside__a {
-    color: white;
-    text-align: center; }
+    width: 15%; }
 
 .button {
   width: 12em;
@@ -51,7 +49,7 @@ a {
   display: flex;
   height: 100%; }
   .section__div {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     line-height: 1.25em; }
   .section__title {
@@ -109,15 +107,17 @@ a {
   .section--hidden {
     display: inline; } }
 @media only screen and (min-width: 1366px) {
-  .section__div {
-    max-height: 10vh; }
   .section__content {
     grid-template-columns: repeat(6, 1fr); }
   .section__content--big {
     grid-template-columns: repeat(6, 1fr); }
   .section__title {
     line-height: 1em;
-    font-size: 2em; }
+    font-size: 2em;
+    align-self: start;
+    padding-left: 1em; }
+  .section__title:hover {
+    transform: scale(1.05); }
   .section__img:hover {
     opacity: 1;
     transform: scale(1.1); }
@@ -141,7 +141,7 @@ a {
   flex-direction: column;
   align-items: center; }
 
-.logo {
+.icon {
   padding-top: 0.5em;
   margin-bottom: 0.5em;
   margin-top: 0.5em;
@@ -149,15 +149,10 @@ a {
   width: 7em; }
 
 @media only screen and (min-width: 768px) {
-  .logo {
+  .icon {
     transform: scale(1.5);
     margin-bottom: 1em;
     margin-top: 1em; } }
-@media only screen and (min-width: 1366px) {
-  .logo {
-    transform: scale(0.5);
-    margin: 0;
-    justify-self: end; } }
 .main {
   display: flex;
   flex-direction: column; }
@@ -171,47 +166,59 @@ a {
     display: none; }
 
 @media only screen and (min-width: 1366px) {
-  .main__header > a > .button {
-    display: none; }
-  .main__logo {
-    position: absolute;
-    top: 0;
-    min-width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 10fr;
-    grid-template-areas: "L T N N N N N N N N N N";
-    height: 15%; }
-  .main__logo > h2 {
-    display: inline;
-    color: white;
-    align-self: center;
-    grid-area: T; }
-  .main__nav {
-    background-color: yellow;
-    top: 0;
-    height: 100%;
-    grid-area: N;
-    display: flex;
-    align-self: center; }
-  .main__article {
-    display: flex; }
-  .main__aside {
-    position: absolute;
-    top: 15%;
-    display: flex; }
-  .main__sectiondiv {
-    height: 100%;
-    position: absolute;
-    overflow: scroll;
-    top: 15%;
-    left: 18%; }
-  .main__section {
+  body {
+    background-color: #070c0d; }
+
+  .main {
     width: 100%;
-    align-self: start; }
-  .main__footer {
-    position: absolute;
-    display: flex; }
-  .main__fmobile {
-    display: none; } }
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    grid-template-rows: 90% 10%; }
+    .main__header > a > .button {
+      display: none; }
+    .main__icon {
+      transform: scale(0.5);
+      margin: 0; }
+    .main__logo > h2 {
+      display: inline;
+      color: white;
+      justify-self: center; }
+    .main__article {
+      display: flex; }
+    .main__aside {
+      grid-area: S;
+      display: flex;
+      height: 100%;
+      width: 100%; }
+    .main__nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 1.5em;
+      text-decoration: none; }
+    .main__aside > .aside > .aside__a > .a__text:hover {
+      transform: scale(1.1);
+      text-decoration: underline; }
+    .main__navp:hover {
+      transform: scale(1.1);
+      text-decoration: underline; }
+    .main__sectiondiv {
+      background-color: #2a454b;
+      overflow: scroll;
+      overflow-x: hidden; }
+    .main__section {
+      width: 100%;
+      background-color: #2a454b; }
+    .main__footer {
+      grid-area: 2/1/2/span 2; }
+    .main__player {
+      display: flex;
+      justify-content: flex-end;
+      background-color: #282828; }
+    .main__playerspan {
+      height: 100%;
+      justify-content: end; }
+    .main__fmobile {
+      display: none; } }
 
 /*# sourceMappingURL=style.css.map */

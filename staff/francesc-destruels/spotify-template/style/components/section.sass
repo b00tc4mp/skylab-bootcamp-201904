@@ -3,8 +3,7 @@
     height: 100%
 
     &__div
- 
-        display: flex
+        display: inline-flex
         flex-direction: column
         line-height: 1.25em
 
@@ -37,6 +36,7 @@
         padding: 0
         margin: 0
         width: 100%   
+
     &__img:hover
         opacity: 0.5
         transform: scale(1.5)
@@ -76,14 +76,14 @@
 
         &--hidden
             display: inline
+            
 
 @media only screen and (min-width: 1366px)
     .section 
-        &__div
-            max-height: 10vh
 
         &__content
             grid-template-columns: repeat(6, 1fr)
+            
 
         &__content--big
             grid-template-columns: repeat(6, 1fr) 
@@ -91,6 +91,11 @@
         &__title
             line-height: 1em
             font-size: 2em
+            align-self: start
+            padding-left: 1em
+        
+        &__title:hover
+            transform: scale(1.05)
 
         &__img:hover
             opacity: 1
