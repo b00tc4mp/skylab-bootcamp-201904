@@ -1,7 +1,6 @@
 .section
     display: flex
-    margin-top: 0.5em
-
+    
     &__div
         width: 100%
         display: flex
@@ -13,20 +12,37 @@
         align-self: center
         
     &__content
-        width: 370px  
+        display: grid
+        grid-template-columns: repeat(4, 1fr) 
         align-self: center
         margin-bottom: 0.5em
+        width: 99%
+
+    &__content--big
+        display: grid
+        grid-template-columns: repeat(2, 1fr) 
+        align-self: center
+        margin-bottom: 0.5em
+        width: 99%
 
     &__img
         border: 0
         padding: 0
         margin: 0
-        height: 5.55em
-        width: 5.55em
+        width: 100%
         
     &__img--big
-        height: 11.40em
-        width: 11.40em
+        border: 0
+        padding: 0
+        margin: 0
+        width: 100%   
+    &__img:hover
+        opacity: 0.5
+        transform: scale(1.5)
+        
+    &__img--big:hover
+        opacity: 0.5
+        transform: scale(1.2)
 
     &__img--hidden
         display: none
@@ -34,3 +50,29 @@
     &--hidden
         display: none
 
+@media only screen and (min-width: 768px)
+    .section  
+        &__content
+            width: 90% 
+
+        &__content--big
+            width: 90% 
+
+        &__title
+            line-height: 1em
+            font-size: 3em
+
+        &__img:hover
+            opacity: 1
+            transform: scale(1.1)
+        
+        &__img--big:hover
+            opacity: 1
+            transform: scale(1.05)
+
+
+        &__img--hidden
+            display: inline
+
+        &--hidden
+            display: inline
