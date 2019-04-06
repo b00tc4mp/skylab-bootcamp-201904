@@ -33,12 +33,18 @@ main{
     justify-content: space-around;
 }
 
+nav > a{
+    font-size: 14px;
+    margin: 5px;
+}
+
 #menu{
     height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     justify-content: space-around;
+    margin:5px;
 }
 
 #fullogo{
@@ -46,8 +52,8 @@ main{
 }
 
 #navigator{
-    background-color: red;
-    height: 5vh;
+    background-color: #e62117ed;
+    height: 8vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -155,12 +161,6 @@ input[type="text"] {
     fill: white;
 }
 
-#icons{
-    height: 30px;
-    width: 30px;
-    fill: white;
-    padding: 5px;
-}
 
 .phototop{
     width: 6vh;
