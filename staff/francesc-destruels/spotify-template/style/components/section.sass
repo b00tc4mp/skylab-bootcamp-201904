@@ -1,8 +1,9 @@
 .section
     display: flex
-    
+    height: 100%
+
     &__div
-        width: 100%
+ 
         display: flex
         flex-direction: column
         line-height: 1.25em
@@ -70,9 +71,31 @@
             opacity: 1
             transform: scale(1.05)
 
-
         &__img--hidden
             display: inline
 
         &--hidden
             display: inline
+
+@media only screen and (min-width: 1366px)
+    .section 
+        &__div
+            max-height: 10vh
+
+        &__content
+            grid-template-columns: repeat(6, 1fr)
+
+        &__content--big
+            grid-template-columns: repeat(6, 1fr) 
+
+        &__title
+            line-height: 1em
+            font-size: 2em
+
+        &__img:hover
+            opacity: 1
+            transform: scale(1.1)
+        
+        &__img--big:hover
+            opacity: 1
+            transform: scale(1.05)
