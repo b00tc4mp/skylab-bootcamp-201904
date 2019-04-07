@@ -41,10 +41,9 @@ i{
     position: absolute;
     top:85px;
     left:20px;
-    margin
 }
 .subscription{
-    color:#e62117;
+    color: #e62117;
     justify-content: flex-start;
     font-size: 15px;
     padding-left: 50px;
@@ -158,8 +157,103 @@ article{
     border-bottom: 1px solid grey;
     margin-bottom: 10px;
 }
+.container__aside{
+    display: none;
+}
+.container__research{
+    display: none;
+}
+.nav-container-menudesktop{
+    display: none;
+}
+.nav-container-title__youtube{
+    display:none;
+}
+.container-header__profilePic{
+    display: none;
+}
 
 @media only screen and (min-width: 600px) {
+    .container{
+        display: grid;
+        grid-template-rows: 0,2fr 0.8fr;
+    }
+    .nav.container{
+        background-color:white;
+        display: flex;
+        justify-content: space-between;
+        margin: 0px;
+        color:black;
+        padding-top: 10px;
+        padding-left: 5px;
+        flex-wrap: nowrap;
+    }
+    .nav-container{
+        display: flex;
+    }
+    .nav-container-menudesktop{
+        display: flex;
+        padding:3px;
+        margin-right: 40px;
+    }
+    .container__research__mobile{
+        display: none;
+    }
+    .container__research{
+        display: flex;
+    }
+    .nav-container-title{
+        display: flex;
+    }
+    .nav-container-title__youtube{
+        display: flex;
+    }
+    .nav-container__logo{
+        margin: 0px;
+        color: red;
+    }
+    .container__research-input{
+        height: 20px;
+        max-width: 100%;
+        border: 1px gray solid;
+        font-family: roboto;
+    }
+    .container-header__profilePic{
+        display:flex;
+        border-radius: 50px;
+        background-color:red; 
+        width: 30px;
+        height: 30px;
+    }
+    .fas.fa-ellipsis-v{
+        display: none;
+    }
+    .container__research__button{
+        width: 30px;
+        height: 20px;
+        border: 1px solid gray;
+        background-color: lightslategray;
+    }
+    .header__title{
+        display:none;
+    }
+    .profilePic{
+        border-radius: 50px;
+        background-color:red; 
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        top:270px;
+        left:50px;
+    }
+    .subscription{
+        margin-left: 100px;
+    }
 
-  
+    .container__aside{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    
+
 }
