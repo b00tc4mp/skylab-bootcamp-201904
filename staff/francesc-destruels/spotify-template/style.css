@@ -210,14 +210,14 @@ a {
       width: 100%;
       background-color: #2a454b; }
     .main__footer {
-      grid-area: 2/1/2/span 2; }
+      background-color: #282828;
+      grid-column: 1/3;
+      margin: 0; }
     .main__player {
-      display: flex;
-      justify-content: flex-end;
-      background-color: #282828; }
-    .main__playerspan {
       height: 100%;
-      justify-content: end; }
+      width: 100%;
+      display: flex;
+      justify-content: flex-end; }
     .main__fmobile {
       display: none; } }
 
