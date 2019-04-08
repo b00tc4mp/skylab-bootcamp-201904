@@ -1,7 +1,16 @@
+@keyframes rotor
+    0%, 100%
+        transform: scale(0.5) rotate(180deg)
+    50% 
+        transform: scale(0.5) rotate(0deg)
+    
 .main
     display: flex
     flex-direction: column
     
+    &__sectionP 
+        display: none
+
     &__nav
         display: none
 
@@ -40,6 +49,12 @@
 
         &__article
             display: flex  
+        
+        &__sectionP 
+            display: block
+            margin-top: 0.25em
+            margin-bottom: 1em
+            color: white
 
         &__aside
             grid-area: S
@@ -82,6 +97,9 @@
             width: 100%
             display: flex
             justify-content: flex-end
-            
+
         &__fmobile
             display: none
+        
+        &__icon:hover
+            animation: rotor 2s infinite
