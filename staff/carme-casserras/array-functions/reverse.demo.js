@@ -2,4 +2,4 @@ console.log('DEMO', 'reverse');
 
 var array = ['one', 'two', 'three'];
 
-console.log(reverse(array));
+console.log(reverse());

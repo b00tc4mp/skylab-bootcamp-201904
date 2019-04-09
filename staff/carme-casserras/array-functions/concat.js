@@ -5,14 +5,15 @@
  * 
  * 
  */
-var a = ['c','a','r'];
-var b = ['d', 'a', 'n', 'i'];
-var acum = [];
+
 function concat(array1, array2) {
+    var acum = [];
     acum = array1;
-    
+     if (!(array1 instanceof Array)) throw TypeError(array + 'is not an array')
+     if (!(array2 instanceof Array)) throw TypeError(array + 'is not an array')
+
     for (var i = 0; i < array2.length; i++) {       
         acum += ',' + array2[i];
     }
-    console.log(acum);
+    return acum;
 }

@@ -8,11 +8,12 @@
  */
 
  function reverse(array) {
-    var acum = [];
+    
     for (var i = (array.length-1); i >= 0; i--) {
-        acum += array[i];
-        
+        array[i] = array[i];
+        console.log(array[i])
     }
-    console.log(acum)
-    array = acum;
+
+    return array
+    
  }
