@@ -1,3 +1,6 @@
+'user strict'
+
+
 /**
  * Returns the first index at which a given element can be found in the array.
  * 
@@ -6,8 +9,9 @@
  * 
  */
 
-function indexof(array, ele) {
+function indexOf(array, ele) {
     if (!(array instanceof Array)) throw TypeError(array + ' is not an array')
+   
         
     for (var i = 0; i < array.length; i++) {
         if (array[i] === ele)  {

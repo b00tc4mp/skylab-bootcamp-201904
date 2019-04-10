@@ -5,7 +5,9 @@ var a = ['c','a','r'];
 var b = ['d', 'a', 'n', 'i'];
 
 console.log('case 1');
-console.log(concat(a,b)) // c,a,r,d,a,n,i
+console.log(concat(a,b)) 
+// c,a,r,d,a,n,i
+
 
 console.log('case 2');
 

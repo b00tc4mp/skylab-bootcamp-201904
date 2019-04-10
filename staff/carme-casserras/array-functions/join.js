@@ -1,3 +1,6 @@
+'user strict'
+
+
 /**
  * Creates and returns a new string by concatenating all of the elements in an array
  * 
@@ -11,5 +14,6 @@ function join(array) {
     for (var i = 0; i < array.length; i++) {
         acum += array[i]+ ' ';      
     }    
+    
     return acum;
 }

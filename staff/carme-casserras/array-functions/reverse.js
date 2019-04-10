@@ -8,12 +8,12 @@
  */
 
  function reverse(array) {
-    
+    var array = ['one', 'two', 'three'];
     for (var i = (array.length-1); i >= 0; i--) {
-        array[i] = array[i];
-        console.log(array[i])
+        array = array[i];
+        
     }
+    console.log(array);
 
-    return array
     
  }
