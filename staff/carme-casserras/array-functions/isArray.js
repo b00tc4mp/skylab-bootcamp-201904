@@ -1,3 +1,5 @@
+'user strict'
+
 /**
  * Determines whether the passed value is an array.
  * 

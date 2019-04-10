@@ -1,7 +1,7 @@
 'use strict'
 
-suite('filter', function() {
-    test('should filter some items from array with a condition', function() {
+describe('filter', function() {
+    it('should filter some items from array with a condition', function() {
         var a = [1, 3, 5, 8, 10, 35, 40, 5, 23, 2, 7];
 
         var answer = [35, 40, 23];
@@ -14,7 +14,7 @@ suite('filter', function() {
         expect(result.toString, answer.toString);
     });
 
-    test('should break on undefined array', function () {
+    it('should break on undefined array', function () {
         
         try {
             filter();
@@ -25,7 +25,7 @@ suite('filter', function() {
         }
     });
     
-    test('should break on undefined callback', function () {
+    it('should break on undefined callback', function () {
         var a = [1, 3, 5, 8, 10, 35, 40, 5, 23, 2, 7];
 
         try {

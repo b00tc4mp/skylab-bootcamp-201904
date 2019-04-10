@@ -1,3 +1,5 @@
+'user strict'
+
 console.log('DEMO', 'filter');
 
 console.log('case 1');

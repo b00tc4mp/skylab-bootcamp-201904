@@ -10,7 +10,7 @@
  */
 
 function join(array) {
-    var acum = [];
+    var acum = '';
     for (var i = 0; i < array.length; i++) {
         acum += array[i]+ ' ';      
     }    

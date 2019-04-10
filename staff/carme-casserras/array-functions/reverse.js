@@ -1,3 +1,6 @@
+'user strict'
+
+
 /**
  *The first array element becomes the last, and the last array element becomes the first.
  * 
@@ -8,12 +11,15 @@
  */
 
  function reverse(array) {
-    var array = ['one', 'two', 'three'];
-    for (var i = (array.length-1); i >= 0; i--) {
-        array = array[i];
+    if (!(array instanceof Array)) throw TypeError(array + ' is not an array')
+
+    
+    for (var i = (array.length); i > 0; i--) {
+        array1[i] = array[i];
         
     }
-    console.log(array);
+    console.log(array)
+    return array1
 
     
  }

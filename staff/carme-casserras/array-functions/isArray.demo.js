@@ -1,3 +1,5 @@
+'user strict'
+
 console.log('DEMO', 'isArray');
 
 

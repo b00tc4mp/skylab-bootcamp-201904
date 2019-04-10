@@ -1,3 +1,5 @@
+'user strict'
+
 console.log('DEMO', 'indexof');
 
 var a = ['ant', 'bison', 'camel', 'duck', 'bison'];

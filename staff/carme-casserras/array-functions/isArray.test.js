@@ -1,7 +1,7 @@
 'use strict'
 
-suite('isArray', function() {
-    test('Determines whether the passed value is an array', function() {
+describe('isArray', function() {
+    it('Determines whether the passed value is an array', function() {
         var a = ['c','a','r'];
         var answer = true;
         var result = isArray(a);           
@@ -9,7 +9,7 @@ suite('isArray', function() {
       
     });
 
-    test('should break on undefined array', function () {
+    it('should break on undefined array', function () {
         
         try {
             isArray();

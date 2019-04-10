@@ -1,7 +1,7 @@
 'user strict'
 
-suite('lastindexof', function() {
-    test('should filter some items from array with a condition', function() {
+describe('lastindexof', function() {
+    it('should filter some items from array with a condition', function() {
         var array = ['ant', 'bison', 'camel', 'duck', 'bison'];
         // var elem = 'bison';
         var elem ;
@@ -14,7 +14,7 @@ suite('lastindexof', function() {
 
     });
 
-    test('should filter some items from array with a condition', function() {
+    it('should filter some items from array with a condition', function() {
         var array = ['ant', 'bison', 'camel', 'duck', 'bison'];
         var elem = 'cat';
 
@@ -26,7 +26,7 @@ suite('lastindexof', function() {
         
     });
 
-    test('should break on undefined array', function () {
+    it('should break on undefined array', function () {
         
         try {
             lastIndexof();
