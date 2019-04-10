@@ -4,7 +4,7 @@ suite('forEach', function () {
     test('should itearate an array without altering it', function () {
         var array = [1, 2, 3];
 
-        var result = []
+        var result = [];
 
         forEach(array, function (v, i) { result[i] = v; });
         // 0 1
