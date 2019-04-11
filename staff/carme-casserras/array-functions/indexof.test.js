@@ -1,7 +1,7 @@
 'use strict'
 
 describe('indexOf', function() {
-    it('Returns the first index at which a given element can be found in the array', function() {
+    it('Should return the first index at which a given element can be found in the array', function() {
         var array = ['ant', 'bison', 'camel', 'duck', 'bison'];
 
         var answer = 2;
@@ -12,7 +12,7 @@ describe('indexOf', function() {
              
     });
 
-    it('should break on undefined array', function () {
+    it('Should break on undefined array', function () {
         
         try {
             indexOf();

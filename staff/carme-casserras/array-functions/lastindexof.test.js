@@ -1,10 +1,10 @@
 'user strict'
 
 describe('lastindexof', function() {
-    it('should filter some items from array with a condition', function() {
+    it('Returns the last index at which a given element can be found in the array, or -1 ', function() {
         var array = ['ant', 'bison', 'camel', 'duck', 'bison'];
-        // var elem = 'bison';
-        var elem ;
+        var elem = 'bison';
+        
 
         var answer = 4;
 
@@ -14,7 +14,7 @@ describe('lastindexof', function() {
 
     });
 
-    it('should filter some items from array with a condition', function() {
+    it('Returns the last index at which a given element can be found in the array, or -1 ', function() {
         var array = ['ant', 'bison', 'camel', 'duck', 'bison'];
         var elem = 'cat';
 
@@ -29,7 +29,7 @@ describe('lastindexof', function() {
     it('should break on undefined array', function () {
         
         try {
-            lastIndexof();
+            lastIndexOf();
 
             throw Error('should not reach this point');
         } catch (error) {

@@ -5,10 +5,10 @@ describe('reverse', function() {
         var array = ['one', 'two', 'three'];
         var answer = ['three', 'two', 'one'];
 
-        var result = reverse(array1)
+        var result = reverse(array);
                      
              
-        expect(result, answer);
+        expect(result, answer, true);
     });
 
     it('should break on undefined array', function () {

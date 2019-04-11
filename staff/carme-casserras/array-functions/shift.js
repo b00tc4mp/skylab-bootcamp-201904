@@ -10,13 +10,13 @@
 function shift(array) {
     if (!(array instanceof Array)) throw TypeError(array + ' is not an array');
 
-    for (var i = 2; i < array.length; i++) {
-        console.log(array.length)
-        array[i]= callback(array[i]);
-        
+    var array1 = [(array.length-1)];
 
-        console.log(array)
+    for (var i = 1; i < array.length; i++) {
+        
+        array1[i-1] = array[i];
+    
     }
-    return array;
+    return array1;
     
 };

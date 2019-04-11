@@ -1,7 +1,7 @@
 'use strict';
 
 describe('shift', function() {
-    it('removes the first element from an array.', function() {
+    it('removes the first element from an array', function() {
         var array = [1, 2, 3];
 
         var answer = [2, 3]
@@ -16,7 +16,7 @@ describe('shift', function() {
     it('should break on undefined array', function () {
         
         try {
-            map();
+            shift();
 
             throw Error('should not reach this point');
         } catch (error) {
