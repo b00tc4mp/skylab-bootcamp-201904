@@ -46,3 +46,27 @@ Hooray.prototype.forEach = function (callback) {
             forEach(index);
     })(0);
 }
+
+
+
+
+Hooray.prototype.concat = function(){
+    if(arguments.length == 0)throw TypeError('undefined');
+    if(!(arguments[0] instanceof Array))throw TypeError('not an array');
+    
+    
+    this.i=0;
+    this.j=0;
+    this.k=0;
+    this.newarray=[];
+
+ 
+    for (i = 0; i < arguments.length; i++){
+        for (j = 0; j < arguments[i].length; j++){
+            this.newarray[k] = this.arguments[i][j];
+            this.k++;
+        }
+    }
+    return newarray;
+ }
+ 

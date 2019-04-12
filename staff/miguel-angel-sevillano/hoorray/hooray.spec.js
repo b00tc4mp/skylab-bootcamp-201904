@@ -100,4 +100,32 @@ describe('hooray', function () {
             
         });
     });
+
+    describe('concat', function() {
+        it('should break if its not undefined', function () {
+    
+            expect(function(){hooray.concat()}).toThrowError();
+        })
+    
+        it('Should break  if its not an array',function (){
+
+            
+            
+            expect(function(){hooray.concat('1')}).toThrowError();
+        })
+        it('shoud return a concated array',function(){
+
+            var a = new hooray
+            var  arr1= [1,2,3,4];
+            var arr2 = [2,3,5,6];
+
+            var result = a.push(arr1,arr2)
+           
+    
+            for(var i =0; i<actual.length; i++){
+                expect(actual[i],expected[i])
+            }
+        });
+       
+    });
 });
