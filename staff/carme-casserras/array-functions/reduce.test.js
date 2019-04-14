@@ -50,10 +50,4 @@ describe('reduce', function() {
             expect(error.message, 'undefined is not a function');
         }
     });
-
-
-
-
 });
-
-
