@@ -443,7 +443,7 @@ Hooray.prototype.splice = function(start, end, ...elements){
     var returnHooray = [];
     var i = 0;
 
-    if ((start == undefined) || (start > this.length) || (arguments.length ==3) && (end == 0)){
+    if ((start == undefined) || (start > this.length) || (end == 0)){
         return returnHooray;
     }
 
@@ -457,23 +457,19 @@ Hooray.prototype.splice = function(start, end, ...elements){
 
     for(i = 0; i < start; i++) {
         startHooray[startHooray.length] = this[i];
-        startHooray.length++
     }
 
     for(i = start; i < end; i++) {
         returnHooray[returnHooray.length] = this[i];
-        returnHooray.length++
     }
 
     for(i = end; i < this.length; i++) {
         endHooray[endHooray.length] = this[i];
-        endHooray.length++
     }
 
-    if(arguments.length > 3) {
-        for(i = 3; i < arguments.length; i++) {
+    if(arguments.length > 2) {
+        for(i = 2; i < arguments.length; i++) {
             newargsHooray[newargsHooray.length] = arguments[i];
-            newargsHooray.length++
         };
     }
     for(i = 0; i < this.length; i++){
