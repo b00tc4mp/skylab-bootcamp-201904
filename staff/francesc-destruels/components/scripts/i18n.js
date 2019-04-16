@@ -125,4 +125,22 @@ var i18n = {
             7: 'El usuario ya existe',
         },
     },
+    home: {
+        en: {
+            title: 'Welcome to Hell',
+            logOut: 'Log Out',
+        },
+        es: {
+            title: 'Bienvenido al Infierno',
+            logOut: 'Salir',
+        },
+        ca: {
+            title: 'Benvingut al infern',
+            logOut: 'Sortir',
+        },
+        ga: {
+            title: 'Bienvenuto al inferno',
+            logOut: 'Pa fuera',
+        },
+    },
 };

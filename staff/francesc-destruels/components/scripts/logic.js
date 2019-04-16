@@ -3,14 +3,14 @@ var logic = {
     register: function(name, surname, email, password, confirmPassword) {
         var error;
 
-        if (typeof name !== 'string' || name === undefined || name === "") {
+        if (name === undefined || name === "") {
             error = TypeError(name + ' is not a valid name');
             error.code = 2;
 
             throw error;
         };
 
-        if (typeof surname !== 'string'|| surname === undefined | surname === ""){
+        if (surname === undefined | surname === ""){
             error = TypeError(surname + ' is not a valid surname');
             error.code = 3;
 
@@ -24,7 +24,7 @@ var logic = {
             throw error;
         };
 
-        if (password.length < 2){
+        if (password.length < 5){
             error = TypeError('Password has to be longer than 5 characters');
             error.code = 5;
 

@@ -15,6 +15,7 @@ var languageSelector = new LanguageSelector(select, function (language) {
     landing.language = language;    
     register.language = language;
     login.language = language;
+    home.language = language;
 });
 
 //PRIMERA VENTANA QUE TE DEJA REGISTRARTE O INICIAR SESIÓN
@@ -70,6 +71,11 @@ login.visible = false;
 
 
 // SIGN IN OK CONFIRMAtION SCRIPT CREATOR COMPONENT NAME SIGN-IN-OK
-var home = new Home(main);
+var home = new Home(main, function(){
+
+    login.__accesTime__ = {};
+    home.visible = false;
+    landing.visible = true;
+}, i18n.home, languageSelected);
 
 home.visible = false;
