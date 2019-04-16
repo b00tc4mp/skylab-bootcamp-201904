@@ -18,6 +18,10 @@
         <option value="ga">Galego</option>
     </select>
 
+    <section>
+        <a href="http://"></a><span> Or </span><a href="http://"></a>
+    </section>
+
     <form>
         <h2>Sign Up</h2>
 
@@ -26,6 +30,7 @@
             <li><input type="text" name="surname" placeholder="surname"></li>
             <li><input type="text" name="email" placeholder="email"></li>
             <li><input type="password" name="password" placeholder="password"></li>
+            <li><input type="password" name="confirmpassword" placeholder="confirmpassword"></li>
         </ul>
 
         <button>Sign Up</button>
@@ -40,17 +45,28 @@
         </ul>
 
         <button>Sign In</button>
+
+        <p>Error</p>
     </form>
 
     <section>
-        User succefully registered, you can proceed to 
-    </section>
+        User successfully registered, you can proceed to <a href="">Login</a>.
+    </section>   
+    
+    <main>
+            <h1>Welcome to Hell.</h1>
+    </main>
 
-    <script src="./scripts/data.js"></script>
+
+    <script src="./scripts/components/feedback.js"></script>
+    <script src="./scripts/components/component.js"></script>
+    <script src="./scripts/components/landing.js"></script>
+    <script src="./scripts/components/language-selector.js"></script>
     <script src="./scripts/components/sign-up.js"></script>
     <script src="./scripts/components/sign-up-ok.js"></script>
     <script src="./scripts/components/sign-in.js"></script>
-    <script src="./scripts/components/language-selector.js"></script>
+    <script src="./scripts/components/home.js"></script>
+    <script src="./scripts/data.js"></script>
     <script src="./scripts/logic.js"></script>
     <script src="./scripts/i18n.js"></script>
     <script src="./scripts/main.js"></script>

@@ -1,10 +1,16 @@
 'use strict';
 
+
 /**
  * 
  * @param {*} form 
+ * @param {*} callback 
+ * @param {*} literals 
+ * @param {*} defaultLanguage 
+ * @param {*} onLanguageChange 
  */
-function SignUp(form, callback, literals, defaultLanguage, onLanguageChange) {
+
+function SignUp(form, onSignUp, literals, defaultLanguage, onLanguageChange) {
     Component.call(this, form);
 
     this.__literals__ = literals;
@@ -12,20 +18,24 @@ function SignUp(form, callback, literals, defaultLanguage, onLanguageChange) {
 
     this.language = defaultLanguage;
 
-    this.onSubmit = callback;
+    this.onSignUp = onSignUp;
 }
 
-Object.defineProperty(SignUp.prototype, "onSubmit", { 
+SignUp.prototype = Object.create(Component.prototype);
+SignUp.prototype.constructor = SignUp;
+
+Object.defineProperty(SignUp.prototype, "onSignUp", { 
     set: function(callback) {
-        this.__form__.addEventListener('submit', function (event) {
+        this.container.addEventListener('submit', function (event) {
             event.preventDefault();
 
             var name = this.name.value;
             var surname = this.surname.value;
             var email = this.email.value;
             var password = this.password.value;
+            var confirmPassword = this.confirmpassword.value;
 
-            callback(name, surname, email, password);
+            callback(name, surname, email, password, confirmPassword);
         });
     }
 });
@@ -34,17 +44,16 @@ Object.defineProperty(SignUp.prototype, 'language', {
     set: function(language) {
         var literals = this.__literals__[language];
 
-        this.__form__.children[0].innerText = literals.title;
-        this.__form__.name.placeholder = literals.name;
-        this.__form__.surname.placeholder = literals.surname;
-        this.__form__.email.placeholder = literals.email;
-        this.__form__.password.placeholder = literals.password;
+        this.container.children[0].innerText = literals.title;
+        this.container.name.placeholder = literals.name;
+        this.container.surname.placeholder = literals.surname;
+        this.container.email.placeholder = literals.email;
+        this.container.password.placeholder = literals.password;
+        this.container.confirmpassword.placeholder = literals.confirmpassword;
 
-        this.__form__.children[2].innerText = literals.title;
+        this.container.children[2].innerText = literals.title;
 
         if (this.__onLanguageChange__) this.__onLanguageChange__(language);
     }
 });
 
-SignUp.prototype = Object.create(Component.prototype);
-SignUp.prototype.constructor = SignUp;

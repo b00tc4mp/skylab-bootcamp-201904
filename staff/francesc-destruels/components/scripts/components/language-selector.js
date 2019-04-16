@@ -6,17 +6,17 @@
  * @param {Function} callback 
  */
 function LanguageSelector(select, callback) {
-    CompositionEvent.call(this, select);
+    Component.call(this, select);
 
     this.onChange = callback;
 }
 
 LanguageSelector.prototype = Object.create(Component.prototype);
-LanguageSelector.prototype.constructor = LanguageSelectorr;
+LanguageSelector.prototype.constructor = LanguageSelector;
 
 Object.defineProperty(LanguageSelector.prototype, "onChange", {
     set: function (callback) {
-        this.__select__.addEventListener('change', function (event) {
+        this.container.addEventListener('change', function (event) {
             callback(event.target.value);
         });
     }
