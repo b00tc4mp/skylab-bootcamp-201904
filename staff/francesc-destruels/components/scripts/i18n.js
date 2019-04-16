@@ -22,7 +22,7 @@ var i18n = {
             login: 'LogIn',
         },
     },
-    signIn: {
+    login: {
         en: {
             title: 'Sign In',
             email: 'E-mail',
@@ -52,7 +52,7 @@ var i18n = {
         ga: 'Administrador'
     },
 
-    signUp: {
+    register: {
         en: {
             title: 'Sign up',
             name: 'Name',
@@ -89,16 +89,40 @@ var i18n = {
 
     errors: {
         en: {
-
+            1: 'wrong credentials',
+            2: "That's not a valid Name",
+            3: "That's not a valid Surname",
+            4: "That's not a valid E-mail",
+            5: 'Password is too short min. 6 characters',
+            6: 'Passwords do not match',
+            7: 'User already exist',
         },
         es: {
-
+            1: 'credenciales incorrectas',
+            2: 'Nombre no valido',
+            3: 'Apellido no valido',
+            4: 'E-mail invalido',
+            5: 'Contraseña demasiado corta, min. 6 carácteres',
+            6: 'Las contraseñas no coinciden',
+            7: 'El usuario ya existe',
         },
         ca: {
-
+            1: 'credencials incorrectes',
+            2: 'Nom no valid',
+            3: 'Cognom no valid',
+            4: 'E-mail no valid',
+            5: 'Contrasenya massa curta, min. 6 caracters',
+            6: 'Les contrasenyes no coincideixen',
+            7: "L'usuari ja existeix",
         },
         ga: {
-
+            1: 'credenciales incorrectas',
+            2: 'Nombre no valido',
+            3: 'Apellido no valido',
+            4: 'E-mail invalido',
+            5: 'Contraseña demasiado corta, min. 6 carácteres',
+            6: 'Las contraseñas no coinciden',
+            7: 'El usuario ya existe',
         },
     },
 };

@@ -5,7 +5,7 @@ function Landing(section, literals, onNavigateToRegister, onNavigateToLogin){
     
     this.__literals__ = literals;
 
-    var link = this.container.children;
+    var links = this.container.children;
 
     links[0].addEventListener('click', function(event){
         event.preventDefault();

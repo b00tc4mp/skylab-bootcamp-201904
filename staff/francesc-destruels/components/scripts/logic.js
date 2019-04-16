@@ -1,11 +1,51 @@
 
 var logic = {
     register: function(name, surname, email, password, confirmPassword) {
-        if (typeof name !== 'string' || name === undefined || name === "") throw new TypeError(name + ' is not a valid name');
-        if (typeof surname !== 'string'|| surname === undefined | surname === "") throw new TypeError(surname + ' is not a valid surname');
-        if (email === undefined || email.includes('@') === false) throw new TypeError( email + ' is not a valid e-mail');
-        if (password.length < 6) throw new TypeError('Password has to be longer than 5 characters');
-        if (password !== confirmPassword) throw new TypeError('Passwords do not match');
+        var error;
+
+        if (typeof name !== 'string' || name === undefined || name === "") {
+            error = TypeError(name + ' is not a valid name');
+            error.code = 2;
+
+            throw error;
+        };
+
+        if (typeof surname !== 'string'|| surname === undefined | surname === ""){
+            error = TypeError(surname + ' is not a valid surname');
+            error.code = 3;
+
+            throw error;
+        };
+
+        if (email === undefined || email.includes('@') === false){
+            error = TypeError( email + ' is not a valid e-mail');
+            error.code = 4;
+
+            throw error;
+        };
+
+        if (password.length < 2){
+            error = TypeError('Password has to be longer than 5 characters');
+            error.code = 5;
+
+            throw error;
+        };
+
+        if (password !== confirmPassword) {
+            error = TypeError('Passwords do not match');
+            error.code = 6;
+
+            throw error;
+        };
+
+        var user = users.find(function (user) { return user.email === email }); 
+
+        if (user !== undefined){
+            error = TypeError('User already exist');
+            error.code = 7;
+
+            throw error;
+        }
 
         users.push({
             name: name,
@@ -15,23 +55,28 @@ var logic = {
         });
     },
 
-    login: function(email, password) {
-        if (email === undefined || email.includes('@') === false) throw new TypeError( email + ' is not a valid e-mail');
-        if (password.length < 6) throw new TypeError('Password has to be longer than 5 characters');
+    login: function (email, password) {
+        var error;
+        var user = users.find(function (user) { return user.email === email }); 
+
+        if (!user) {
+            error = Error('wrong credentials');
+
+            error.code = 1;
+
+            throw error;
+        };
         
-        var user = users.find(function (user) { return user.email === email });
-
-        if(!user){
-            var error = Error('wrong credential');
-                
-        }
-
         if (user.password === password) {
             this.__userEmail__ = email;
-            this.__accestime__ = Date.now();
+            this.__accessTime__ = Date.now();
         } else {
-            throw new TypeError('wrong credentials');
-        }
+            error = Error('wrong credentials');
+
+            error.code = 1;
+
+            throw error;
+        };
     },
 }
 
