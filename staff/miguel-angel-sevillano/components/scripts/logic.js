@@ -3,11 +3,9 @@
 var logic = {
     register: function (name, surname, email, password) {
         if (typeof name !== 'string') throw TypeError(name + ' is not a valid name');
-        if (typeof surname !== 'string') throw TypeError(surname +' is not a valid surname')
-        if ( email.indexOf("@") =-1) throw TypeError(email +' is not a valid email')
-        
-        var check = users.find(function(check) {return check.email = email} );
-        if(check === true)throw TypeError(email + ' alredy registered')
+        // TODO add more validations
+
+        // TODO verify user does not exists already, otherwise error 'user already exists'
 
         users.push({
             name: name,
@@ -18,18 +16,34 @@ var logic = {
     },
 
     login: function (email, password) {
-        if ( email.indexOf("@") =-1) throw TypeError(email +' is not a valid email');
+        // TODO validate input data
 
-        var userMail = users.find(function(userMail) { return userMail.email === email });
-        var userPass = users.find(function(userPass) { return userPass.password === password });
+        var user = users.find(function(user) { return user.email === email });
 
-        if(userMail !== true)throw TypeError( ' wrong credentials')
-        if(userPass !== true)throw TypeError( ' wrong credentials')
-        
+        if (!user) {
+            var error = Error('wrong credentials')
+
+            error.code = 1;
+
+            throw error;
+        };
 
         if (user.password === password) {
             this.__userEmail__ = email;
             this.__accessTime__ = Date.now();
-        } 
+        } else {
+            var error = Error('wrong credentials')
+
+            error.code = 1;
+
+            throw error;
+        };
+    },
+
+    logout:function(){
+
+        this.__userEmail__=undefined;
+        this.__accessTime__=undefined;
     }
+    
 }
