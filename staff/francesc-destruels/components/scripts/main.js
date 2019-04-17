@@ -72,8 +72,8 @@ login.visible = false;
 
 // SIGN IN OK CONFIRMAtION SCRIPT CREATOR COMPONENT NAME SIGN-IN-OK
 var home = new Home(main, function(){
+    logic.logOut();
 
-    login.__accesTime__ = {};
     home.visible = false;
     landing.visible = true;
 }, i18n.home, languageSelected);

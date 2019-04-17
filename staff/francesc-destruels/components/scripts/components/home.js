@@ -8,8 +8,7 @@ function Home(container, onLogOut, literals, defaultLanguage){
 
 
     this.onLogOut = onLogOut;
-    console.log(this.language);
-}
+};
 
 Home.prototype = Object.create(Component.prototype);
 Home.prototype.constructor = Home;
