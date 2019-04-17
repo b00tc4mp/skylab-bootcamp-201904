@@ -6,6 +6,15 @@ function Home(container, onLogOut, literals, defaultLanguage){
     this.__literals__ = literals;
     this.language = defaultLanguage;
 
+    var form = this.container.children[2];
+
+    var search = new Search(form, onSearch);
+
+    var form = this.container.children[3];
+
+    var results = new Result(container, );
+
+    this.__results__ = results;
 
     this.onLogOut = onLogOut;
 };
@@ -21,6 +30,14 @@ Object.defineProperty(Home.prototype, "onLogOut", {
 
             callback();
         });
+    }
+});
+
+Object.defineProperty(Home.prototype, "results", {
+    set: function (results) {
+        this.__results__.items = results;
+
+            callback();
     }
 });
 

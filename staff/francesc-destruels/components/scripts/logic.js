@@ -86,7 +86,23 @@ var logic = {
     },
 
     searchDucks: function (quary, callback) {
-        if (quary === undefined) throw TypeError(quary + ' is not a valid search value');
+        var error;
+
+        if (quary === undefined){
+            error = TypeError('Search can not be undefined');
+
+            error.code = 8;
+            
+            throw error; 
+        };
+
+        if (callback instanceof Function === false){
+            error = TypeError('Callback is not a function');
+
+            error.code = 9;
+            
+            throw error; 
+        };
 
         var xhr = new XMLHttpRequest();
 
@@ -101,6 +117,23 @@ var logic = {
     },
 
     retrieveDucklingDetail: function (id, callback) {
+        var error;
+
+        if (id === undefined){
+            error = TypeError('Not a valid ID');
+
+            error.code = 8;
+            
+            throw error; 
+        };
+        
+        if (callback instanceof Function === false){
+            error = TypeError('Callback is not a function');
+
+            error.code = 9;
+            
+            throw error; 
+        };
 
         var xhr = new XMLHttpRequest;
 

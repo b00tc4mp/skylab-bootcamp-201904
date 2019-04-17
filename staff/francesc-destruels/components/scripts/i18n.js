@@ -96,6 +96,8 @@ var i18n = {
             5: 'Password is too short min. 6 characters',
             6: 'Passwords do not match',
             7: 'User already exist',
+            8: 'Search value can not be undefined',
+            9: 'Undefined callback'
         },
         es: {
             1: 'credenciales incorrectas',
@@ -105,6 +107,8 @@ var i18n = {
             5: 'Contraseña demasiado corta, min. 6 carácteres',
             6: 'Las contraseñas no coinciden',
             7: 'El usuario ya existe',
+            8: 'El valor de busqueda no puede ser indefinido',
+            9: 'Callback indefinido'
         },
         ca: {
             1: 'credencials incorrectes',
@@ -114,6 +118,8 @@ var i18n = {
             5: 'Contrasenya massa curta, min. 6 caracters',
             6: 'Les contrasenyes no coincideixen',
             7: "L'usuari ja existeix",
+            8: 'El valor de recerca no pot ser Undefined',
+            9: 'Callback indefinit'
         },
         ga: {
             1: 'credenciales incorrectas',
@@ -123,6 +129,8 @@ var i18n = {
             5: 'Contraseña demasiado corta, min. 6 carácteres',
             6: 'Las contraseñas no coinciden',
             7: 'El usuario ya existe',
+            8: 'El valor de busqueda no puede ser indefinido',
+            9: 'Callback indefinido'
         },
     },
     home: {

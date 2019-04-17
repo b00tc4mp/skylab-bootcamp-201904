@@ -50,13 +50,13 @@ describe('logic', function () {
 
         true && it('should fail on a non proper e-mail', function () {
             expect(function () {
-                logic.register(name, surname, 'carlos.com' , password, confirmPassword);
+                logic.register(name, surname, 'carlos.com', password, confirmPassword);
             }).toThrowError(TypeError, 'carlos.com is not a valid e-mail');
         });
 
         true && it('should fail on non-matching passwords', function () {
             expect(function () {
-                logic.register(name, surname, email  , password, undefined);
+                logic.register(name, surname, email, password, undefined);
             }).toThrowError(TypeError, 'Passwords do not match');
         });
     });
@@ -78,12 +78,12 @@ describe('logic', function () {
             // expect(logic.__accessTime__ / 1000).toBeCloseTo(Date.now() / 1000, 1);
         });
 
-        true && it('should fail on wrong email (unexisting user)', function(){
+        true && it('should fail on wrong email (unexisting user)', function () {
             var _error;
 
             try {
                 logic.login('pepitogrillo@gmail.com', password);
-            } catch(error) {
+            } catch (error) {
                 _error = error;
             }
 
@@ -91,12 +91,12 @@ describe('logic', function () {
             expect(_error.code).toBe(1);
         });
 
-        true && it('should fail on wrong password (existing user)', function(){
+        true && it('should fail on wrong password', function () {
             var _error;
 
             try {
                 logic.login(email, '456666');
-            } catch(error) {
+            } catch (error) {
                 _error = error;
             }
 
@@ -104,17 +104,93 @@ describe('logic', function () {
             expect(_error.code).toBe(1);
         });
 
-        true && it('should fail on wrong password (existing user)', function(){
+        true && it('should fail on wrong password (existing user)', function () {
             var _error;
 
             try {
                 logic.login(email, '456666');
-            } catch(error) {
+            } catch (error) {
                 _error = error;
             }
 
             expect(_error).toBeDefined();
             expect(_error.code).toBe(1);
+        });
+    });
+
+    describe('search ducks', function () {
+        true && it('should succeed on correct query', function (done) {
+            logic.searchDucks('yellow', function (ducks) {
+                expect(ducks).toBeDefined();
+                expect(ducks instanceof Array).toBeTruthy();
+                expect(ducks.length).toBe(13);
+
+                done();
+            });
+        });
+
+        true && it('should fail on undefined quary', function () {
+            var _error;
+
+            try {
+                logic.searchDucks(undefined, function(){console.log('hello');});
+            } catch (error) {
+                _error = error;
+            }
+
+            expect(_error).toBeDefined();
+            expect(_error.code).toBe(8);
+        });
+
+        true && it('should fail on undefined callback', function () {
+            var _error;
+
+            try {
+                logic.searchDucks('hola', 'tomate');
+            } catch (error) {
+                _error = error;
+            }
+
+            expect(_error).toBeDefined();
+            expect(_error.code).toBe(9);
+        });
+    });
+
+    describe('retrieve ducks', function () {
+        true && it('should succeed on correct query', function (done) {
+            logic.retrieveDucklingDetail('5c3853aebd1bde8520e66e11', function (ducks) {
+                expect(ducks).toBeDefined();
+                expect(ducks instanceof Object).toBeTruthy();
+                expect(ducks.id).toBe("5c3853aebd1bde8520e66e11");
+
+                done();
+            });
+        });
+
+        true && it('should fail on undefined id', function () {
+            var _error;
+
+            try {
+                logic.retrieveDucklingDetail(undefined, function(){console.log('hello');});
+            } catch (error) {
+                _error = error;
+            }
+
+            expect(_error).toBeDefined();
+            expect(_error.code).toBe(8);
+        });
+
+        true && it('should fail on undefined callback', function () {
+            var _error;
+
+            try {
+                logic.retrieveDucklingDetail('hola', 'tomate');
+            } catch (error) {
+                _error = error;
+            }
+
+            expect(_error).toBeDefined();
+            expect(_error.code).toBe(9);
         });
     });
 });
