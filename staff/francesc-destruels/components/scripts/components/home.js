@@ -52,6 +52,7 @@ Object.defineProperty(Home.prototype, "results", {
 
         this.__results__.items = results;
         this.__results__.visible = true;
+        this.__detail__.visible = false;
 
     }
 });
