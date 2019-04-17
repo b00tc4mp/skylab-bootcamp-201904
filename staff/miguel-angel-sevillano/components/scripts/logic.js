@@ -52,5 +52,36 @@ var logic = {
 
         this.__userEmail__=undefined;
         this.__accessTime__=undefined;
-    }
+    },
+
+    
+    searchDucks: function (query, callback) {
+        // TODO validate inputs
+
+        var xhr = new XMLHttpRequest;
+
+        xhr.open('GET', 'https://duckling-api.herokuapp.com/api/search?q=' + query);
+
+        xhr.addEventListener('load', function () {
+            callback(JSON.parse(this.responseText));
+        });
+
+        xhr.send();
+    },
+
+    retrieveDucklingDetail: function(id, callback) {
+        // TODO validate inputs
+        
+        var xhr = new XMLHttpRequest;
+
+        xhr.open('GET', 'https://duckling-api.herokuapp.com/api/ducks/' + id);
+
+        xhr.addEventListener('load', function () {
+            callback(JSON.parse(this.responseText));
+        });
+
+        xhr.send();
+    },
+
+
 }

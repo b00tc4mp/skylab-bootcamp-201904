@@ -99,4 +99,18 @@ describe('logic', function () {
 
         // TODO fail cases
     });
+
+    describe('search ducks', function() {
+        it('should succeed on correct query', function(done) {
+            logic.searchDucks('yellow', function(ducks) {
+                expect(ducks).toBeDefined();
+                expect(ducks instanceof Array).toBeTruthy();
+                expect(ducks.length).toBe(13);
+
+                done();
+            });
+
+            // TODO fail cases
+        });
+    });
 });

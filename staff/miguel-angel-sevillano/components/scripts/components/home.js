@@ -5,11 +5,13 @@ function Home(container,gotolanding) {
 
     var links=this.container.children;
 
-    links[1].addEventListener('click', function(event) {
+    links[2].addEventListener('click', function(event) {
         event.preventDefault();
         
         gotolanding();
     });
+
+    
 }
 
 Home.prototype = Object.create(Component.prototype);
