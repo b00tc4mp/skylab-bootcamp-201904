@@ -2,10 +2,18 @@
 
 var logic = {
     register: function (name, surname, email, password) {
-        if (typeof name !== 'string') throw TypeError(name + ' is not a valid name');
-        // TODO add more validations
+        if (typeof name == 'undefined' || typeof name == 'empty') throw TypeError(name + ' is not a valid name');
+        if (typeof surname == 'undefined' || typeof surname == 'empty') throw TypeError(surname + ' is not a valid name');
+        if (email.indexOf("@") == -1)throw TypeError(email + ' is not a valid email');
 
         // TODO verify user does not exists already, otherwise error 'user already exists'
+
+        users.forEach(element => {
+            if (element.email === email){
+                throw TypeError('user alredy registered');
+            }
+            
+        });
 
         users.push({
             name: name,
@@ -45,5 +53,4 @@ var logic = {
         this.__userEmail__=undefined;
         this.__accessTime__=undefined;
     }
-    
 }
