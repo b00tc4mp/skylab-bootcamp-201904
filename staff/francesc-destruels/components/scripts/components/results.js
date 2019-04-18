@@ -18,11 +18,9 @@ Object.defineProperty(Results.prototype, "items", {
 
             var li = document.createElement('li');
 
-            li.setAttribute('data-id', item.id); 
-
-            var h3 = document.createElement('h3');
-            h3.innerText = item.title;
-            li.appendChild(h3);
+            var h2 = document.createElement('h2');
+            h2.innerText = item.title;
+            li.appendChild(h2);
 
             var img = document.createElement('img');
             img.src = item.image;
@@ -37,7 +35,6 @@ Object.defineProperty(Results.prototype, "items", {
             li.addEventListener('click', function () {
                 this.visible = false;
                 this.onDetail(item.id);
-
             }.bind(this));
         }.bind(this));
     }

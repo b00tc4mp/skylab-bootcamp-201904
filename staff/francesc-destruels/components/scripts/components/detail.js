@@ -26,7 +26,5 @@ Object.defineProperty(Detail.prototype, "items", {
             this.container.appendChild(img);
             this.container.appendChild(p);
             this.container.appendChild(span);
-
-            this.visible = true;
     }
 })
