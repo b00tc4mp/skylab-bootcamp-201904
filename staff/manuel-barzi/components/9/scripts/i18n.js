@@ -81,20 +81,16 @@ var i18n = {
     },
     errors: {
         en: {
-            1: 'wrong credentials',
-            2: 'user not found'
+            1: 'wrong credentials'
         },
         es: {
-            1: 'credenciales incorrectas',
-            2: 'usuario no encontrado'
+            1: 'credenciales incorrectas'
         },
         ca: {
-            1: 'credencials incorrectes',
-            2: 'usuari no trobat'
+            1: 'credencials incorrectes'
         },
         ga: {
-            1: 'credenciales incorrectas',
-            2: 'usuario non atopado'
+            1: 'credenciales incorrectas'
         }
     }
 };
