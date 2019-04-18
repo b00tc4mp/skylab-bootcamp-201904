@@ -7,7 +7,7 @@ function Detail(container) {
 Detail.prototype = Object.create(Component.prototype);
 Detail.prototype.constructor = Detail;
 
-Object.defineProperty(Detail.prototype, "items", {
+Object.defineProperty(Detail.prototype, "item", {
     set: function(items){
         while (this.container.firstElementChild) this.container.removeChild(this.container.firstElementChild);
             var h3 = document.createElement('h3');

@@ -58,6 +58,8 @@ var login = new Login(forms[1], function (email, password) {
     try {
         logic.login(email, password);
 
+        var user = logic.retrieveUser(email);
+        home.name = user.name;
         login.visible = false;
         home.visible = true;
     } catch (error) {
@@ -93,12 +95,10 @@ var home = new Home(main, function () {
     logic.retrieveDucklingDetail(id, function (ducks) {
 
         home.detail = {
-                // id: duck.id,
                 title: ducks.title,
                 image: ducks.imageUrl,
                 price: ducks.price,
                 description: ducks.description,
-                // link: duck.link,
         };
     });
 }, i18n.home, languageSelected);

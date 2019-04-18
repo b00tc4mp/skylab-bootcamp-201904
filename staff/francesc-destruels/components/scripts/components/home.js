@@ -62,7 +62,7 @@ Object.defineProperty(Home.prototype, "results", {
 Object.defineProperty(Home.prototype, "detail", {
     set: function (detail) {
 
-        this.__detail__.items = detail;
+        this.__detail__.item = detail;
         this.__results__.visible = false;
         this.__detail__.visible = true;
 

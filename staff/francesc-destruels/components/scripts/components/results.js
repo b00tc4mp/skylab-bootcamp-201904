@@ -33,7 +33,7 @@ Object.defineProperty(Results.prototype, "items", {
             this.container.appendChild(li);            
             
             li.addEventListener('click', function () {
-                this.visible = false;
+                // this.visible = false;
                 this.onDetail(item.id);
             }.bind(this));
         }.bind(this));
