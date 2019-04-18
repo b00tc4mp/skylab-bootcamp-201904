@@ -20,6 +20,7 @@ var landing = new Landing(sections[0], i18n.landing, function() {
     landing.visible = false;
     login.visible = true;
 });
+landing.visible = false;
 
 var forms = document.getElementsByTagName('form');
 
@@ -52,12 +53,26 @@ var registerOk = new RegisterOk(sections[1], function () {
 registerOk.visible = false;
 
 var main = document.getElementsByTagName('main')[0];
-var home = new Home(main,function(){
+var home = new Home(main, function(query) {
+    logic.searchDucks(query, function(ducks) {
+        home.results = ducks.map(function(duck) {
+            return {
+                id: duck.id,
+                title: duck.title,
+                image: duck.imageUrl,
+                price: duck.price
+            }
+        });
+    });
+},function(){
     logic.logout();
     landing.visible=true;
     home.visible=false;
-    
+},function (id){
+    logic.retrieveDucklingDetail(id,function(data){
+        home.details= data;
+    })
 });
-home.visible = false;
+// home.visible = false;
 
 

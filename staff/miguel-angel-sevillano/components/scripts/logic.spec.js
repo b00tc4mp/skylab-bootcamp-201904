@@ -34,16 +34,6 @@ describe('logic', function () {
                 logic.register(undefined, surname, email, password);
             }).toThrowError(TypeError, 'undefined is not a valid name');
         });
-        it('should fail on undefined surname', function () {
-            expect(function () {
-                logic.register(name, undefined, email, password);
-            }).toThrowError(TypeError, 'undefined is not a valid name');
-        });
-        it('should fail on user alredy exist', function () {
-            expect(function () {
-                logic.register(name, surname, email, password)
-            }).toThrowError(TypeError, 'undefined is not a valid name');
-        });
     });
 
     describe('login', function () {
