@@ -1,4 +1,4 @@
-var users = [{
+let users = [{
     name: "Fran",
     surname: "D.",
     email: "2@",

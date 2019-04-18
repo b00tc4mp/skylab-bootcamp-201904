@@ -1,88 +1,88 @@
 
 var logic = {
-    register: function(name, surname, email, password, confirmPassword) {
-        var error;
+    register(name, surname, email, password, confirmPassword) {
+        let error
 
         if (name === undefined || name === "") {
             error = TypeError(name + ' is not a valid name');
-            error.code = 2;
+            error.code = 2
 
-            throw error;
+            throw error
         };
 
         if (surname === undefined | surname === ""){
             error = TypeError(surname + ' is not a valid surname');
-            error.code = 3;
+            error.code = 3
 
-            throw error;
+            throw error
         };
 
         if (email === undefined || email.includes('@') === false){
             error = TypeError( email + ' is not a valid e-mail');
-            error.code = 4;
+            error.code = 4
 
-            throw error;
+            throw error
         };
 
         if (password.length < 5){
             error = TypeError('Password has to be longer than 5 characters');
-            error.code = 5;
+            error.code = 5
 
-            throw error;
+            throw error
         };
 
         if (password !== confirmPassword) {
-            error = TypeError('Passwords do not match');
-            error.code = 6;
+            error = TypeError('Passwords do not match')
+            error.code = 6
 
-            throw error;
+            throw error
         };
 
-        var user = users.find(function (user) { return user.email === email }); 
+        const user = users.find(function (user) { return user.email === email }); 
 
         if (user !== undefined){
-            error = TypeError('User already exist');
-            error.code = 7;
+            error = TypeError('User already exist')
+            error.code = 7
 
-            throw error;
+            throw error
         }
 
         users.push({
-            name: name,
-            surname: surname,
-            email: email,
-            password: password,
+            name,
+            surname,
+            email,
+            password,
         });
     },
 
-    login: function (email, password) {
-        var error;
-        var user = users.find(function (user) { return user.email === email }); 
+    login(email, password) {
+        let error
+        const user = users.find(function (user) { return user.email === email })
 
         if (!user) {
-            error = Error('wrong credentials');
+            error = Error('wrong credentials')
 
-            error.code = 1;
+            error.code = 1
 
-            throw error;
-        };
+            throw error
+        }
         
         if (user.password === password) {
-            this.__userEmail__ = email;
-            this.__accessTime__ = Date.now();
+            this.__userEmail__ = email
+            this.__accessTime__ = Date.now()
         } else {
-            error = Error('wrong credentials');
+            error = Error('wrong credentials')
 
-            error.code = 1;
+            error.code = 1
 
-            throw error;
-        };
+            throw error
+        }
     },
 
-    logOut: function () {
+    logOut() {
         
-        this.__accessTime__ = "";
-        this.__userEmail__ = "";
+        this.__accessTime__ = ""
+        this.__userEmail__ = ""
     },
 
     // retrieveUser: function (email) {
@@ -105,65 +105,65 @@ var logic = {
     //     };
     // },
 
-    searchDucks: function (quary, callback) {
-        var error;
+    searchDucks(quary, callback) {
+        let error
 
         if (quary === undefined){
-            error = TypeError('Search can not be undefined');
+            error = TypeError('Search can not be undefined')
 
-            error.code = 8;
+            error.code = 8
             
-            throw error; 
-        };
+            throw error 
+        }
 
         if (callback instanceof Function === false){
-            error = TypeError('Callback is not a function');
+            error = TypeError('Callback is not a function')
 
-            error.code = 9;
+            error.code = 9
             
-            throw error; 
+            throw error
         };
 
-        var xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest()
 
-        xhr.open('GET', 'https://duckling-api.herokuapp.com/api/search?q=' + quary);
+        xhr.open('GET', 'https://duckling-api.herokuapp.com/api/search?q=' + quary)
 
         xhr.addEventListener('load', function () {
-            callback(JSON.parse(this.responseText));
-        });
+            callback(JSON.parse(this.responseText))
+        })
 
-        xhr.send();
+        xhr.send()
 
     },
 
-    retrieveDucklingDetail: function (id, callback) {
-        var error;
+    retrieveDucklingDetail(id, callback) {
+        let error
 
         if (id === undefined){
-            error = TypeError('Not a valid ID');
+            error = TypeError('Not a valid ID')
 
-            error.code = 8;
+            error.code = 8
             
-            throw error; 
-        };
+            throw error
+        }
         
         if (callback instanceof Function === false){
-            error = TypeError('Callback is not a function');
+            error = TypeError('Callback is not a function')
 
-            error.code = 9;
+            error.code = 9
             
-            throw error; 
-        };
+            throw error
+        }
 
-        var xhr = new XMLHttpRequest;
+        const xhr = new XMLHttpRequest
 
-        xhr.open('GET', 'https://duckling-api.herokuapp.com/api/ducks/' + id);
+        xhr.open('GET', 'https://duckling-api.herokuapp.com/api/ducks/' + id)
 
-        xhr.addEventListener('load', function () {
+        xhr.addEventListener('load', function() {
             callback(JSON.parse(this.responseText));
-        });
+        })
 
-        xhr.send();
+        xhr.send()
     }
 
 }
