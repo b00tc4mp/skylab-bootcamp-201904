@@ -1,7 +1,7 @@
 'use strict'
 
 class Home extends Component {
-    constructor(container, onLogOut, onSearch, onDetail, literals, defaultLanguage) {
+    constructor(container, onLogOut, onSearch, onDetail, literals) {
         super(container)
 
         // ARGUMENT 1 FUNCION LOOGOUT LLAMADA A LOGICA 1
@@ -29,7 +29,6 @@ class Home extends Component {
 
         //ARGUMENT 4 y 5 FIJAR IDIOMA
         this.__literals__ = literals
-        this.language = defaultLanguage
     }
 }
 
@@ -71,9 +70,9 @@ Object.defineProperty(Home.prototype, "detail", {
 
 Object.defineProperty(Home.prototype, 'language', {
     set: function (language) {
-        var literals = this.__literals__[language]
-
-        this.container.children[0].innerText = literals.title
+        const literals = this.__literals__[language]        
+        this.container.children[0].innerText = literals.title + ' ' + this.name + '!'
         this.container.children[1].innerText = literals.logOut
     }
 })
+

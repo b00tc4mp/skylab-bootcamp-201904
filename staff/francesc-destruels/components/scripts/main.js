@@ -57,9 +57,12 @@ registerOk.visible = false
 const login = new Login(forms[1], function (email, password) {
     try {
         logic.login(email, password)
-        // var user = logic.retrieveUser(email);
-        // home.name = user.name;
+
+        let you = logic.retrieveUser(email);
+        console.log(you)
+        home.name = you.name
         login.visible = false
+        home.language = languageSelected
         home.visible = true
     } catch (error) {
         login.error = i18n.errors[languageSelected][error.code]
@@ -100,6 +103,6 @@ const home = new Home(main, function () {
                 description: ducks.description,
         }
     })
-}, i18n.home, languageSelected)
+}, i18n.home)
 
 home.visible = false

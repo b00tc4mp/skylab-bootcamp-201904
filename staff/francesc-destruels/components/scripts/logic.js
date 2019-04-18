@@ -85,25 +85,25 @@ var logic = {
         this.__userEmail__ = ""
     },
 
-    // retrieveUser: function (email) {
-    //     if (email === undefined) throw TypeError(`not a valid email`);
+    retrieveUser(email) {
+        if (email === undefined) throw TypeError(`not a valid email`);
 
-    //     var user = users.find(function (user) { return user.email === email });
+        let user = users.find(function (user) { return user.email === email });
 
-    //     if (!user) {
-    //         var error = Error('user not found with email ' + email)
+        if (!user) {
+            let error = Error('user not found with email ' + email)
 
-    //         error.code = 2;
+            error.code = 2;
 
-    //         throw error;
-    //     }
+            throw error;
+        }
 
-    //     return {
-    //         name: user.name,
-    //         surname: user.surname,
-    //         email: user.email
-    //     };
-    // },
+        return {
+            name: user.name,
+            surname: user.surname,
+            email: user.email
+        };
+    },
 
     searchDucks(quary, callback) {
         let error
