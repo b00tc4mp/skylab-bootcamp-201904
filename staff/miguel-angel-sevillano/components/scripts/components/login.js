@@ -9,39 +9,23 @@
  * @param {*} defaultLanguage 
  * @param {Function} onLanguageChange The callback invoked on language change.
  */
-function Login(form, onLogin, literals, defaultLanguage, onLanguageChange) {
-    Component.call(this, form);
 
-    this.__literals__ = literals;
-    this.__onLanguageChange__ = onLanguageChange;
 
-    var feedback = new Feedback(this.container.children[3]);
-    feedback.visible = false;
-    this.__feedback__ = feedback;
-
-    this.language = defaultLanguage;
-
-    this.onLogin = onLogin;
-}
-
-Login.prototype = Object.create(Component.prototype);
-Login.prototype.constructor = Login;
-
-Object.defineProperty(Login.prototype, 'onLogin', {
-    set: function (callback) {
-        this.container.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            var email = this.email.value;
-            var password = this.password.value;
-
-            callback(email, password);
-        });
+class Login extends Component{
+    constructor(form ,onLogin,literals,defaultLanguage,onLanguageChange){
+        super(form)
+        this.__literals__ = literals;
+        this.__onLanguageChange__=onLanguageChange;
+        this.container =form;
+        
+        this.onLogin=onLogin;
+        var feedback = new Feedback(this.container.children[3]);
+        feedback.visible = false;
+        this.__feedback__ = feedback;
+        this.language=defaultLanguage;
     }
-});
 
-Object.defineProperty(Login.prototype, 'language', {
-    set: function (language) {
+    set language(language){
         var literals = this.__literals__[language];
 
         this.container.children[0].innerText = literals.title;
@@ -52,12 +36,31 @@ Object.defineProperty(Login.prototype, 'language', {
         this.container.children[2].innerText = literals.title;
 
         if (this.__onLanguageChange__) this.__onLanguageChange__(language);
-    }
-});
 
-Object.defineProperty(Login.prototype, 'error', {
-    set: function(error) {
+    }
+
+    set onLogin(callback){
+        this.container.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var email = this.email.value;
+            var password = this.password.value; //setter activated after click login
+
+            callback(email, password);
+        });
+        
+    }
+    set error(error){
         this.__feedback__.message = error;
         this.__feedback__.visible = true;
     }
-});
+    
+}
+
+
+
+
+
+
+
+

@@ -5,19 +5,22 @@
  * @param {HTMLElement} select 
  * @param {Function} callback 
  */
-function LanguageSelector(select, callback) {
-    Component.call(this, select);
 
-    this.onChange = callback;
-}
 
-LanguageSelector.prototype = Object.create(Component.prototype);
-LanguageSelector.prototype.constructor = LanguageSelector;
+class LanguageSelector extends Component{
 
-Object.defineProperty(LanguageSelector.prototype, 'onChange', {
-    set: function (callback) {
-        this.container.addEventListener('change', function (event) {
-            callback(event.target.value);
-        });
+    constructor(select, callback) {
+        super(select) // extends with component to been able to be visible or not
+        this.select = select;
+        this.onChange= callback;
     }
-});
+    
+    set onChange(result){
+
+        this.select.addEventListener('change',function(event){
+            
+            result(event.target.value) // cat , en ,es etc from language button
+        })
+    }
+
+}
