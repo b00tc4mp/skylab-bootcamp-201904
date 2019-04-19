@@ -30,10 +30,12 @@ const landing = new Landing(sections[0], i18n.landing, function () {
 // SIGN UP SCRIPT CREATOR COMPONENT NAME SIGN-UP
 const register = new Register(forms[0], function (name, surname, email, password, confirmPassword) {
     try {
-        logic.register(name, surname, email, password, confirmPassword)
-
-        register.visible = false
-        registerOk.visible = true
+        logic.register(name, surname, email, password, confirmPassword, function(error){
+            if (error) return alert(error.message)
+            
+            register.visible = false
+            registerOk.visible = true
+        })
     } catch (error) {
         register.error = i18n.errors[languageSelected][error.code]
     }

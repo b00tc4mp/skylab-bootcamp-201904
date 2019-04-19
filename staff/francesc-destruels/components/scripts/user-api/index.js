@@ -5,73 +5,69 @@ const userApi = {
 
     __url__ : "https://skylabcoders.herokuapp.com/api",
 
-    __call__(path, method, body, callback){
-        const xhr = new XMLHttpRequest()
-        xhr.open(method, `${__url__}${path}`)
+    __call__(path, method, callback, body) {
+        // TODO validate inputs
 
-        if(method == 'GET') {
-            if (body !== undefined || body === ""){
+        const xhr = new XMLHttpRequest
 
-            } else {
-                xhr.send() 
-            }    
+        xhr.open(method, `${this.__url__}/${path}`)
+
+        xhr.addEventListener('load', function () {
+            callback(JSON.parse(this.responseText))
+        })
+
+        if (method === 'GET') {
+            if (body) throw Error('cannot send body in GET request')
+            else xhr.send()
         } else {
-            if (body === undefined){
-
-            } else {
-                            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-            xhr.send(JSON.stringify(body));
-            }
+            if (body) {
+                xhr.setRequestHeader('content-type', 'application/json')
+                xhr.send(JSON.stringify(body))
+            } else xhr.send()
         }
     },
 
-    registerUser(name, surname, email, password, callback){
-        let error
+    create(name, surname, username, password, callback){
 
-        if (name === undefined || name === "") {
-            error = TypeError(name + ' is not a valid name');
-            error.code = 2
+        validate.arguments([
+            {name: 'name', value: name, type: 'string', notEmpty: true,  },
+            {name: 'surname', value: surname, type: 'string', notEmpty: true, },
+            {name: 'username', value: username, type: 'string', notEmpty: true,},
+            {name: 'password', value: password, type: 'string', notEmpty: true,},
+            {name: 'callback', value: callback, type: 'function', notEmpty: true, }
+        ])
 
-            throw error
-        };
+        validate.email(username)
 
-        if (surname === undefined | surname === ""){
-            error = TypeError(surname + ' is not a valid surname');
-            error.code = 3
-
-            throw error
-        };
-
-        if (email === undefined){
-            error = TypeError( email + ' is not a valid e-mail');
-            error.code = 4
-
-            throw error
-        };
-
-        if (password === undefined && password.length < 5){
-            error = TypeError('Password has to be longer than 5 characters');
-            error.code = 5
-
-            throw error
-        };
-
-        this.__call__('/user', 'POST', {name, surname, username, password}, callback)
+        this.__call__('/user', 'POST', callback, { name, surname, username, password } )
     },
 
-    authUser(email, password){
+    authUser(username, password, callback){
 
+        validate.arguments([
+            {name: 'username', value: username, type: 'string', notEmpty: true,},
+            {name: 'password', value: password, type: 'string', notEmpty: true,},
+            {name: 'callback', value: callback, type: 'function', notEmpty: true, }
+        ])
+
+        this.__call__('/user', 'POST', callback, {username, password })
     },
 
-    retrieveUser(token, userID){
+    retrieveUser(token, userID, callback){
+
+        validate.arguments([
+            {name: 'token', value: token, type: 'string', notEmpty: true,},
+            {name: 'userID', value: userID, type: 'string', notEmpty: true,},
+            {name: 'callback', value: callback, type: 'function', notEmpty: true, }
+        ])
 
     },
 
-    updateUser(token, userID, dataToModify){
+    // updateUser(token, userID, dataToModify, callback){
 
-    },
+    // },
 
-    deleteUser(token, userID, email, password){
+    // deleteUser(token, userID, email, password, callback){
 
-    }
+    // }
 }

@@ -38,7 +38,12 @@ var logic = {
             throw error
         };
 
-        userApi.registerUser(name, surname, email, password)
+        validate.email(email)
+
+        userApi.create(name, surname, email, password, function(reponse){
+            if (Response.status === "Ok") callback()
+            else callback(Error(response.message))
+        })
     },
 
     login(email, password) {
