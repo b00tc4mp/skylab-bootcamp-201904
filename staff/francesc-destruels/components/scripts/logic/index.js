@@ -38,21 +38,7 @@ var logic = {
             throw error
         };
 
-        const user = users.find(function (user) { return user.email === email }); 
-
-        if (user !== undefined){
-            error = TypeError('User already exist')
-            error.code = 7
-
-            throw error
-        }
-
-        users.push({
-            name,
-            surname,
-            email,
-            password,
-        });
+        userApi.registerUser(name, surname, email, password)
     },
 
     login(email, password) {
@@ -124,15 +110,7 @@ var logic = {
             throw error
         };
 
-        const xhr = new XMLHttpRequest()
-
-        xhr.open('GET', 'https://duckling-api.herokuapp.com/api/search?q=' + quary)
-
-        xhr.addEventListener('load', function () {
-            callback(JSON.parse(this.responseText))
-        })
-
-        xhr.send()
+        duckApi.searchDucks(query, callback)
 
     },
 
@@ -155,15 +133,7 @@ var logic = {
             throw error
         }
 
-        const xhr = new XMLHttpRequest
-
-        xhr.open('GET', 'https://duckling-api.herokuapp.com/api/ducks/' + id)
-
-        xhr.addEventListener('load', function() {
-            callback(JSON.parse(this.responseText));
-        })
-
-        xhr.send()
+        duckApi.retrieveDuck(id, callback)
     }
 
 }
