@@ -28,18 +28,13 @@ const landing = new Landing(sections[0], i18n.landing, function () {
 })
 
 // SIGN UP SCRIPT CREATOR COMPONENT NAME SIGN-UP
-const register = new Register(forms[0], function (name, surname, email, password, confirmPassword) {
-    try {
-        logic.register(name, surname, email, password, confirmPassword, function(error){
-            if (error) return alert(error.message)
-            
-            register.visible = false
-            registerOk.visible = true
-        })
-    } catch (error) {
-        register.error = i18n.errors[languageSelected][error.code]
-    }
+const register = new Register(forms[0], function (name, surname, email, password) {
+    logic.registerUser(name, surname, email, password, function (error) {
+        if (error) return alert(error.message)
 
+        register.visible = false
+        registerOk.visible = true
+    })
 }, i18n.register, languageSelected, function () {
     this.__feedback__.visible = false
 })
@@ -58,13 +53,22 @@ registerOk.visible = false
 // SIGN IN SCRIPT CREATOR COMPONENT NAME SIGN-IN
 const login = new Login(forms[1], function (email, password) {
     try {
-        logic.login(email, password)
+        logic.login(email, password, function (answer) {
 
-        let you = logic.retrieveUser(email)
-        home.name = you.name
-        login.visible = false
-        home.language = languageSelected
-        home.visible = true
+            if (answer.error) alert(answer.error.message)
+
+            login.__userID___ = answer.id
+            login.__token___ = answer.token
+
+            logic.retrieveUser(login.__token___, login.__userID___, function (answer) {
+                if (answer.error) alert(answer.error.message)
+
+                home.name = answer.name
+                login.visible = false
+                home.language = languageSelected
+                home.visible = true
+            })
+        })
     } catch (error) {
         login.error = i18n.errors[languageSelected][error.code]
     }
@@ -98,10 +102,10 @@ const home = new Home(main, function () {
     logic.retrieveDucklingDetail(id, function (ducks) {
 
         home.detail = {
-                title: ducks.title,
-                image: ducks.imageUrl,
-                price: ducks.price,
-                description: ducks.description,
+            title: ducks.title,
+            image: ducks.imageUrl,
+            price: ducks.price,
+            description: ducks.description,
         }
     })
 }, i18n.home)

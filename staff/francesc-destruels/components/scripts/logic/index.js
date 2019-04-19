@@ -1,6 +1,6 @@
 
 var logic = {
-    register(name, surname, email, password, confirmPassword) {
+    registerUser(name, surname, email, password, confirmPassword) {
         let error
 
         if (name === undefined || name === "") {
@@ -40,7 +40,7 @@ var logic = {
 
         validate.email(email)
 
-        userApi.create(name, surname, email, password, function(reponse){
+        userApi.create(name, surname, email, password, function(response){
             if (Response.status === "Ok") callback()
             else callback(Error(response.message))
         })

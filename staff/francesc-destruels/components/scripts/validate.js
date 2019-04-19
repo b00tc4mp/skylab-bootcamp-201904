@@ -1,8 +1,13 @@
+'use strict'
+
 const validate = {
     arguments(args){
         args.forEach(({name, value, type, notEmpty, optional}) => {
-            if (typeof value !== type) throw TypeError(`${value} is not a ${type}`)  
-            if (notEmpty) if (type === 'string') if (!value.trim().length) throw Error(`${name} can not be empty`) 
+            if (value != undefined) {
+                if (typeof value !== type) throw TypeError(`${name} ${value} is not a ${type}`)
+    
+                if (notEmpty) if (type === 'string') if (!value.trim().length) throw new ValueError(`${name} is empty`)
+            } else if (!optional) throw new RequirementError(`${name} is not optional`)
         });
     },
 

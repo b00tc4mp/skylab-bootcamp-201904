@@ -5,7 +5,7 @@ const userApi = {
 
     __url__ : "https://skylabcoders.herokuapp.com/api",
 
-    __call__(path, method, callback, body) {
+    __call__(path, method, callback, body, token) {
         // TODO validate inputs
 
         const xhr = new XMLHttpRequest
@@ -16,9 +16,14 @@ const userApi = {
             callback(JSON.parse(this.responseText))
         })
 
+        if (token){
+            xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+        }
+
         if (method === 'GET') {
             if (body) throw Error('cannot send body in GET request')
             else xhr.send()
+
         } else {
             if (body) {
                 xhr.setRequestHeader('content-type', 'application/json')
@@ -30,11 +35,11 @@ const userApi = {
     create(name, surname, username, password, callback){
 
         validate.arguments([
-            {name: 'name', value: name, type: 'string', notEmpty: true,  },
-            {name: 'surname', value: surname, type: 'string', notEmpty: true, },
-            {name: 'username', value: username, type: 'string', notEmpty: true,},
-            {name: 'password', value: password, type: 'string', notEmpty: true,},
-            {name: 'callback', value: callback, type: 'function', notEmpty: true, }
+            {name: 'name', value: name, type: 'string', notEmpty: true},
+            {name: 'surname', value: surname, type: 'string', notEmpty: true},
+            {name: 'username', value: username, type: 'string', notEmpty: true},
+            {name: 'password', value: password, type: 'string', notEmpty: true},
+            {name: 'callback', value: callback, type: 'function', notEmpty: true}
         ])
 
         validate.email(username)
@@ -47,10 +52,10 @@ const userApi = {
         validate.arguments([
             {name: 'username', value: username, type: 'string', notEmpty: true,},
             {name: 'password', value: password, type: 'string', notEmpty: true,},
-            {name: 'callback', value: callback, type: 'function', notEmpty: true, }
+            {name: 'callback', value: callback, type: 'function', notEmpty: true}
         ])
 
-        this.__call__('/user', 'POST', callback, {username, password })
+        this.__call__('/auth', 'POST', callback, {username, password })
     },
 
     retrieveUser(token, userID, callback){
@@ -61,6 +66,7 @@ const userApi = {
             {name: 'callback', value: callback, type: 'function', notEmpty: true, }
         ])
 
+        this.__call__('/user/' + userID, 'GET', callback, undefined, token)
     },
 
     // updateUser(token, userID, dataToModify, callback){
