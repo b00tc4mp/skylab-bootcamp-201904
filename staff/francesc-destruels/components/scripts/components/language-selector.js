@@ -1,17 +1,16 @@
 'use strict';
 
 class LanguageSelector extends Component {
-    constructor(select, callback){
+    constructor(select, callback) {
         super(select)
 
         this.onChange = callback
     }
+
+    set onChange(callback) {
+        this.container.addEventListener('change', event => {
+            callback(event.target.value)
+        })
+    }
 }
 
-Object.defineProperty(LanguageSelector.prototype, "onChange", {
-    set: function (callback) {
-        this.container.addEventListener('change', function (event) {
-            callback(event.target.value)
-        });
-    }
-});

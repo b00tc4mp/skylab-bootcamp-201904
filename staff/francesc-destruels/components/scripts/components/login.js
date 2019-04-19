@@ -15,10 +15,8 @@ class Login extends Component {
 
         this.onLogin = onLogin
     }
-}
 
-Object.defineProperty(Login.prototype, "onLogin", {
-    set: function (callback) {
+    set onLogin(callback) {
         this.container.addEventListener('submit', function (event) {
             event.preventDefault()
 
@@ -28,10 +26,8 @@ Object.defineProperty(Login.prototype, "onLogin", {
             callback(email, password)
         });
     }
-})
 
-Object.defineProperty(Login.prototype, 'language', {
-    set: function (language) {
+    set language(language) {
         var literals = this.__literals__[language]
 
         this.container.children[0].innerText = literals.title
@@ -43,11 +39,9 @@ Object.defineProperty(Login.prototype, 'language', {
 
         if (this.__onLanguageChange__) this.__onLanguageChange__(language)
     }
-})
 
-Object.defineProperty(Login.prototype, 'error', {
-    set: function (error) {
+    set error(error) {
         this.__feedback__.message = error
         this.__feedback__.visible = true
     }
-})
+}

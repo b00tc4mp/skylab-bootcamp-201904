@@ -6,13 +6,10 @@ class Results extends Component {
 
         this.onDetail = onDetail
     }
-}
 
-//UN SETTER PARA CUANDO CAMBIA ITEMS; LO CONVIERTE EN ELEMENTOS HTML 
-Object.defineProperty(Results.prototype, "items", {
-    set: function(items){
-        while (this.container.firstElementChild) this.container.removeChild(this.container.firstElementChild)
-        items.forEach(function(item){
+    set items(items){
+        this.container.innerHTML = '';
+        items.forEach(item => {
 
             var li = document.createElement('li')
 
@@ -30,10 +27,9 @@ Object.defineProperty(Results.prototype, "items", {
 
             this.container.appendChild(li)         
             
-            li.addEventListener('click', function () {
-                // this.visible = false
+            li.addEventListener('click', () => {
                 this.onDetail(item.id)
-            }.bind(this))
-        }.bind(this))
+            })
+        })
     }
-})
+}

@@ -30,49 +30,36 @@ class Home extends Component {
         //ARGUMENT 4 y 5 FIJAR IDIOMA
         this.__literals__ = literals
     }
-}
 
-// SETTER PARA CUANDO SE ACTIVA EL CLICK EN EL BOTON DE LOGOUT
-Object.defineProperty(Home.prototype, "onLogOut", {
-    set: function (callback) {
-        this.container.children[1].addEventListener('click', function (event) {
+    // SETTER PARA CUANDO SE ACTIVA EL CLICK EN EL BOTON DE LOGOUT
+    set onLogOut(callback) {
+        this.container.children[1].addEventListener('click', function (event){
             event.preventDefault()
 
             callback()
         })
     }
-})
 
-// SETTER PARA CUANDO RESULTS SE MODIFICA DESPIERTA EL UL;
-Object.defineProperty(Home.prototype, "results", {
-    set: function (results) {
-
+    // SETTER PARA CUANDO RESULTS SE MODIFICA DESPIERTA EL UL;
+    set results(results) {
         this.__results__.items = results
         this.__results__.visible = true
         this.__detail__.visible = false
-
     }
-})
 
-//SETTER PARA DESPERTAR A ARTICLE Y DORMIR RESULTS
-
-Object.defineProperty(Home.prototype, "detail", {
-    set: function (detail) {
-
+    //SETTER PARA DESPERTAR A ARTICLE Y DORMIR RESULTS
+    set detail(detail) {
         this.__detail__.items = detail
         this.__results__.visible = false
         this.__detail__.visible = true
-
     }
-})
 
-// SETTER PARA EL IDIOMA
-
-Object.defineProperty(Home.prototype, 'language', {
-    set: function (language) {
-        const literals = this.__literals__[language]        
+    //SETTER PARA DESPERTAR A ARTICLE Y DORMIR RESULTS
+    set language(language) {
+        const literals = this.__literals__[language]
         this.container.children[0].innerText = literals.title + ' ' + this.name + '!'
         this.container.children[1].innerText = literals.logOut
+        this.container.children[2].children[1].innerText = literals.search
     }
-})
 
+}

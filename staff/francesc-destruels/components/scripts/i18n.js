@@ -137,18 +137,22 @@ const i18n = {
         en: {
             title: 'Welcome to Hell',
             logOut: 'Log Out',
+            search: 'Search',
         },
         es: {
             title: 'Bienvenido al Infierno',
             logOut: 'Salir',
+            search: 'Busqueda'
         },
         ca: {
             title: 'Benvingut al infern',
             logOut: 'Sortir',
+            search: 'Cercà',
         },
         ga: {
             title: 'Bienvenuto al inferno',
             logOut: 'Pa fuera',
+            search: 'Andeandá',
         },
     },
 };

@@ -5,7 +5,7 @@ class RegisterOk extends Component {
         super(section)
         const link = this.container.children[0]
 
-        link.addEventListener('click', function (event) {
+        link.addEventListener('click', event => {
             event.preventDefault()
 
             onNavigateToLogin()

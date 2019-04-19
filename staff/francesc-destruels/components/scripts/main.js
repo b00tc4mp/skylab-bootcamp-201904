@@ -58,8 +58,7 @@ const login = new Login(forms[1], function (email, password) {
     try {
         logic.login(email, password)
 
-        let you = logic.retrieveUser(email);
-        console.log(you)
+        let you = logic.retrieveUser(email)
         home.name = you.name
         login.visible = false
         home.language = languageSelected

@@ -4,10 +4,8 @@ class Feedback extends Component {
     constructor(container){
         super(container)
     }
-}
 
-Object.defineProperty(Feedback.prototype, 'message', {
-    set: function(message){
-        this.container.innerText = message
+    set message(message){
+          this.container.innerText = message
     }
-})
+}

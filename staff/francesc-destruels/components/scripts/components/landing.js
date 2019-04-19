@@ -8,22 +8,20 @@ class Landing extends Component {
 
         const links = this.container.children
 
-        links[0].addEventListener('click', function (event) {
+        links[0].addEventListener('click', event => {
             event.preventDefault()
 
             onNavigateToRegister()
         })
 
-        links[2].addEventListener('click', function (event) {
+        links[2].addEventListener('click', event => {
             event.preventDefault()
 
             onNavigateToLogin()
         })
     }
-}
 
-Object.defineProperty(Landing.prototype, 'language', {
-    set: function (language) {
+    set language(language) {
         var literals = this.__literals__[language]
 
         var children = this.container.children
@@ -31,4 +29,4 @@ Object.defineProperty(Landing.prototype, 'language', {
         children[1].innerText = literals.or
         children[2].innerText = literals.login
     }
-})
+}

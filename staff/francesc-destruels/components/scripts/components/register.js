@@ -16,10 +16,8 @@ class Register extends Component {
 
         this.onSignUp = onSignUp
     }
-}
 
-Object.defineProperty(Register.prototype, "onSignUp", {
-    set: function (callback) {
+    set onSignUp(callback) {
         this.container.addEventListener('submit', function (event) {
             event.preventDefault()
 
@@ -32,10 +30,8 @@ Object.defineProperty(Register.prototype, "onSignUp", {
             callback(name, surname, email, password, confirmPassword)
         })
     }
-})
 
-Object.defineProperty(Register.prototype, 'language', {
-    set: function (language) {
+    set language(language) {
         const literals = this.__literals__[language]
 
         this.container.children[0].innerText = literals.title
@@ -49,11 +45,9 @@ Object.defineProperty(Register.prototype, 'language', {
 
         if (this.__onLanguageChange__) this.__onLanguageChange__(language)
     }
-});
 
-Object.defineProperty(Register.prototype, 'error', {
-    set: function (error) {
+    set error(error) {
         this.__feedback__.message = error
         this.__feedback__.visible = true
     }
-})
+}
