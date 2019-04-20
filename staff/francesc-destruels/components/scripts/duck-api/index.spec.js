@@ -10,10 +10,24 @@ describe('duck api', () => {
 
                 done()
             })
-
-            // TODO fail cases
         })
-    })
 
-    // TODO test retrieve duck
+        it('should fail on undefined query', () => {
+            expect(() => duckApi.searchDucks(undefined, () => { })).toThrowError(RequirementError, `query is not optional`)
+        })
+
+    })
+})
+
+describe('retrive ducks', () => {
+    it('should succeed on correct query', (done) => {
+        duckApi.retrieveDuck('5c3853aebd1bde8520e66e11', (ducks) => {
+            expect(ducks).toBeDefined()
+            expect(ducks instanceof Object).toBeTruthy()
+
+            done()
+        })
+
+        // TODO fail cases
+    })
 })

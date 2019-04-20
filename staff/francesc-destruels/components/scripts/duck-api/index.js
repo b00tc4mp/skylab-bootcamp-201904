@@ -34,45 +34,20 @@ const duckApi = {
     },
 
     searchDucks(query, callback) {
-        let error
 
-        if (quary === undefined){
-            error = TypeError('Search can not be undefined')
-
-            error.code = 8
-            
-            throw error 
-        }
-
-        if (callback instanceof Function === false){
-            error = TypeError('Callback is not a function')
-
-            error.code = 9
-            
-            throw error
-        }
+        validate.arguments([
+            {name: 'query', value: query, type: 'string', notEmpty: true,},
+            {name: 'callback', value: callback, type: 'function', notEmpty: true, }
+        ])
 
         this.__call__(`search?q=${query}`, callback)
     },
 
     retrieveDuck(id, callback) {
-        let error
-
-        if (id === undefined){
-            error = TypeError('Not a valid ID')
-
-            error.code = 8
-            
-            throw error
-        }
-        
-        if (callback instanceof Function === false){
-            error = TypeError('Callback is not a function')
-
-            error.code = 9
-            
-            throw error
-        }
+        validate.arguments([
+            {name: 'id', value: id, type: 'string', notEmpty: true,},
+            {name: 'callback', value: callback, type: 'function', notEmpty: true, }
+        ])
 
         this.__call__(`ducks/${id}`, callback)
     }

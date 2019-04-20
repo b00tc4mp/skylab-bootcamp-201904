@@ -1,35 +1,17 @@
 
 var logic = {
-    registerUser(name, surname, email, password, confirmPassword) {
+
+    registerUser(name, surname, email, password, confirmPassword, callback ) {
         let error
 
-        if (name === undefined || name === "") {
-            error = TypeError(name + ' is not a valid name');
-            error.code = 2
-
-            throw error
-        };
-
-        if (surname === undefined | surname === ""){
-            error = TypeError(surname + ' is not a valid surname');
-            error.code = 3
-
-            throw error
-        };
-
-        if (email === undefined || email.includes('@') === false){
-            error = TypeError( email + ' is not a valid e-mail');
-            error.code = 4
-
-            throw error
-        };
-
-        if (password.length < 5){
-            error = TypeError('Password has to be longer than 5 characters');
-            error.code = 5
-
-            throw error
-        };
+        validate.arguments([
+            {name: 'name', value: name, type: 'string', notEmpty: true},
+            {name: 'surname', value: surname, type: 'string', notEmpty: true},
+            {name: 'email', value: email, type: 'string', notEmpty: true},
+            {name: 'password', value: password, type: 'string', notEmpty: true},
+            {value: confirmPassword, type: 'string', notEmpty: true},
+            {value: callback, type: 'function', notEmpty: true}
+        ])
 
         if (password !== confirmPassword) {
             error = TypeError('Passwords do not match')
@@ -40,110 +22,83 @@ var logic = {
 
         validate.email(email)
 
-        userApi.create(name, surname, email, password, function(response){
-            if (Response.status === "Ok") callback()
-            else callback(Error(response.message))
+        userApi.create(name, surname, email, password, function(response) {
+            if (response.status === 'OK') callback()
+            else callback(Error(response.error))
         })
     },
 
-    login(email, password) {
-        let error
-        const user = users.find(function (user) { return user.email === email })
+    login(email, password, callback) {
 
-        if (!user) {
-            error = Error('wrong credentials')
+        validate.email(email)
 
-            error.code = 1
+        validate.arguments([
+            {name: 'password', value: password, type: 'string', notEmpty: true}
+        ])
 
-            throw error
-        }
-        
-        if (user.password === password) {
-            this.__userEmail__ = email
-            this.__accessTime__ = Date.now()
-        } else {
-            error = Error('wrong credentials')
-
-            error.code = 1
-
-            throw error
-        }
+        userApi.authUser(email, password, function(response) {
+            if (response.status === 'OK') callback(response)
+            else callback(Error(response.error))
+        })
     },
 
+    retrieveUser(callback) {
+
+        userApi.retrieveUser(__token__, __id__, function(response) {
+            if (response.status === 'OK') callback(response)
+            else callback(Error(response.error))
+        })
+    },    
+    
     logOut() {
         
-        this.__accessTime__ = ""
-        this.__userEmail__ = ""
+        this.__id__ = ""
+        this.__token__ = ""
     },
 
-    retrieveUser(email) {
-        if (email === undefined) throw TypeError(`not a valid email`);
+    // searchDucks(quary, callback) {
+    //     let error
 
-        let user = users.find(function (user) { return user.email === email });
+    //     if (quary === undefined){
+    //         error = TypeError('Search can not be undefined')
 
-        if (!user) {
-            let error = Error('user not found with email ' + email)
-
-            error.code = 2;
-
-            throw error;
-        }
-
-        return {
-            name: user.name,
-            surname: user.surname,
-            email: user.email
-        };
-    },
-
-    searchDucks(quary, callback) {
-        let error
-
-        if (quary === undefined){
-            error = TypeError('Search can not be undefined')
-
-            error.code = 8
+    //         error.code = 8
             
-            throw error 
-        }
+    //         throw error 
+    //     }
 
-        if (callback instanceof Function === false){
-            error = TypeError('Callback is not a function')
+    //     if (callback instanceof Function === false){
+    //         error = TypeError('Callback is not a function')
 
-            error.code = 9
+    //         error.code = 9
             
-            throw error
-        };
+    //         throw error
+    //     };
 
-        duckApi.searchDucks(query, callback)
+    //     duckApi.searchDucks(query, callback)
 
-    },
+    // },
 
-    retrieveDucklingDetail(id, callback) {
-        let error
+    // retrieveDucklingDetail(id, callback) {
+    //     let error
 
-        if (id === undefined){
-            error = TypeError('Not a valid ID')
+    //     if (id === undefined){
+    //         error = TypeError('Not a valid ID')
 
-            error.code = 8
+    //         error.code = 8
             
-            throw error
-        }
+    //         throw error
+    //     }
         
-        if (callback instanceof Function === false){
-            error = TypeError('Callback is not a function')
+    //     if (callback instanceof Function === false){
+    //         error = TypeError('Callback is not a function')
 
-            error.code = 9
+    //         error.code = 9
             
-            throw error
-        }
+    //         throw error
+    //     }
 
-        duckApi.retrieveDuck(id, callback)
-    }
+    //     duckApi.retrieveDuck(id, callback)
+    // }
 
 }
-
-
-
-
-

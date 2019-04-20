@@ -1,12 +1,17 @@
 'use strict'
 
 const userApi = {
-    // TODO
+    __url__: "https://skylabcoders.herokuapp.com/api",
 
-    __url__ : "https://skylabcoders.herokuapp.com/api",
+    __call__(path, method,  body, callback, token) {
 
-    __call__(path, method, callback, body, token) {
-        // TODO validate inputs
+        validate.arguments([
+            { name: 'path', value: path, type: 'string', notEmpty: true },
+            { name: 'method', value: method, type: 'string', notEmpty: true },
+            { name: 'token', value: token, type: 'string', notEmpty: true, optional: true  },
+            { name: 'body', value: body, type: 'object', notEmpty: true, optional: true },
+            { value: callback, type: 'function' }
+        ])
 
         const xhr = new XMLHttpRequest
 
@@ -42,9 +47,7 @@ const userApi = {
             {name: 'callback', value: callback, type: 'function', notEmpty: true}
         ])
 
-        validate.email(username)
-
-        this.__call__('/user', 'POST', callback, { name, surname, username, password } )
+        this.__call__('/user', 'POST',  { name, surname, username, password }, callback)
     },
 
     authUser(username, password, callback){
@@ -55,7 +58,7 @@ const userApi = {
             {name: 'callback', value: callback, type: 'function', notEmpty: true}
         ])
 
-        this.__call__('/auth', 'POST', callback, {username, password })
+        this.__call__('/auth', 'POST', { username, password }, callback)
     },
 
     retrieveUser(token, userID, callback){
@@ -66,12 +69,21 @@ const userApi = {
             {name: 'callback', value: callback, type: 'function', notEmpty: true, }
         ])
 
-        this.__call__('/user/' + userID, 'GET', callback, undefined, token)
+        this.__call__('/user/' + userID, 'GET', undefined, callback, token )
     },
 
-    // updateUser(token, userID, dataToModify, callback){
+    updateUser(token, userID, dataToModify, callback){
 
-    // },
+        validate.arguments([
+            {name: 'token', value: token, type: 'string', notEmpty: true,},
+            {name: 'userID', value: userID, type: 'string', notEmpty: true,},
+            {name: 'dataToModify', value: dataToModify, type: 'string', notEmpty: true,},
+            {name: 'callback', value: callback, type: 'function', notEmpty: true, }
+        ])
+
+        this.__call__('/user/' + userID, 'PUT',  dataToModify, callback, token)
+
+    },
 
     // deleteUser(token, userID, email, password, callback){
 

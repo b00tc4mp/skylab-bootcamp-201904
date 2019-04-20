@@ -235,4 +235,29 @@ describe('user api', () => {
             })
         })
     })
+
+    describe('retrieve error', () => {
+        beforeEach(done => userApi.create(name, surname, username, password, done))
+        true && it('should succeed on correct user data', done => {
+
+            userApi.authUser(username, password, function (response) {
+                expect(response).toBeDefined()
+
+                let { data: { id, token } } = response
+
+                token = "sadadasdasd"
+
+                userApi.retrieveUser(token, id, function (response) {
+
+                    expect(response).toBeDefined()
+                    const { status, error } = response
+
+                    expect(status).toBe('KO')
+                    expect(error).toBe(`invalid token`)
+
+                    done()
+                })
+            })
+        })
+    })
 })
