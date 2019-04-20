@@ -35,7 +35,6 @@ class Home extends Component {
     set onLogOut(callback) {
         this.container.children[1].addEventListener('click', function (event){
             event.preventDefault()
-
             callback()
         })
     }
@@ -61,5 +60,4 @@ class Home extends Component {
         this.container.children[1].innerText = literals.logOut
         this.container.children[2].children[1].innerText = literals.search
     }
-
 }

@@ -36,7 +36,7 @@ const duckApi = {
     searchDucks(query, callback) {
 
         validate.arguments([
-            {name: 'query', value: query, type: 'string', notEmpty: true,},
+            {name: 'query', value: query, type: 'string', optional: true},
             {name: 'callback', value: callback, type: 'function', notEmpty: true, }
         ])
 

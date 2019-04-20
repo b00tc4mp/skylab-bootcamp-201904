@@ -11,11 +11,6 @@ describe('duck api', () => {
                 done()
             })
         })
-
-        it('should fail on undefined query', () => {
-            expect(() => duckApi.searchDucks(undefined, () => { })).toThrowError(RequirementError, `query is not optional`)
-        })
-
     })
 })
 

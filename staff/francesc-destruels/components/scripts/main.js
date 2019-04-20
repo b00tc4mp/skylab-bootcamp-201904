@@ -28,15 +28,19 @@ const landing = new Landing(sections[0], i18n.landing, function () {
 })
 
 // SIGN UP SCRIPT CREATOR COMPONENT NAME SIGN-UP
-const register = new Register(forms[0], function (name, surname, email, password) {
-    logic.registerUser(name, surname, email, password, function (error) {
-        if (error) return alert(error.message)
+const register = new Register(forms[0], function (name, surname, email, password, confirmPassword) {
+    try {
+        logic.registerUser(name, surname, email, password, confirmPassword, function (error) {
+            if (error) return register.error = i18n.errors[languageSelected][error.code]
 
-        register.visible = false
-        registerOk.visible = true
-    })
+            register.visible = false
+            registerOk.visible = true
+        })
+    } catch (error) {
+        register.error = i18n.errors[languageSelected][error.code]
+    }
 }, i18n.register, languageSelected, function () {
-    this.__feedback__.visible = false
+    this.__feedback__.visible = false;
 })
 
 register.visible = false;
@@ -53,17 +57,22 @@ registerOk.visible = false
 // SIGN IN SCRIPT CREATOR COMPONENT NAME SIGN-IN
 const login = new Login(forms[1], function (email, password) {
     try {
-        logic.login(email, password, function (answer) {
+        logic.login(email, password, (answer) => {
+            if (answer.status === 'KO') return login.error = i18n.errors[languageSelected][1]
 
-            if (answer.error) alert(answer.error.message)
+            const { data: { id, token } } = answer
 
-            login.__userID___ = answer.id
-            login.__token___ = answer.token
+            let __token = token;
+            let __id = id;
 
-            logic.retrieveUser(login.__token___, login.__userID___, function (answer) {
+            logic.retrieveUser(__token, __id, (answer) => {
                 if (answer.error) alert(answer.error.message)
 
-                home.name = answer.name
+                const { data: { name } } = answer
+
+                let __name = name
+
+                home.name = __name.toUpperCase()
                 login.visible = false
                 home.language = languageSelected
                 home.visible = true
@@ -72,9 +81,8 @@ const login = new Login(forms[1], function (email, password) {
     } catch (error) {
         login.error = i18n.errors[languageSelected][error.code]
     }
-
 }, i18n.login, languageSelected, function () {
-    this.__feedback__.visible = false
+    this.__feedback__.visible = false;
 })
 
 login.visible = false

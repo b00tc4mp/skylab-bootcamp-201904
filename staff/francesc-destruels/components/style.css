@@ -13,6 +13,11 @@ form {
   background-color: lightblue;
   border: 1px solid black; }
 
+ul {
+  max-width: 50%;
+  max-height: 20%;
+}
+
 button {
   width: 25%;
   align-self: center; }

@@ -234,7 +234,7 @@ describe('logic', () => {
         })
     })
 
-    describe('authenticate', () => {
+    describe('authenticate fail', () => {
         beforeEach(done => logic.registerUser(name, surname, email, password, confirmPassword, done))
 
         true && it('should succeed on correct user data', done => {
@@ -243,7 +243,7 @@ describe('logic', () => {
             logic.login(email, password, function (error) {
                 expect(error).toBeDefined()
                 expect(error instanceof Error).toBeTruthy()
-                
+
                 done()
             })
         })
