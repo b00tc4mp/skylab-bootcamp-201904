@@ -1,108 +1,100 @@
-'use strict';
+'use strict'
 
-let languageSelected = 'en';
+let languageSelected = 'en'
 
-let select = document.getElementsByTagName('select')[0];
+const select = document.getElementsByTagName('select')[0]
+const languageSelector = new LanguageSelector(select, function (language) {
+    languageSelected = language
 
-let languageSelector = new LanguageSelector(select, function (language) {
-    languageSelected = language; //language setter of each propiety
-    landing.language = language;
-    register.language = language;
-    login.language = language;
-});
+    landing.language = language
+    register.language = language
+    login.language = language
+    home.language = language
+})
 
+const sections = document.getElementsByTagName('section')
 
-// END LANGUAGE SELECTOR--------------------------------------------------------------------------------
-
-var sections = document.getElementsByTagName('section');
-
-var landing = new Landing(sections[0], i18n.landing, function() {
-    landing.visible = false; //navigate to register
-    register.visible = true;
+const landing = new Landing(sections[0], i18n.landing, function() {
+    landing.visible = false
+    register.visible = true
 }, function() {
-    landing.visible = false;//navigate to login
-    login.visible = true;
-},languageSelected);
-landing.visible = false;
+    landing.visible = false
+    login.visible = true
+})
 
 
-// END LANDING-------------------------------------------------------------------------------------
+const forms = document.getElementsByTagName('form')
 
-var forms = document.getElementsByTagName('form');
+const register = new Register(forms[0], function (name, surname, email, password) {
+    logic.registerUser(name, surname, email, password, function(error) {
+        if (error) return alert(error.message)
+        document.getElementsByClassName("title")[0].style.display ="none";
+        register.visible = false
+        registerOk.visible = true
+     
+    })
+}, i18n.register, languageSelected)
 
-var register = new Register(forms[0], function (name, surname, email, password) {
-    logic.register(name, surname, email, password); //sends to logic the data from the setter when button register is clicked
-
-    register.visible = false; // turns on of visibility when setter is activated
-    registerOk.visible = true;
-}, i18n.register, languageSelected);
-    register.visible = false;
+register.visible = false
 
 
-//REGISTER ENDS HERE----------------------------------------------------------------------
 
-var login = new Login(forms[1], function (email, password) {
-    try {
-        logic.login(email, password); //sends info to logic , after setter activate onclick login
 
-        login.visible = false;
-        home.visible = true;
-    } catch (error) {
-        login.error = i18n.errors[languageSelected][error.code];
-    }
+const login = new Login(forms[1], function (email, password) {
+    
+        logic.loginUser(email, password, function(error){
+            if (error) return alert(error.message)
+
+            userApi.retrieve(localStorage.getItem('id'),localStorage.getItem('token'),function (response2){
+            home.name = response2.data.name;//obtains data from token user and shows name
+            document.getElementsByClassName("title")[0].style.display ="none";
+            login.visible = false
+            home.visible = true
+
+        })
+    })
+        
+        
+    
 }, i18n.login, languageSelected, function() {
-    this.__feedback__.visible = false;
-});
+    this.__feedback__.visible = false
+})
+login.visible = false
 
 
-login.visible = false;
+const registerOk = new RegisterOk(sections[1], function () {
+    registerOk.visible = false
+    login.visible = true
+})
+registerOk.visible = false
 
+const main = document.getElementsByTagName('main')[0]
 
-//LOGIN ENDS HERE-------------------------------------------------------------------
-
-var registerOk = new RegisterOk(sections[1], function () {
-    registerOk.visible = false;
-    login.visible = true;
-});
-registerOk.visible = false;
-
-
-// REGISTER ENDS HERE-------------------------------------------------------
-
-var main = document.getElementsByTagName('main')[0];
-
-var home = new Home(main, function(query) {
-    logic.searchDucks(query, function(ducks) { //calls logic for info
-        home.results = ducks.map(function(duck) { //format resuults of duck info
+const home = new Home(main, function(query) {
+    logic.searchDucks(query, function(ducks) {
+        home.results = ducks.map(function(duck) {
             return {
                 id: duck.id,
                 title: duck.title,
-                image: duck.imageUrl, 
-                price: duck.price,
+                image: duck.imageUrl,
+                price: duck.price
             }
-        });
-    });
-    
+        })
+    })
+}, function(duckId) {
+    logic.retrieveDuck(duckId, function(duck) {
+        home.detail = {
+            title: duck.title,
+            image: duck.imageUrl,
+            price: duck.price,
+            description: duck.description
+        }
+    })
 },function(){
-    logic.logout();
-    landing.visible=true;
-    home.visible=false; // reset the sesion of the logged user
-
-},function (id){
-    logic.retrieveDucklingDetail(id,function(ducks){ //calls loic for duck detail by id
-        
-        home.detail= {
-
-            title: ducks.title,
-            image: ducks.imageUrl,
-            price: ducks.price,
-            description : ducks.description,
-
-        };
-    });
-});
-home.visible = false;
-landing.visible=true;
+    document.getElementsByClassName("title")[0].style.display ="block"
+    landing.visible =true;
+    home.visible = false;
+},i18n.home)
+home.visible = false
 
 
-//HOME ENDS HERE----------------------------------------------------------------------

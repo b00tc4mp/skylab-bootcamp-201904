@@ -1,4 +1,4 @@
-var i18n = {
+const i18n = {
     landing: {
         en: {
             register: 'Register',
@@ -79,18 +79,44 @@ var i18n = {
             password: 'Contrasinal'
         }
     },
-    errors: {
+    home: {
         en: {
-            1: 'wrong credentials'
+            logout: 'Log Out',
+            hello: 'Hello',
+            search: 'Search'
         },
         es: {
-            1: 'credenciales incorrectas'
+            logout: 'Salir',
+            hello: 'Hola',
+            search: 'Buscar'
         },
         ca: {
-            1: 'credencials incorrectes'
+            logout: 'Sortir',
+            hello: 'Hola',
+            search: 'Cercar'
         },
         ga: {
-            1: 'credenciales incorrectas'
+            logout: 'Salir',
+            hello: 'Hola',
+            search: 'Atopar'
+        }
+    },
+    errors: {
+        en: {
+            1: 'wrong credentials',
+            2: 'user not found'
+        },
+        es: {
+            1: 'credenciales incorrectas',
+            2: 'usuario no encontrado'
+        },
+        ca: {
+            1: 'credencials incorrectes',
+            2: 'usuari no trobat'
+        },
+        ga: {
+            1: 'credenciales incorrectas',
+            2: 'usuario non atopado'
         }
     }
-};
+}

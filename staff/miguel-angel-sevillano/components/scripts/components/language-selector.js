@@ -1,26 +1,15 @@
-'use strict';
+'use strict'
 
-/**
- * 
- * @param {HTMLElement} select 
- * @param {Function} callback 
- */
-
-
-class LanguageSelector extends Component{
-
+class LanguageSelector extends Component {
     constructor(select, callback) {
-        super(select) // extends with component to been able to be visible or not
-        this.select = select;
-        this.onChange= callback;
-    }
-    
-    set onChange(result){
+        super(select)
 
-        this.select.addEventListener('change',function(event){
-            
-            result(event.target.value) // cat , en ,es etc from language button
+        this.onChange = callback
+    }
+
+    set onChange(callback) {
+        this.container.addEventListener('change', event => {
+            callback(event.target.value)
         })
     }
-
 }

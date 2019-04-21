@@ -1,39 +1,33 @@
-'use strict';
+'use strict'
 
-class Landing extends Component{
-    constructor(section, literals, onNavigateToRegister, onNavigateToLogin,languageSelected){
+class Landing extends Component {
+    constructor(section, literals, onNavigateToRegister, onNavigateToLogin) {
         super(section)
-    this.section = section;
-    let links = this.section.children;
-    this.literals = literals;
-    this.language = languageSelected;
-        
-    links[0].addEventListener('click', function(event) {
-        event.preventDefault();
 
-        onNavigateToRegister();
-    });
+        this.__literals__ = literals
 
-    links[2].addEventListener('click', function(event) {
-        event.preventDefault();
+        const links = this.container.children
 
-        onNavigateToLogin();
-    });
-    
+        links[0].addEventListener('click', event => {
+            event.preventDefault()
+
+            onNavigateToRegister()
+        })
+
+        links[2].addEventListener('click', event => {
+            event.preventDefault()
+
+            onNavigateToLogin()
+        })
     }
-    set language(change){
 
-            var literals = this.literals[change];//this language comes from the new landing and laguange selector
-    
-            var children = this.section.children;
-            children[0].innerText = literals.register;
-            children[1].innerText = literals.or;
-            children[2].innerText = literals.login;
-        }
-    
+    set language(language) {
+        
+        const literals = this.__literals__[language]
+
+        const children = this.container.children
+        children[0].innerText = literals.register
+        children[1].innerText = literals.or
+        children[2].innerText = literals.login
+    }
 }
-
-
-
-
-

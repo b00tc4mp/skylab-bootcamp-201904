@@ -6,68 +6,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        
 </head>
 
 <body>
-    <select>
+    <select class="language">
         <option value="en">English</option>
         <option value="es">Español</option>
         <option value="ca">Català</option>
         <option value="ga">Galego</option>
     </select>
 
-    <section>
-            <a href="">Register</a> <span>or</span> <a href="">Login</a>.
+    <h1 class=title>DUCKS SUPER ONLINE STORE</h1>
+
+    <section class="section">
+        <a class= section__items href="">Register</a> 
+        <span class="section__item">OR</span> 
+        <a class="section__items" href="">Login</a>
     </section>
 
     <form>
-        <h2>Register</h2>
+        <h2 class="register">Register</h2>
 
-        <ul>
-            <li><input type="text" name="name" placeholder="name"></li>
-            <li><input type="text" name="surname" placeholder="surname"></li>
-            <li><input type="text" name="email" placeholder="email"></li>
-            <li><input type="password" name="password" placeholder="password"></li>
+        <ul class="register">
+            <li class="form"><input type="text" name="name" placeholder="name"></li>
+            <li class="form"><input type="text" name="surname" placeholder="surname"></li>
+            <li class="form"><input type="text" name="email" placeholder="email"></li>
+            <li class="form"><input type="password" name="password" placeholder="password"></li>
         </ul>
 
-        <button>Register</button>
+        <button class="okreg">Register</button>
     </form>
 
     <form>
-        <h2>Login</h2>
+        <h2 class="register">Login</h2>
 
-        <ul>
-            <li><input type="text" name="email" placeholder="email"></li>
-            <li><input type="password" name="password" placeholder="password"></li>
+        <ul class="register">
+            <li class="form"><input type="text" name="email" placeholder="email"></li>
+            <li class="form"><input type="password" name="password" placeholder="password"></li>
         </ul>
 
-        <button>Login</button>
+        <button class="okreg">Login</button>
 
         <p>Error!</p>
     </form>
 
-    <section>
+    <section class="register">
         User successfully registered, you can proceed to <a href="">Login</a>.
     </section>
 
-    <main>
-        <h1>Hello, World!</h1>
-        <a href="">Logout</a>
+    <main class="home">
+        <h1 class="welcome">Hello World!</h1>
 
-        <form>
-            <input type="text" name="query">
-            <button>Search</button>
+        <button class="oksearch">Log Out</button>
+
+        <form class="search">
+            <input type="text" name="query" class="searchbar">
+            <button class="oksearch">Search</button>
         </form>
 
-        <ul></ul>
+        <ul class="list"></ul>
 
-        <section>
-            <h2></h2>
-            <img src="">
-            <span></span>
-            <p></p>
+        <section class="detail">
+            <h2 class="detail__title"></h2>
+            <img class="img">
+            <span class="detail__title"></span>
+            <p class="detail__title"></p>
         </section>
     </main>
+
+    <script src="scripts/errors.js"></script>
+    <script src="scripts/validate.js"></script>
 
     <script src="scripts/components/component.js"></script>
     <script src="scripts/components/feedback.js"></script>
@@ -75,13 +88,15 @@
     <script src="scripts/components/landing.js"></script>
     <script src="scripts/components/register.js"></script>
     <script src="scripts/components/register-ok.js"></script>
-    <script src="scripts/components/detail.js"></script>
     <script src="scripts/components/login.js"></script>
     <script src="scripts/components/search.js"></script>
     <script src="scripts/components/results.js"></script>
+    <script src="scripts/components/detail.js"></script>
     <script src="scripts/components/home.js"></script>
-    <script src="scripts/data.js"></script>
-    <script src="scripts/logic.js"></script>
+
+    <script src="scripts/duck-api/index.js"></script>
+    <script src="scripts/user-api/index.js"></script>
+    <script src="scripts/logic/index.js"></script>
     <script src="scripts/i18n.js"></script>
     <script src="scripts/main.js"></script>
 </body>

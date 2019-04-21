@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css?family=Indie+Flower");
+body {
+  background-image: url(https://st.depositphotos.com/1740194/4289/v/950/depositphotos_42895729-stock-illustration-rubber-duck-on-blue.jpg); }
+
+.language {
+  display: flex;
+  flex-direction: column;
+  font-family: "Indie Flower"; }
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-family: "Indie Flower";
+  background-color: white;
+  opacity: 0.7; }
+
+.section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-family: "Indie Flower";
+  background-color: white;
+  margin-top: 101px;
+  padding: 10px;
+  opacity: 0.9; }
+  .section__items {
+    display: flex;
+    flex-direction: row;
+    color: black;
+    font-weight: bold;
+    font-size: 25px; }
+  .section__item {
+    color: black;
+    font-size: 25px;
+    font-weight: bold; }
+
+.register {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px;
+  align-items: center;
+  opacity: 0.9;
+  font-family: "Indie Flower"; }
+
+.form {
+  font-family: "Indie Flower"; }
+
+.okreg {
+  background-color: white;
+  border-color: white;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Indie Flower"; }
+
+.welcome {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px;
+  align-items: center;
+  opacity: 0.9;
+  font-family: "Indie Flower"; }
+
+.home {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px; }
+
+.search {
+  margin-top: 20px; }
+
+.oksearch {
+  background-color: white;
+  border-color: white;
+  font-size: 20px;
+  margin-left: 20px;
+  font-family: "Indie Flower";
+  margin-top: 20px; }
+
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: white;
+  margin: 10px;
+  width: 100px; }
+
+.searchbar {
+  height: 30px;
+  width: 70%; }
+
+.detail {
+  display: flex;
+  flex-direction: column; }
+  .detail__title {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    padding: 10px;
+    background-color: white;
+    opacity: 0.9;
+    font-family: "Indie Flower";
+    font-size: 25px; }
+
+.img {
+  width: 300px;
+  height: 300px; }
+
+/*# sourceMappingURL=style.css.map */
