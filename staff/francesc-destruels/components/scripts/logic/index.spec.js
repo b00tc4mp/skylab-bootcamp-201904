@@ -136,7 +136,7 @@ describe('logic', () => {
 
 
     describe('authenticate', () => {
-        beforeEach(done => logic.registerUser(name, surname, email, password, confirmPassword, done))
+        beforeEach(done => userApi.create(name, surname, email, password, done))
 
         true && it('should succeed on correct user data', done => {
             logic.login(email, password, function (response) {
@@ -203,7 +203,7 @@ describe('logic', () => {
     })
 
     describe('authenticate fail', () => {
-        beforeEach(done => logic.registerUser(name, surname, email, password, confirmPassword, done))
+        beforeEach(done => userApi.create(name, surname, email, password, done))
 
         true && it('should fail on bad request', done => {
             const email = 'xxxxx@cccc.com'
@@ -217,7 +217,7 @@ describe('logic', () => {
     })
 
     describe('retrieve', () => {
-        beforeEach(done => logic.registerUser(name, surname, email, password, confirmPassword, done))
+        beforeEach(done => userApi.create(name, surname, email, password, done))
         true && it('should succeed on correct user data', done => {
 
             logic.login(email, password, function (response) {

@@ -94,6 +94,8 @@ const home = new Home(main, function () {
 
     home.visible = false
     landing.visible = true
+    main.children[3].innerText = "";
+    main.children[4].style.display = "none";
 
 }, function (query) {
     logic.searchDucks(query, function (ducks) {

@@ -13,7 +13,11 @@ describe('user api', () => {
             userApi.create(name, surname, username, password, function (response) {
                 expect(response).toBeDefined()
 
-                const { status, data: { id } } = response
+                const { status, data } = response
+
+                expect(data).toBeDefined()
+
+                const { id } = data 
 
                 expect(status).toBe('OK')
                 expect(typeof id).toBe('string')
@@ -144,9 +148,13 @@ describe('user api', () => {
             userApi.authUser(username, password, function (response) {
                 expect(response).toBeDefined()
 
-                const { status, data: { id, token } } = response
+                const { status, data } = response
 
                 expect(status).toBe('OK')
+                expect(data).toBeDefined()
+
+                const { id, token  } = data 
+
                 expect(typeof id).toBe('string')
                 expect(typeof token).toBe('string')
                 expect(id.length).toBeGreaterThan(0)
@@ -243,9 +251,9 @@ describe('user api', () => {
             userApi.authUser(username, password, function (response) {
                 expect(response).toBeDefined()
 
-                let { data: { id, token } } = response
+                let { data: { id } } = response
 
-                token = "sadadasdasd"
+                let token = "sadadasdasd"
 
                 userApi.retrieveUser(token, id, function (response) {
 

@@ -2,6 +2,7 @@
 
 const userApi = {
     __url__: "https://skylabcoders.herokuapp.com/api",
+    __timeout__ : 0,
 
     __call__(path, method,  body, callback, token) {
 
@@ -19,7 +20,18 @@ const userApi = {
 
         xhr.addEventListener('load', function () {
             callback(JSON.parse(this.responseText))
+            //callback(error, JSON.parse(this.responseText))
         })
+
+        // xhr.onerror(){
+        //     callback(new Error(`Can not connect`))
+        // }
+
+        // xhr.ontimeout(){
+        //     callback(new Error(`time out`))
+        // }
+
+        // xhr.timeout = __timeout__
 
         if (token){
             xhr.setRequestHeader('Authorization', `Bearer ${token}`)
@@ -31,7 +43,7 @@ const userApi = {
 
         } else {
             if (body) {
-                xhr.setRequestHeader('content-type', 'application/json')
+                xhr.setRequestHeader('Content-Type', 'application/json')
                 xhr.send(JSON.stringify(body))
             } else xhr.send()
         }
@@ -77,7 +89,7 @@ const userApi = {
         validate.arguments([
             {name: 'token', value: token, type: 'string', notEmpty: true,},
             {name: 'userID', value: userID, type: 'string', notEmpty: true,},
-            {name: 'dataToModify', value: dataToModify, type: 'string', notEmpty: true,},
+            {name: 'dataToModify', value: dataToModify, type: 'object', notEmpty: true,},
             {name: 'callback', value: callback, type: 'function', notEmpty: true, }
         ])
 

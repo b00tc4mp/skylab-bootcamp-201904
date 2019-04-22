@@ -53,7 +53,7 @@ class Home extends Component {
         this.__detail__.visible = true
     }
 
-    //SETTER PARA DESPERTAR A ARTICLE Y DORMIR RESULTS
+    //SETTER PARA CAMBIAR IDIOMA Y AÑADIR USER
     set language(language) {
         const literals = this.__literals__[language]
         this.container.children[0].innerText = literals.title + ' ' + this.name + '!'
