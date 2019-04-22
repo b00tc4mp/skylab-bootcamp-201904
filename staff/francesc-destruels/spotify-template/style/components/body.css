@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  background-color: #191414;
+  font-family: proxima-nova, sans-serif;
+}
+
+a {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+/*# sourceMappingURL=body.css.map */

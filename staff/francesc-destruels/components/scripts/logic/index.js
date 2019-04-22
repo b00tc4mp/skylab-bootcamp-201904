@@ -1,5 +1,25 @@
 
-var logic = {
+const logic = {
+
+    set __userId__(id) {
+        sessionStorage.userId = id
+    },
+
+    get __userId__() {
+        return normalize.undefinedOrNull(sessionStorage.userId)
+    },
+
+    set __userToken__(token) {
+        sessionStorage.userToken = token
+    },
+
+    get __userToken__() {
+        return normalize.undefinedOrNull(sessionStorage.userToken)
+    },
+
+    get isUserLoggedIn() {
+        return !!(this.__userId__ && this.__userToken__)
+    },
 
     registerUser(name, surname, email, password, confirmPassword, callback) {
         let error
@@ -34,10 +54,11 @@ var logic = {
             throw error
         }
 
-        userApi.create(name, surname, email, password, function (response) {
-            if (response.status === 'OK') callback()
+        userApi.create(name, surname, email, password, function (error, response) {
+            if (error) callback(error)
+            else if (response.status === 'OK') callback()
             else {
-                error = Error('existing user')
+                error = new LogicError(response.error)
                 error.code = 6
                 callback(error)
             }
@@ -56,7 +77,8 @@ var logic = {
 
         try {
             validate.arguments([
-                { name: 'password', value: password, type: 'string', notEmpty: true }
+                { name: 'password', value: password, type: 'string', notEmpty: true },
+                { value: callback, type: 'function' }
             ])
         } catch (error) {
             error = Error(`Password can't be empty`)
@@ -64,23 +86,33 @@ var logic = {
             throw error
         }
 
-        userApi.authUser(email, password, function (response) {
-            callback(response)
+        userApi.authUser(email, password, (error, response) => {
+            if (error) callback(error)
+            else if (response.status === 'OK') {
+                const { data: { id, token } } = response
+
+                this.__userId__ = id
+                this.__userToken__ = token
+
+                callback()
+            } else callback(new LogicError(response.error))
         })
     },
 
-    retrieveUser(token, id, callback) {
+    retrieveUser(callback) {
 
-        userApi.retrieveUser(token, id, function (response) {
-            if (response.status === 'OK') callback(response)
-            else callback(Error(response.error))
+        userApi.retrieveUser( this.__userToken__, this.__userId__, (error, response) => {
+            if (error) callback(error)
+            else if (response.status === 'OK') {
+                const { data: { name, surname, username: email } } = response
+
+                callback(undefined, { name, surname, email })
+            } else callback(new LogicError(response.error))
         })
     },
 
     logOut() {
-
-        __id = ""
-        __token = ""
+        sessionStorage.clear()
     },
 
     searchDucks(query, callback) {

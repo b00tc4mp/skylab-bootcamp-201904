@@ -16,24 +16,24 @@ const userApi = {
 
         const xhr = new XMLHttpRequest
 
+        xhr.timeout = this.__timeout__
+
         xhr.open(method, `${this.__url__}/${path}`)
 
-        xhr.addEventListener('load', function () {
-            callback(JSON.parse(this.responseText))
-            //callback(error, JSON.parse(this.responseText))
-        })
+        xhr.onload = function () {
+            callback(undefined, JSON.parse(this.responseText))
+        }
 
-        // xhr.onerror(){
-        //     callback(new Error(`Can not connect`))
-        // }
+        xhr.onerror = function() {
+            callback(new ConnectionError('cannot connect'))
+        }
 
-        // xhr.ontimeout(){
-        //     callback(new Error(`time out`))
-        // }
-
-        // xhr.timeout = __timeout__
+        xhr.ontimeout = () => {
+            callback(new TimeoutError(`time out, exceeded limit of ${this.__timeout__}ms`))
+        }
 
         if (token){
+            if(!token) throw Error('token not provided')
             xhr.setRequestHeader('Authorization', `Bearer ${token}`)
         }
 
