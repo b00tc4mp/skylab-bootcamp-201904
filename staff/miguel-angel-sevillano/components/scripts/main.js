@@ -45,7 +45,7 @@ const login = new Login(forms[1], function (email, password) {
         logic.loginUser(email, password, function(error){
             if (error) return alert(error.message)
 
-            userApi.retrieve(localStorage.getItem('id'),localStorage.getItem('token'),function (response2){
+            userApi.retrieve(sessionStorage.getItem('id'),sessionStorage.getItem('token'),function (response2){
             home.name = response2.data.name;//obtains data from token user and shows name
             document.getElementsByClassName("title")[0].style.display ="none";
             login.visible = false
