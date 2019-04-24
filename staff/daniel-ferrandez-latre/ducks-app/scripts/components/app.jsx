@@ -1,40 +1,29 @@
 const { Component, /* Fragment */ } = React
 
 class App extends Component {
-    state = { lang: i18n.language , visible: logic.isUserLoggedIn ? 'home' : 'landing', error: null, name: null, response: null }
+    state = { lang: i18n.language, visible: logic.isUserLoggedIn ? 'home' : 'landing', error: null, name: null }
 
-    handleLanguageChange = lang => this.setState({ lang: i18n.language = lang })
+    handleLanguageChange = lang => this.setState({ lang: i18n.language = lang }) // NOTE setter runs first, getter runs after (i18n)
 
     handleRegisterNavigation = () => this.setState({ visible: 'register' })
 
     handleLoginNavigation = () => this.setState({ visible: 'login' })
 
-    handleRegister = (name, surname, email, password) =>
-    logic.registerUser(name, surname, email, password, error => {
-        if (error) return this.setState({ error: error.message })
-
-            this.setState({ visible: 'registerOk'})
-
-    })
-
-    handleLogin = (username, password) =>
-        logic.loginUser(username, password, error => {
-            if (error) return this.setState({ error: error.message })
-
-            logic.retrieveUser((error, user) => {
+    handleLogin = (username, password) => {
+        try {
+            logic.loginUser(username, password, error => {
                 if (error) return this.setState({ error: error.message })
 
-                this.setState({ visible: 'home', name: user.name })
-            })
-        })
+                logic.retrieveUser((error, user) => {
+                    if (error) return this.setState({ error: error.message })
 
-    handleSearchDucks = (query) =>
-    logic.searchDucks(query, function(response){
-            if(error) return this.setState({error: error.message})
-            this.setState({responseDucks: response})
-            console.log(responseDucks)
-        })
-  
+                    this.setState({ visible: 'home', name: user.name, error: null })
+                })
+            })
+        } catch ({ message }) {
+            this.setState({ error: message })
+        }
+    }
 
     componentDidMount() {
         logic.isUserLoggedIn && logic.retrieveUser((error, user) => {
@@ -44,31 +33,48 @@ class App extends Component {
         })
     }
 
+    handleRegister = (name, surname, username, password) => {
+        try {
+            logic.registerUser(name, surname, username, password, error => {
+                if (error) return this.setState({ error: error.message })
+
+                this.setState({ visible: 'register-ok', error: null })
+            })
+        } catch ({ message }) {
+            this.setState({ error: message })
+        }
+    }
+
+    handleLogout = () => {
+        logic.logoutUser()
+
+        this.setState({ visible: 'landing' })
+    }
+
     render() {
         const {
             state: { lang, visible, error, name },
             handleLanguageChange,
             handleRegisterNavigation,
             handleLoginNavigation,
+            handleLogin,
             handleRegister,
-            handleLogin
+            handleLogout
         } = this
 
         // return <Fragment>
         return <>
-            <LanguageSelector onLanguageChange={handleLanguageChange} />
+            <LanguageSelector lang={lang} onLanguageChange={handleLanguageChange} />
 
             {visible === 'landing' && <Landing lang={lang} onRegister={handleRegisterNavigation} onLogin={handleLoginNavigation} />}
 
             {visible === 'register' && <Register lang={lang} onRegister={handleRegister} error={error} />}
-            
-            {visible === 'registerOk' && <RegisterOk lang={lang} onRegisterOk = {handleLoginNavigation} />}
+
+            {visible === 'register-ok' && <RegisterOk lang={lang} onLogin={handleLoginNavigation} />}
 
             {visible === 'login' && <Login lang={lang} onLogin={handleLogin} error={error} />}
 
-            {visible === 'home' && <Home lang={lang} name={name} />}
-
-            {visible === 'searchDucks' && <SearchDucks lang={lang} on />}
+            {visible === 'home' && <Home lang={lang} name={name} onLogout={handleLogout} />}
         </>
         // </Fragment>
     }

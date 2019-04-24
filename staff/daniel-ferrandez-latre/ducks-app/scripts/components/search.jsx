@@ -1,35 +1,31 @@
-const i18nSearch = {
-    en: {
-        title: 'Search Ducks',
-        button_search: 'search'
-    },
-    es: {
-        title: 'Buscar patos',
-        button_search: 'buscar'
-    },
-    ca: {
-        title: 'Cercar ànecs',
-        button_search: 'cercar'
-    },
-    ga: {
-        title: 'Buscar patos con acento gallego',
-        button_search: 'buscar'
-    }
-}
-
-function SearchDucks(props){
-    const {lang} = props;
-    const literals = i18nSearch[props]
-
-    function handleSearchDucks(e){
-        e.preventDefault()
-        const {title, button_search} = e.target.searchDucks
+const Search = (() => {
+    const literals = {
+        en: {
+            search: 'Search'   
+        },
+        es: {
+            search: 'Buscar'   
+        },
+        ca: {
+            search: 'Cerca'   
+        },
+        ga: {
+            search: 'Buscar'   
+        }
     }
 
-    return <>
-    <h3>{title}</h3>
-    <form onSubmit={handleSearchDucks}>
-        <input type="text" name="searchDucks" placeholder="{button_search}"/>
-    </form>
-    </>
-}
+    return function({lang, onSearch}) {
+        const { search } = literals[lang]
+
+        return <form onSubmit={e => {
+            e.preventDefault()
+
+            const query = e.target.query.value
+
+            onSearch(query)
+        }}>
+            <input type="text" name="query"/>
+            <button>{search}</button>
+        </form>
+    }
+})()

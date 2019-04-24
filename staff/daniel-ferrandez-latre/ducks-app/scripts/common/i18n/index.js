@@ -1,4 +1,3 @@
-    
 const i18n = {
     set language(lang) {
         localStorage.lang = lang
