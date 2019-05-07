@@ -6,7 +6,7 @@ module.exports = (dir, extension, callback) => {
     fs.readdir(dir, function (err,dir) {
         if (err) return callback(err)
         dir.forEach((element) => {
-            if (path.extname(element) === '.' + extension) result.push(element)
+            if (path.extname(element) === `.${extension}`) result.push(element)
         })
         return callback(null,result)
         })

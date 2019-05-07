@@ -1,14 +1,23 @@
-var http = require('http')
-var bl = require('bl')
+const http = require('http')
+const bl = require('bl')
 
-const [,,url] = process.argv
+const { argv: [, , ...urls] } = process
+let dataArr = []
+let count = 0
 
-http.get(url, (response) => {
-    
+for(let i = 0; i < 3; i++){
+    http.get(urls[i], (response) => {
+        response.pipe(bl(function (err, data) { 
+            if (err!= null) console.log(err)
+            dataArr[i] = data.toString()
+            count++
 
-})on.response(response.pipe(bl(function (err, data) { 
-    if (err!= null) console.log(err)
-    data = data.toString()
-    console.log(data.length)
-    console.log(data)
-})))
+            if (count == 3){
+                for(let i = 0; i < dataArr.length; i++){
+                    console.log(dataArr[i])
+                }
+            }
+        }))
+    })
+}
+
