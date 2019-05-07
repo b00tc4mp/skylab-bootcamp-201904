@@ -4,16 +4,10 @@ const port = process.argv[2] // Puerto que usara como request
 
 function answerTime(time, boolean) {
     if (!boolean) {
-        const hour = time.getHours() < 10 ? "0" + time.getHours() : time.getHours()
-        const minutes = time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()
-        const seconds = time.getSeconds() < 10 ? "0" + time.getSeconds() : time.getSeconds()
-
-        return { "hour": hour, "minute": minutes, "second": seconds }
+        return { "hour": time.getHours(), "minute": time.getMinutes(), "second": time.getSeconds() }
 
     } else {
-        const unixtime = time.getTime()
-
-        return { "unixtime": unixtime }
+        return { "unixtime": time.getTime() }
     }
 }
 
