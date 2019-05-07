@@ -3,10 +3,10 @@ var fs = require('fs');
 
 
 
-var server = http.createServer(function (req, res) {
+var server = http.createServer(function (req, res) { //create a server
   
     
-    fs.createReadStream(process.argv[3]).pipe(res)
+    fs.createReadStream(process.argv[3]).pipe(res) //for every conecton we recibed we send something to  then pipe as response
 
         res.writeHead(200,{'content-type': 'text/plain'});
 
