@@ -1,26 +1,19 @@
 const http = require('http')
 
-const{argv: [, , host, port, message]} = process
+const{argv: [, , host, port, ...message]} = process
 
 
 
 
-const data = JSON.stringify({
-  todo: 'Buy the milk'
-})
+const data = message.join(' ')
 
 const options = {
-  hostname: 'flaviocopes.com',
-  port: 443,
-  path: '/todos',
+  hostname: `${host}`,
+  port: port ,
   method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Content-Length': data.length
-  }
 }
 
-const req = https.request(options, (res) => {
+const req = http.request(options, (res) => {
   console.log(`statusCode: ${res.statusCode}`)
 
   res.on('data', (d) => {
