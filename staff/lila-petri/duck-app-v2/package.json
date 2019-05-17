@@ -19,7 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
+    "test:debug": "react-scripts debug test --runInBand --no-cache",
+    "test:debug-inspect": "react-scripts --inspect-brk test --runInBand --no-cache",
     "test:coverage": "react-scripts test --coverage --watchAll"
   },
   "eslintConfig": {

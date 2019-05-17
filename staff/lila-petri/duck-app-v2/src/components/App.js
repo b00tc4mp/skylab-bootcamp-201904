@@ -3,6 +3,7 @@ import logic from '../logic'
 import i18n from '../common/i18n'
 import LanguageSelector from './LanguageSelector'
 import Landing from './Landing'
+import Favorites from './Favorites'
 import Register from './Register'
 import RegisterOk from './RegisterOk'
 import Login from './Login'
@@ -59,9 +60,28 @@ class App extends Component {
             this.setState({ error: message })
         }
     }
+    handleFavorites = () => {
+        try{
+            logic.retrieveFavDucks()
+                .then(() => this.props.history.push('/favorites'))
+                .catch(error =>
+                    this.setState({ error: error.message })
+                )
 
-    handleFavorites = {}
+        }catch({message}){
+            this.setState({error: message})
 
+        }
+    }
+    handleComeBack = () => {
+        logic.retrieveUser()
+            .then(({name}) => {
+                this.setState({ name, error: null }, () => this.props.history.push('/home'))
+            })
+            .catch(error =>
+                this.setState({ error: error.message })
+            )
+        }
     handleLogout = () => {
         logic.logoutUser()
 
@@ -80,8 +100,8 @@ class App extends Component {
             handleLoginNavigation,
             handleLogin,
             handleRegister,
-            handleLogout,
-            handleFavorites
+            handleFavorites,
+            handleLogout
         } = this
 
         return <>
@@ -99,6 +119,8 @@ class App extends Component {
                 <Route path="/login" render={() => logic.isUserLoggedIn ? <Redirect to="/home" /> : <Login lang={lang} onLogin={handleLogin} error={error} />} />
 
                 <Route path="/home" render={() => logic.isUserLoggedIn ? <Home lang={lang} name={name} onLogout={handleLogout} onFavorites={handleFavorites}/> : <Redirect to="/" />} />
+            
+                <Route path="/favorites" render={() => <Favorites lang={lang} error={error} />} />
 
                 <Redirect to="/" />
             </Switch>

@@ -56,7 +56,7 @@ class Home extends Component {
             handleRetrieve,
             handleFav,
             state: { query, ducks, duck, favs },
-            props: { lang, name, onLogout }
+            props: { lang, name, onLogout, onFavorites }
         } = this
 
         const { hello, logout, favorites } = literals[lang]
@@ -64,7 +64,7 @@ class Home extends Component {
         return <main className="home">
             <h1>{hello}, {name}!</h1>
             <button onClick={onLogout}>{logout}</button>
-            <button onClick={onLogout}>{favorites}</button>
+            <button onClick={onFavorites}>{favorites}</button>
             <Search lang={lang} query={query} onSearch={handleSearch} />
             {!duck && ducks && (ducks.length && <Results items={ducks} onItem={handleRetrieve} onFav={handleFav} favs={favs} /> || <p>No results.</p>)}
             {duck && <Detail item={duck} />}
