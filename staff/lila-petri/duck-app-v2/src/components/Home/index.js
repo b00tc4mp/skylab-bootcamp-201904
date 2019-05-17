@@ -59,11 +59,12 @@ class Home extends Component {
             props: { lang, name, onLogout }
         } = this
 
-        const { hello, logout } = literals[lang]
+        const { hello, logout, favorites } = literals[lang]
 
         return <main className="home">
             <h1>{hello}, {name}!</h1>
             <button onClick={onLogout}>{logout}</button>
+            <button onClick={onLogout}>{favorites}</button>
             <Search lang={lang} query={query} onSearch={handleSearch} />
             {!duck && ducks && (ducks.length && <Results items={ducks} onItem={handleRetrieve} onFav={handleFav} favs={favs} /> || <p>No results.</p>)}
             {duck && <Detail item={duck} />}

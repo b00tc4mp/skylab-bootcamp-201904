@@ -60,6 +60,8 @@ class App extends Component {
         }
     }
 
+    handleFavorites = {}
+
     handleLogout = () => {
         logic.logoutUser()
 
@@ -78,7 +80,8 @@ class App extends Component {
             handleLoginNavigation,
             handleLogin,
             handleRegister,
-            handleLogout
+            handleLogout,
+            handleFavorites
         } = this
 
         return <>
@@ -95,7 +98,7 @@ class App extends Component {
 
                 <Route path="/login" render={() => logic.isUserLoggedIn ? <Redirect to="/home" /> : <Login lang={lang} onLogin={handleLogin} error={error} />} />
 
-                <Route path="/home" render={() => logic.isUserLoggedIn ? <Home lang={lang} name={name} onLogout={handleLogout} /> : <Redirect to="/" />} />
+                <Route path="/home" render={() => logic.isUserLoggedIn ? <Home lang={lang} name={name} onLogout={handleLogout} onFavorites={handleFavorites}/> : <Redirect to="/" />} />
 
                 <Redirect to="/" />
             </Switch>
