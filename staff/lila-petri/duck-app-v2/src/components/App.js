@@ -11,7 +11,7 @@ import Home from './Home'
 import { Route, withRouter, Redirect, Switch } from 'react-router-dom'
 
 class App extends Component {
-    state = { lang: i18n.language, visible: null, error: null, name: null }
+    state = { lang: i18n.language, visible: null, error: null, name: null ,favs: null}
 
     handleLanguageChange = lang => this.setState({ lang: i18n.language = lang })
 
@@ -63,7 +63,9 @@ class App extends Component {
     handleFavorites = () => {
         try{
             logic.retrieveFavDucks()
-                .then(() => this.props.history.push('/favorites'))
+                .then((favs) =>
+                    this.setState({ favs: favs.map(({ id, title, imageUrl: image, price }) => ({ id, title, image, price })), favs }, () => this.props.history.push('/favorites'))
+                )
                 .catch(error =>
                     this.setState({ error: error.message })
                 )
@@ -73,6 +75,12 @@ class App extends Component {
 
         }
     }
+    handleFav = (id) =>{
+        logic.toggleFavDuck(id)
+            .then(() => logic.retrieveFavDucks())
+            .then(favs => this.setState({ favs }))
+    }
+            
     handleComeBack = () => {
         logic.retrieveUser()
             .then(({name}) => {
@@ -94,13 +102,15 @@ class App extends Component {
 
     render() {
         const {
-            state: { lang, visible, error, name },
+            state: { lang, visible, error, name, favs },
             handleLanguageChange,
             handleRegisterNavigation,
             handleLoginNavigation,
             handleLogin,
             handleRegister,
             handleFavorites,
+            handleComeBack,
+            handleFav,
             handleLogout
         } = this
 
@@ -120,8 +130,8 @@ class App extends Component {
 
                 <Route path="/home" render={() => logic.isUserLoggedIn ? <Home lang={lang} name={name} onLogout={handleLogout} onFavorites={handleFavorites}/> : <Redirect to="/" />} />
             
-                <Route path="/favorites" render={() => <Favorites lang={lang} error={error} />} />
-
+                <Route path="/favorites" render={() =>favs && <Favorites lang={lang} favs={favs} error={error} onReturn={handleComeBack} onFav={handleFav}/>} />
+            
                 <Redirect to="/" />
             </Switch>
         </>
