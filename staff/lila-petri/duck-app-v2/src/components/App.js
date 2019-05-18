@@ -4,6 +4,7 @@ import i18n from '../common/i18n'
 import LanguageSelector from './LanguageSelector'
 import Landing from './Landing'
 import Favorites from './Favorites'
+import Cart from './Cart'
 import Register from './Register'
 import RegisterOk from './RegisterOk'
 import Login from './Login'
@@ -11,7 +12,7 @@ import Home from './Home'
 import { Route, withRouter, Redirect, Switch } from 'react-router-dom'
 
 class App extends Component {
-    state = { lang: i18n.language, visible: null, error: null, name: null ,favs: null}
+    state = { lang: i18n.language, visible: null, error: null, name: null ,favs: null, cart: null}
 
     handleLanguageChange = lang => this.setState({ lang: i18n.language = lang })
 
@@ -75,6 +76,21 @@ class App extends Component {
 
         }
     }
+    handleCart = () => {
+        try{
+            logic.retrieveCartDucks()
+                .then((items) =>
+                    this.setState({ items: items.map(({ id, title, imageUrl: image, price }) => ({ id, title, image, price })), items }, () => this.props.history.push('/cart'))
+                )
+                .catch(error =>
+                    this.setState({ error: error.message })
+                )
+
+        }catch({message}){
+            this.setState({error: message})
+
+        }
+    }
     handleFav = (id) =>{
         logic.toggleFavDuck(id)
             .then(() => logic.retrieveFavDucks())
@@ -102,7 +118,7 @@ class App extends Component {
 
     render() {
         const {
-            state: { lang, visible, error, name, favs },
+            state: { lang, visible, error, name, favs, cart },
             handleLanguageChange,
             handleRegisterNavigation,
             handleLoginNavigation,
@@ -111,6 +127,7 @@ class App extends Component {
             handleFavorites,
             handleComeBack,
             handleFav,
+            handleCart,
             handleLogout
         } = this
 
@@ -128,9 +145,11 @@ class App extends Component {
 
                 <Route path="/login" render={() => logic.isUserLoggedIn ? <Redirect to="/home" /> : <Login lang={lang} onLogin={handleLogin} error={error} />} />
 
-                <Route path="/home" render={() => logic.isUserLoggedIn ? <Home lang={lang} name={name} onLogout={handleLogout} onFavorites={handleFavorites}/> : <Redirect to="/" />} />
+                <Route path="/home" render={() => logic.isUserLoggedIn ? <Home lang={lang} name={name} onLogout={handleLogout} onFavorites={handleFavorites} goCart={handleCart}/> : <Redirect to="/" />} />
             
                 <Route path="/favorites" render={() =>favs && <Favorites lang={lang} favs={favs} error={error} onReturn={handleComeBack} onFav={handleFav}/>} />
+
+                <Route path="/cart" render={() => <Cart lang={lang} error={error} onReturn={handleComeBack} cart={cart} onFav={handleFav}/>} />
             
                 <Redirect to="/" />
             </Switch>

@@ -2,21 +2,25 @@ export default  {
     en: {
         hello: 'Hello',
         logout: 'Logout',
-        favorites: 'Favorites'
+        favorites: 'Favorites',
+        mycart: 'My Cart'
     },
     es: {
         hello: 'Hola',
         logout: 'Cerrar sesión',
-        favorites: 'Favoritos'
+        favorites: 'Favoritos',
+        mycart: 'Mi Cesta'
     },
     ca: {
         hello: 'Hola',
         logout: 'Tanca sessió',
-        favorites: 'Favorits'
+        favorites: 'Favorits',
+        mycart: 'Cistella'
     },
     ga: {
         hello: 'Hola',
         logout: 'Finalizar sesión',
-        favorites: 'Favoritos'
+        favorites: 'Favoritos',
+        mycart: 'Miña Cesta'
     }
 }

@@ -4,12 +4,12 @@ import { TimeoutError, ConnectionError, ValueError, RequirementError } from '../
 jest.setTimeout(100000)
 
 describe('rest api', () => {
-    const name = 'Manuel'
-    const surname = 'Barzi'
+    const name = 'Lila'
+    const surname = 'Petri'
     let email
     const password = '123'
 
-    beforeEach(() => email = `manuelbarzi-${Math.random()}@gmail.com`)
+    beforeEach(() => email = `lila-${Math.random()}@gmail.com`)
 
     describe('users', () => {
         describe('register user', () => {
@@ -137,7 +137,7 @@ describe('rest api', () => {
             })
         })
 
-        describe('when api url fails', () => {
+        xdescribe('when api url fails', () => {
             let url
 
             beforeEach(() => {
@@ -159,7 +159,7 @@ describe('rest api', () => {
             afterEach(() => restApi.__url__ = url)
         })
 
-        describe('when server responds too late', () => {
+        xdescribe('when server responds too late', () => {
             const timeout = 1
 
             beforeEach(() => restApi.__timeout__ = timeout)
@@ -300,7 +300,6 @@ describe('rest api', () => {
                     })
                     .then(() => restApi.retrieveFavDucks(token))
                     .then(favs => {
-                        debugger
                         expect(favs).toBeDefined()
                         expect(favs instanceof Array).toBeTruthy()
                         expect(favs.length).toBe(1)
@@ -323,6 +322,53 @@ describe('rest api', () => {
                 duckId = null
 
                 expect(() => restApi.toggleFavDuck(token, duckId)).toThrowError(RequirementError, 'id is not optional')
+            })
+
+            // TODO more cases
+        })
+
+        describe('toggle cart duck', () => {
+            let duckId
+
+            beforeEach(() =>
+                restApi.searchDucks(token, '')
+                    .then(ducks => duckId = ducks[0].id)
+            )
+
+            it('should succeed adding cart on first time', () =>
+                restApi.toggleCartDuck(token, duckId)
+                    .then(response => {
+                        console.log(response)
+                        debugger
+                        const { message } = response
+
+                        expect(message).toBe('Ok, duck toggled.')
+                    })
+                    .then(() => restApi.retrieveCartDucks(token))
+                    .then(cart => {
+                        debugger
+                        expect(cart).toBeDefined()
+                        expect(cart instanceof Array).toBeTruthy()
+                        expect(cart.length).toBe(1)
+                        expect(cart[0].id).toBe(duckId)
+                    })
+            )
+
+            it('should succeed removing cart on second time', () =>
+                restApi.toggleCartDuck(token, duckId)
+                    .then(() => restApi.toggleCartDuck(token, duckId))
+                    .then(() => restApi.retrieveCartDucks(token))
+                    .then(cart => {
+                        expect(cart).toBeDefined()
+                        expect(cart instanceof Array).toBeTruthy()
+                        expect(cart.length).toBe(0)
+                    })
+            )
+
+            it('should fail on null duck id', () => {
+                duckId = null
+
+                expect(() => restApi.toggleCartDuck(token, duckId)).toThrowError(RequirementError, 'id is not optional')
             })
 
             // TODO more cases

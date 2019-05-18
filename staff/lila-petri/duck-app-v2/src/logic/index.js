@@ -114,7 +114,29 @@ const logic = {
 
                 return response
             })
-    }
+    },
+
+    toggleCartDuck(id) {
+        validate.arguments([
+            { name: 'id', value: id, type: 'string' }
+        ])
+
+        return restApi.toggleCartDuck(this.__userToken__, id)
+            .then(({ error }) => {
+                if (error) throw new LogicError(error)
+            })
+    },
+
+    retrieveCartDucks() {
+        return restApi.retrieveCartDucks(this.__userToken__)
+            .then(response => {
+                const { error } = response
+
+                if (error) throw new LogicError(error)
+
+                return response
+            })
+    },
 }
 
 export default logic

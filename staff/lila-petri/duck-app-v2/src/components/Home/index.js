@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom'
 import queryString from 'query-string'
 
 class Home extends Component {
-    state = { query: null, error: null, ducks: null, duck: null, favs: null }
+    state = { query: null, error: null, ducks: null, duck: null, favs: null , cart: null}
 
     componentWillReceiveProps(props) {
         if (props.location.search) {
@@ -49,24 +49,33 @@ class Home extends Component {
         logic.toggleFavDuck(id)
             .then(() => logic.retrieveFavDucks())
             .then(favs => this.setState({ favs }))
+    
+    handelCart = (id) => {
+        logic.toggleCartDuck(id)
+            .then(() => logic.retrieveCartDucks())
+            .then(cart => this.setState({ cart }))
+
+    }
 
     render() {
         const {
             handleSearch,
             handleRetrieve,
             handleFav,
-            state: { query, ducks, duck, favs },
-            props: { lang, name, onLogout, onFavorites }
+            handelCart,
+            state: { query, ducks, duck, favs, cart},
+            props: { lang, name, onLogout, onFavorites, goCart}
         } = this
 
-        const { hello, logout, favorites } = literals[lang]
+        const { hello, logout, favorites, mycart } = literals[lang]
 
         return <main className="home">
             <h1>{hello}, {name}!</h1>
             <button onClick={onLogout}>{logout}</button>
             <button onClick={onFavorites}>{favorites}</button>
+            <button onClick={goCart}>{mycart}</button>
             <Search lang={lang} query={query} onSearch={handleSearch} />
-            {!duck && ducks && (ducks.length && <Results items={ducks} onItem={handleRetrieve} onFav={handleFav} favs={favs} /> || <p>No results.</p>)}
+            {!duck && ducks && (ducks.length && <Results items={ducks} onItem={handleRetrieve} onFav={handleFav} favs={favs} onCart={handelCart} lang={lang} /> || <p>No results.</p>)}
             {duck && <Detail item={duck} />}
         </main>
     }

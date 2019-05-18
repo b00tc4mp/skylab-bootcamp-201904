@@ -126,7 +126,35 @@ const restApi = {
             timeout: this.__timeout__
         })
             .then(response => response.json())
-    }
+    },
+    toggleCartDuck(token, id) {
+        validate.arguments([
+            { name: 'token', value: token, type: 'string', notEmpty: true },
+            { name: 'id', value: id, type: 'string', notEmpty: true }
+        ])
+        debugger
+        return call(`${this.__url__}/ducks/${id}/cart`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            timeout: this.__timeout__
+        })
+            .then(response => response.json())
+    },
+    retrieveCartDucks(token) {
+        validate.arguments([
+            { name: 'token', value: token, type: 'string', notEmpty: true }
+        ])
+
+        return call(`${this.__url__}/ducks/cart`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            timeout: this.__timeout__
+        })
+            .then(response => response.json())
+    },
 }
 
 
