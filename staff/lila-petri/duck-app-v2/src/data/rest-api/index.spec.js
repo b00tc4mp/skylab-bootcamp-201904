@@ -327,7 +327,7 @@ describe('rest api', () => {
             // TODO more cases
         })
 
-        describe('toggle cart duck', () => {
+        describe('add cart duck', () => {
             let duckId
 
             beforeEach(() =>
@@ -335,18 +335,19 @@ describe('rest api', () => {
                     .then(ducks => duckId = ducks[0].id)
             )
 
-            it('should succeed adding cart on first time', () =>
-                restApi.toggleCartDuck(token, duckId)
+            fit('should succeed adding cart on first time', () =>
+                restApi.addCartDuck(token, duckId)
                     .then(response => {
                         console.log(response)
-                        debugger
+                        
                         const { message } = response
-
-                        expect(message).toBe('Ok, duck toggled.')
+                        
+                        expect(message).toBe('Ok, duck added to cart.')
                     })
                     .then(() => restApi.retrieveCartDucks(token))
                     .then(cart => {
-                        debugger
+                        
+                        console.log(cart)
                         expect(cart).toBeDefined()
                         expect(cart instanceof Array).toBeTruthy()
                         expect(cart.length).toBe(1)
@@ -354,7 +355,7 @@ describe('rest api', () => {
                     })
             )
 
-            it('should succeed removing cart on second time', () =>
+            xit('should succeed removing cart on second time', () =>
                 restApi.toggleCartDuck(token, duckId)
                     .then(() => restApi.toggleCartDuck(token, duckId))
                     .then(() => restApi.retrieveCartDucks(token))

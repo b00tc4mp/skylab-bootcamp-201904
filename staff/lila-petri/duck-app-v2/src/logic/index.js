@@ -116,19 +116,38 @@ const logic = {
             })
     },
 
-    toggleCartDuck(id) {
+    addCartDuck(id) {
         validate.arguments([
             { name: 'id', value: id, type: 'string' }
         ])
 
-        return restApi.toggleCartDuck(this.__userToken__, id)
+        return restApi.addCartDuck(this.__userToken__, id)
             .then(({ error }) => {
                 if (error) throw new LogicError(error)
             })
     },
-
+    deleteCartDuck(id) {
+        validate.arguments([
+            { name: 'id', value: id, type: 'string' }
+        ])
+        
+        return restApi.deleteCartDuck(this.__userToken__, id)
+            .then(({ error }) => {
+                if (error) throw new LogicError(error)
+            })
+    },
     retrieveCartDucks() {
         return restApi.retrieveCartDucks(this.__userToken__)
+            .then(response => {
+                const { error } = response
+
+                if (error) throw new LogicError(error)
+
+                return response
+            })
+    },
+    payment() {
+        return restApi.payment(this.__userToken__)
             .then(response => {
                 const { error } = response
 

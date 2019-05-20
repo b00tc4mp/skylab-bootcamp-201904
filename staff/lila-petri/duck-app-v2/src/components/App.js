@@ -4,6 +4,7 @@ import i18n from '../common/i18n'
 import LanguageSelector from './LanguageSelector'
 import Landing from './Landing'
 import Favorites from './Favorites'
+import Checkout from './Checkout'
 import Cart from './Cart'
 import Register from './Register'
 import RegisterOk from './RegisterOk'
@@ -79,8 +80,8 @@ class App extends Component {
     handleCart = () => {
         try{
             logic.retrieveCartDucks()
-                .then((items) =>
-                    this.setState({ items: items.map(({ id, title, imageUrl: image, price }) => ({ id, title, image, price })), items }, () => this.props.history.push('/cart'))
+                .then((cart) =>
+                    this.setState({ cart: cart.map(({ id, title, imageUrl: image, price }) => ({ id, title, image, price })), cart }, () => this.props.history.push('/cart'))
                 )
                 .catch(error =>
                     this.setState({ error: error.message })
@@ -96,6 +97,13 @@ class App extends Component {
             .then(() => logic.retrieveFavDucks())
             .then(favs => this.setState({ favs }))
     }
+
+    handleDeleteCart = (id) => {
+        logic.deleteCartDuck(id)
+            .then(() => logic.retrieveCartDucks())
+            .then(cart => this.setState({ cart }))
+
+    }
             
     handleComeBack = () => {
         logic.retrieveUser()
@@ -106,6 +114,14 @@ class App extends Component {
                 this.setState({ error: error.message })
             )
         }
+    handleCheckout= () => this.props.history.push('/checkout')
+    handlePayment = () => {
+        logic.payment()
+            .then(()=>this.props.history.push('/home'))
+            .catch(error =>
+                this.setState({ error: error.message })
+            )
+    }
     handleLogout = () => {
         logic.logoutUser()
 
@@ -128,6 +144,9 @@ class App extends Component {
             handleComeBack,
             handleFav,
             handleCart,
+            handleDeleteCart,
+            handleCheckout,
+            handlePayment,
             handleLogout
         } = this
 
@@ -147,9 +166,11 @@ class App extends Component {
 
                 <Route path="/home" render={() => logic.isUserLoggedIn ? <Home lang={lang} name={name} onLogout={handleLogout} onFavorites={handleFavorites} goCart={handleCart}/> : <Redirect to="/" />} />
             
-                <Route path="/favorites" render={() =>favs && <Favorites lang={lang} favs={favs} error={error} onReturn={handleComeBack} onFav={handleFav}/>} />
+                <Route path="/favorites" render={() => favs && <Favorites lang={lang} favs={favs} error={error} onReturn={handleComeBack} onFav={handleFav}/>} />
 
-                <Route path="/cart" render={() => <Cart lang={lang} error={error} onReturn={handleComeBack} cart={cart} onFav={handleFav}/>} />
+                <Route path="/cart" render={() => cart && <Cart lang={lang} error={error} onReturn={handleComeBack} cart={cart} onDelete={handleDeleteCart} onCheckout={handleCheckout}/>} />
+
+                <Route path="/checkout" render={() => <Checkout lang={lang} error={error} name={name} cart={cart} onPayment={handlePayment}/>} />
             
                 <Redirect to="/" />
             </Switch>

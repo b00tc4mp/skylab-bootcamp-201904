@@ -103,7 +103,6 @@ const restApi = {
             { name: 'token', value: token, type: 'string', notEmpty: true },
             { name: 'id', value: id, type: 'string', notEmpty: true }
         ])
-
         return call(`${this.__url__}/ducks/${id}/fav`, {
             method: 'POST',
             headers: {
@@ -127,14 +126,29 @@ const restApi = {
         })
             .then(response => response.json())
     },
-    toggleCartDuck(token, id) {
+    addCartDuck(token, id) {
+        validate.arguments([
+            { name: 'token', value: token, type: 'string', notEmpty: true },
+            { name: 'id', value: id, type: 'string', notEmpty: true }
+        ])
+        
+        return call(`${this.__url__}/ducks/${id}/cart`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            timeout: this.__timeout__
+        })
+            .then(response => response.json())
+    },
+    deleteCartDuck(token, id) {
         validate.arguments([
             { name: 'token', value: token, type: 'string', notEmpty: true },
             { name: 'id', value: id, type: 'string', notEmpty: true }
         ])
         debugger
         return call(`${this.__url__}/ducks/${id}/cart`, {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -148,6 +162,21 @@ const restApi = {
         ])
 
         return call(`${this.__url__}/ducks/cart`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            timeout: this.__timeout__
+        })
+            .then(response => response.json())
+    },
+    payment(token) {
+        validate.arguments([
+            { name: 'token', value: token, type: 'string', notEmpty: true }
+    
+        ])
+        
+        return call(`${this.__url__}/payment`, {
+            method: 'POST',
             headers: {
                 Authorization: `Bearer ${token}`
             },

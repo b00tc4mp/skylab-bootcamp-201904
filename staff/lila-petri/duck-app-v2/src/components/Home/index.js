@@ -51,7 +51,7 @@ class Home extends Component {
             .then(favs => this.setState({ favs }))
     
     handelCart = (id) => {
-        logic.toggleCartDuck(id)
+        logic.addCartDuck(id)
             .then(() => logic.retrieveCartDucks())
             .then(cart => this.setState({ cart }))
 

@@ -7,13 +7,13 @@ import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 function Favorites({lang, favs, onReturn, onFav}) {
     const { favorites, comeback, results } = literals[lang]
     if (favs.length){
-    return <div>
+    return <div className="home">
         <h2>{favorites}</h2>
         <button onClick={onReturn}>{comeback}</button>
 
     <ul>
         {
-            favs.map(({ id, title, image, price }) =>{
+            favs.map(({ id, title, imageUrl: image, price }) =>{
                 const isFav = favs.some(fav => fav.id === id)
 
                 return <li key={id}>
@@ -30,7 +30,7 @@ function Favorites({lang, favs, onReturn, onFav}) {
     </ul> 
     </div>
     }else {
-        return <div>
+        return <div className="home">
         <h2>{favorites}</h2>
         <button onClick={onReturn}>{comeback}</button>
 

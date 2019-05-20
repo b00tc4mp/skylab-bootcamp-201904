@@ -1,26 +1,34 @@
 export default  {
     en: {
 
-        mycart: 'My Cart',
-        comeback : 'Come Back',
-        results: 'No results',
+        mycart: 'My Shopping Bag',
+        comeback : 'Keep buying',
+        results: 'There are no items in your shopping cart',
+        topay: 'Total to Pay',
+        checkout: 'Checkout'
         
     },
     es: {
         mycart: 'Mi Cesta',
-        comeback : 'Volver',
-        results: 'No hay resultados'
+        comeback : 'Seguir comprando',
+        results: 'No hay items en su carrito de compra',
+        topay: 'Total a Pagar',
+        checkout: 'Comprar'
     },
     ca: {
         
-        mycart: 'Cistella',
-        comeback : 'Tornar',
-        results: 'No hi ha resultats'
+        mycart: 'Bossa',
+        comeback : 'Continuar comprant',
+        results: 'No hi ha ítems a la cistella de compra',
+        topay: 'Total a Pagar',
+        checkout: 'Comprar'
     },
     ga: {
         
         mycart: 'Miña Cesta',
-        comeback : 'Volva',
-        results: 'Non hai resultados'
+        comeback : 'Continúa a compra',
+        results: 'Non hai artigos na túa cesta da compra',
+        topay: 'Total a Pagar',
+        checkout: 'Comprar'
     }
 }
