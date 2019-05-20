@@ -3,24 +3,28 @@ export default  {
         hello: 'Hello',
         logout: 'Logout',
         favorites: 'Favorites',
-        mycart: 'My Cart'
+        mycart: 'My Cart',
+        myorders: 'My Orders'
     },
     es: {
         hello: 'Hola',
         logout: 'Cerrar sesión',
         favorites: 'Favoritos',
-        mycart: 'Mi Cesta'
+        mycart: 'Mi Cesta',
+        myorders: 'Mis Compras'
     },
     ca: {
         hello: 'Hola',
         logout: 'Tanca sessió',
         favorites: 'Favorits',
-        mycart: 'Cistella'
+        mycart: 'Cistella',
+        myorders: 'Els meus compres'
     },
     ga: {
         hello: 'Hola',
         logout: 'Finalizar sesión',
         favorites: 'Favoritos',
-        mycart: 'Miña Cesta'
+        mycart: 'Miña Cesta',
+        myorders: 'As miñas compras'
     }
 }

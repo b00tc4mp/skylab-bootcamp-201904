@@ -184,6 +184,20 @@ const restApi = {
         })
             .then(response => response.json())
     },
+    retrieveOrders(token) {
+        validate.arguments([
+            { name: 'token', value: token, type: 'string', notEmpty: true }
+    
+        ])
+        
+        return call(`${this.__url__}/orders`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            timeout: this.__timeout__
+        })
+            .then(response => response.json())
+    },
 }
 
 

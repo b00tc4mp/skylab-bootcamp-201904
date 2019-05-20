@@ -8,6 +8,7 @@ describe('rest api', () => {
     const surname = 'Petri'
     let email
     const password = '123'
+    const duckId = '5c3853aebd1bde8520e66e2c'
 
     beforeEach(() => email = `lila-${Math.random()}@gmail.com`)
 
@@ -124,6 +125,39 @@ describe('rest api', () => {
                         expect(response.surname).toBe(surname)
                         expect(response.email).toBe(email)
                         expect(response.password).toBeUndefined()
+                    })
+            )
+
+            it('should fail on incorrect user token', () => {
+                return restApi.retrieveUser('wrong-token')
+                    .then(response => {
+                        const { error } = response
+
+                        expect(error).toBe('invalid token')
+                    })
+            })
+        })
+
+        describe('retrieve orders', () => {
+            let token
+
+            beforeEach(() =>
+                restApi.registerUser(name, surname, email, password)
+                    .then(response =>
+                        restApi.authenticateUser(email, password)
+                    )
+                    .then(response => token = response.token)
+                    .then(()=> restApi.addCartDuck(token, duckId))
+                    .then(()=> restApi.payment(token))
+            )
+
+            fit('should succeed on correct user token', () =>
+                restApi.retrieveOrders(token)
+                    .then(orders => {
+                       
+                        expect(orders instanceof Array).toBeTruthy()
+                        expect(orders[0].id).toBeDefined()
+                        expect(orders[0].date).toBeDefined()
                     })
             )
 
@@ -338,8 +372,6 @@ describe('rest api', () => {
             fit('should succeed adding cart on first time', () =>
                 restApi.addCartDuck(token, duckId)
                     .then(response => {
-                        console.log(response)
-                        
                         const { message } = response
                         
                         expect(message).toBe('Ok, duck added to cart.')
@@ -347,7 +379,6 @@ describe('rest api', () => {
                     .then(() => restApi.retrieveCartDucks(token))
                     .then(cart => {
                         
-                        console.log(cart)
                         expect(cart).toBeDefined()
                         expect(cart instanceof Array).toBeTruthy()
                         expect(cart.length).toBe(1)

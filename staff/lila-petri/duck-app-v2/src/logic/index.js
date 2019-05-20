@@ -156,6 +156,17 @@ const logic = {
                 return response
             })
     },
+    retrieveOrders() {
+        return restApi.retrieveOrders(this.__userToken__)
+            .then(response => {
+                
+                const { error } = response
+
+                if (error) throw new LogicError(error)
+
+                return response
+            })
+    },
 }
 
 export default logic

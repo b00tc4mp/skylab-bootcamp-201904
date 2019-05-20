@@ -5,6 +5,7 @@ import LanguageSelector from './LanguageSelector'
 import Landing from './Landing'
 import Favorites from './Favorites'
 import Checkout from './Checkout'
+import Orders from './Orders'
 import Cart from './Cart'
 import Register from './Register'
 import RegisterOk from './RegisterOk'
@@ -13,7 +14,7 @@ import Home from './Home'
 import { Route, withRouter, Redirect, Switch } from 'react-router-dom'
 
 class App extends Component {
-    state = { lang: i18n.language, visible: null, error: null, name: null ,favs: null, cart: null}
+    state = { lang: i18n.language, visible: null, error: null, name: null ,favs: [], cart: [], orders: []}
 
     handleLanguageChange = lang => this.setState({ lang: i18n.language = lang })
 
@@ -47,6 +48,12 @@ class App extends Component {
                 .catch(error =>
                     this.setState({ error: error.message })
                 )
+
+        switch(this.props.location.pathname) {
+            case '/orders':
+                    this.handleOrders()
+            break;
+        }
     }
 
     handleRegister = (name, surname, username, password) => {
@@ -122,6 +129,24 @@ class App extends Component {
                 this.setState({ error: error.message })
             )
     }
+    handleOrders = () => {
+        debugger
+        try{
+            logic.retrieveOrders()
+                .then((orders) =>{
+                
+                    this.setState({ orders }, () => this.props.history.push('/orders'))
+                })
+                .catch(error =>
+                    this.setState({ error: error.message })
+                )
+
+        }catch({message}){
+            this.setState({error: message})
+
+        }
+    }
+    
     handleLogout = () => {
         logic.logoutUser()
 
@@ -134,7 +159,7 @@ class App extends Component {
 
     render() {
         const {
-            state: { lang, visible, error, name, favs, cart },
+            state: { lang, visible, error, name, favs, cart, orders},
             handleLanguageChange,
             handleRegisterNavigation,
             handleLoginNavigation,
@@ -147,6 +172,7 @@ class App extends Component {
             handleDeleteCart,
             handleCheckout,
             handlePayment,
+            handleOrders,
             handleLogout
         } = this
 
@@ -164,13 +190,15 @@ class App extends Component {
 
                 <Route path="/login" render={() => logic.isUserLoggedIn ? <Redirect to="/home" /> : <Login lang={lang} onLogin={handleLogin} error={error} />} />
 
-                <Route path="/home" render={() => logic.isUserLoggedIn ? <Home lang={lang} name={name} onLogout={handleLogout} onFavorites={handleFavorites} goCart={handleCart}/> : <Redirect to="/" />} />
+                <Route path="/home" render={() => logic.isUserLoggedIn ? <Home lang={lang} name={name} onLogout={handleLogout} onFavorites={handleFavorites} goCart={handleCart} onOrders={handleOrders}/> : <Redirect to="/" />} />
             
-                <Route path="/favorites" render={() => favs && <Favorites lang={lang} favs={favs} error={error} onReturn={handleComeBack} onFav={handleFav}/>} />
+                <Route path="/favorites" render={() => <Favorites lang={lang} favs={favs} error={error} onReturn={handleComeBack} onFav={handleFav}/>} />
 
-                <Route path="/cart" render={() => cart && <Cart lang={lang} error={error} onReturn={handleComeBack} cart={cart} onDelete={handleDeleteCart} onCheckout={handleCheckout}/>} />
+                <Route path="/cart" render={() => <Cart lang={lang} error={error} onReturn={handleComeBack} cart={cart} onDelete={handleDeleteCart} onCheckout={handleCheckout}/>} />
 
                 <Route path="/checkout" render={() => <Checkout lang={lang} error={error} name={name} cart={cart} onPayment={handlePayment}/>} />
+                
+                <Route path="/orders" render={() => <Orders lang={lang} error={error}  orders={orders} onReturn={handleComeBack}/>} />
             
                 <Redirect to="/" />
             </Switch>

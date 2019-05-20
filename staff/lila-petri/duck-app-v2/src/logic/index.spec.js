@@ -195,6 +195,35 @@ describe('logic', () => {
                     })
             })
         })
+        describe('retrieve orders', () => {
+            let token, duckId='5c3853aebd1bde8520e66e1f'
+
+            beforeEach(() =>
+                restApi.registerUser(name, surname, email, password)
+                    .then(response =>
+                        restApi.authenticateUser(email, password)
+                    )
+                    .then(response => {
+                        token = response.token
+
+                        logic.__userToken__ = token
+                    })
+                    .then(()=> restApi.addCartDuck(token, duckId))
+                    .then(()=> restApi.payment(token))
+            )
+
+            it('should succeed on correct user id and token', () =>
+                logic.retrieveOrders()
+                    .then(orders => {
+                        debugger
+                        expect(orders instanceof Array).toBeTruthy()
+                        expect(orders[0].id).toDefined()
+                        expect(orders[0].date).toDefined()
+                        
+                    })
+            )
+
+        })
 
         describe('ducks', () => {
             let token

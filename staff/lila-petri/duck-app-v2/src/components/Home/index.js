@@ -64,16 +64,17 @@ class Home extends Component {
             handleFav,
             handelCart,
             state: { query, ducks, duck, favs, cart},
-            props: { lang, name, onLogout, onFavorites, goCart}
+            props: { lang, name, onLogout, onFavorites, goCart, onOrders}
         } = this
 
-        const { hello, logout, favorites, mycart } = literals[lang]
+        const { hello, logout, favorites, mycart, myorders } = literals[lang]
 
         return <main className="home">
             <h1>{hello}, {name}!</h1>
             <button onClick={onLogout}>{logout}</button>
             <button onClick={onFavorites}>{favorites}</button>
             <button onClick={goCart}>{mycart}</button>
+            <button onClick={onOrders}>{myorders}</button>
             <Search lang={lang} query={query} onSearch={handleSearch} />
             {!duck && ducks && (ducks.length && <Results items={ducks} onItem={handleRetrieve} onFav={handleFav} favs={favs} onCart={handelCart} lang={lang} /> || <p>No results.</p>)}
             {duck && <Detail item={duck} />}
