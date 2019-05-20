@@ -51,8 +51,16 @@ class App extends Component {
 
         switch(this.props.location.pathname) {
             case '/orders':
-                    this.handleOrders()
+                this.handleOrders()
             break;
+            case '/favorites':
+                this.handleFavorites()
+            break;
+            case '/cart':
+                this.handleCart()
+            break;
+
+
         }
     }
 
@@ -130,7 +138,7 @@ class App extends Component {
             )
     }
     handleOrders = () => {
-        debugger
+        
         try{
             logic.retrieveOrders()
                 .then((orders) =>{
