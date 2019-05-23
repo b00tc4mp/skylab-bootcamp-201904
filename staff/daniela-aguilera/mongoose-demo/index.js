@@ -1,7 +1,6 @@
 const mongoose = require('mongoose'); 
 const User = require('./schema/user')
 
-// npm promps
 mongoose.connect('mongodb://localhost/test', function (err) {
  
    if (err) throw err;
