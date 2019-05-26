@@ -12,44 +12,47 @@ const jsonParser = bodyParser.json()
 const router = express.Router()
 
 
+//Get Hello world
+router.get('/hello', jsonParser, (req, res) => {
+
+    console.log("I am here")
+
+    res.status(201).json({ Mensaje: "Eres muy guapeton" })
+
+})
+
+
 //User Creation I only require Nickname, Age, Email && Password to register, Nickname and Email has to be Unique!
-router.post('/user', jsonParser, (req, res) => {
+router.post('/users', jsonParser, async (req, res) => {
     const { body: { nickname, age, email, password } } = req
 
     try {
+        await logic.registerUser(nickname, age, email, password)
+        res.status(201).json({ message: 'Ok, user created. ' })
 
-        logic.registerUser(nickname, age, email, password)
-            .then(() => res.status(201).json({ message: 'Ok, user created. ' }))
-            .catch(({ message }) => {
-                res.status(400).json({ error: message })
-            })
     } catch ({ message }) {
         res.status(400).json({ error: message })
     }
 })
 
 //User authentication using Nickname || Email && password
-router.post('/auth', jsonParser, (req, res) => {
+router.post('/auth', jsonParser, async (req, res) => {
     const { body: { userNameOrEmail, password } } = req
 
     try {
-        logic.authenticateUser(userNameOrEmail, password) // cojerá token
-            .then(id => {
+        const id = await logic.authenticateUser(userNameOrEmail, password) // cojerá token
 
-                let newtoken = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: '5h' })
-                return res.json({ token: newtoken })
-            })
-            .catch(({ message }) => {
-                res.status(400).json({ error: message })
-            })
+        let newtoken = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: '5h' })
+        return res.json({ token: newtoken })
+
     } catch ({ message }) {
         res.status(400).json({ error: message })
     }
 })
 
-//Retriving User information 
+//Retriving User information
 
-router.get('/user', jsonParser, (req, res) => { // Un get + ruta user y ID para obtener datos de usuario
+router.get('/user', jsonParser, async (req, res) => { // Un get + ruta user y ID para obtener datos de usuario
     let { headers: { authorization: token } } = req
     token = token.split(' ')[1]
 
@@ -58,11 +61,10 @@ router.get('/user', jsonParser, (req, res) => { // Un get + ruta user y ID para 
 
         const { sub } = payload
 
-        return logic.retrieveUser(sub)
-            .then(({ nickname, age, email, userPicture }) => res.json({ nickname, age, email, userPicture }))
-            .catch(({ message }) => {
-                res.status(400).json({ error: message })
-            })
+        const { nickname, age, email, userPicture } = await logic.retrieveUser(sub)
+        
+        res.json({ nickname, age, email, userPicture })
+
     } catch ({ message }) {
         res.status(400).json({ error: message })
     }

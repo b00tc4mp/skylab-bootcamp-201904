@@ -23,6 +23,7 @@ const user = new Schema({
         required: true 
     },
     records: [gameHistory],
+    avatarURL: String
 })
 
 module.exports = user
