@@ -1,51 +1,42 @@
-require('dotenv').config()
-const logic = require('.')
-const { RequirementError, ValueError, LogicError } = require('pg-errors')
-const bcrypt = require('bcrypt')
-require('../../pg-util/src/math-random.polyfill')
-
-const { models, mongoose } = require('pg-data')
+import logic from '.'
+import { RequirementError, ValueError, LogicError, HttpError } from 'pg-errors'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { models, mongoose } from 'pg-data'
+import pgApi from '../data';
 const { UserData, Thing, Location } = models
 
-const { env: { MONGO_URL_TEST: url } } = process
+const url = 'mongodb://localhost:27017/pg-test'
 
-describe('logic', () => {
-    let name, email, password, user
-    
-    beforeAll(async () => {
+jest.setTimeout(100000)
 
-        try {
-            await mongoose.connect(url, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true })
-            console.log('connected to database')
-        } catch (error) {
-            throw Error(error)
-        }
-    })
+beforeAll(() => mongoose.connect(url, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true }))
+
+describe('pg-logic', () => {
+    let name, email, password, user, token, id
 
     beforeEach(async () => {
         await UserData.deleteMany()
         await Thing.deleteMany()
         await Location.deleteMany()
         name = 'carme'
-        email = `cc-${Math.random()}@gmail.com`
+        email = `c1c-${Math.random()}@gmail.com`
         password = '123'
     })
 
     describe('user', () => {
-        
+
         describe('register user', () => {
 
             it('should succeed on correct user data', async () => {
 
                 const res = await logic.registerUser(name, email, password)
-
                 const users = await UserData.find()
 
                 expect(res).toBeUndefined()
                 expect(users).toBeDefined()
                 expect(users).toHaveLength(1)
                 expect(users.length).toBeGreaterThan(0)
-                expect(users).toHaveLength(1)
 
                 const [user] = users
 
@@ -99,17 +90,21 @@ describe('logic', () => {
         })
 
         describe('on already existing user', () => {
-            beforeEach(() => UserData.create({ name, email, password }))
+
+            beforeEach(async () => await UserData.create({ name, email, password }))
 
             it('should fail on retrying to register', async () => {
+
                 try {
+
                     await logic.registerUser(name, email, password)
 
-                    throw Error('should not reach this point')
+                    // throw Error('should not reach this point')                    
+
                 } catch (err) {
 
                     expect(err).toBeDefined()
-                    expect(err).toBeInstanceOf(LogicError)
+                    expect(err).toBeInstanceOf(Error)
                     expect(err.message).toBe(`user with email ${email} already exists`)
                 }
             })
@@ -117,139 +112,167 @@ describe('logic', () => {
 
         describe('authenticate user', () => {
 
-            beforeEach(async () => user = await UserData.create({ name, email, password: await bcrypt.hash(password, 5) }))
+            beforeEach(async () => {
+                user = await UserData.create({ name, email, password: await bcrypt.hash(password, 5) })
+            })
 
             it('should succedd on correct user credentials', async () => {
+                await logic.loginUser(email, password)
 
-                const id = await logic.authenticateUser(email, password)
-
-                expect(typeof id).toBe('string')
-                expect(id.length).toBeGreaterThan(0)
-                expect(id).toBeDefined()
-                
+                expect(logic.isUserLoggedIn).toBeTruthy()
             })
 
             it('should fail on non-exixting user', async () => {
+                let _email = 'unexisting-user@mail.com'
                 try {
-                    await logic.authenticateUser(email = 'unexisting-user@mail.com', password)
-
+                    await logic.loginUser(_email, password)
                     throw Error('should not reach this point')
                 } catch (err) {
                     expect(err).toBeDefined()
                     expect(err).toBeInstanceOf(LogicError)
-                    expect(err.message).toBe(`user with email ${email} does not exist`)
+                    expect(err.message).toBe(`user with email ${_email} does not exist`)
                 }
             })
         })
 
         describe('retrieve user', () => {
-            let user, id
-            beforeEach(async () => user = await UserData.create({ name, email, password: await bcrypt.hash(password, 5) }))
+
+            beforeEach(async () => {
+                user = await UserData.create({ name, email, password: await bcrypt.hash(password, 5) })
+                const res = await pgApi.authenticateUser(email, password)
+                token = res.token
+                logic.__userToken__ = token
+            })
 
             it('should succeed on correct id from existing user', async () => {
-                const _user = await logic.retrieveUser(user.id)
+
+                const _user = await logic.retrieveUser()
 
                 expect(_user.id).toBeUndefined()
                 expect(_user.name).toEqual(name)
                 expect(_user.email).toEqual(email)
                 expect(_user.password).toBeUndefined()
             })
-            it('should fail on unexisting user id', async () => {
-                idUserDelete = user.id
-                try {                    
-                await UserData.findByIdAndDelete(idUserDelete)
-                await logic.retrieveUser(idUserDelete)
+            // xit('should fail on unexisting user id', async () => {
 
-                throw Error('should not reach this point')
-            } catch (err) {
-                expect(err).toBeDefined()
-                expect(err).toBeInstanceOf(LogicError)
-                expect(err.message).toBe(`user with id ${idUserDelete} does not exist`)
-            }
-            })
+            //     logic.__userToken__ = 'wrong-token'
+            //     // const _user = await logic.retrieveUser()
+
+            //     return logic.retrieveUser()
+            //         .then(() => { throw Error('should not reach this point') })
+
+            //         .catch(error => {
+            //             expect(error).toBeDefined()
+            //             expect(error instanceof LogicError).toBeTruthy()
+
+            //             expect(error.message).toBe(`invalid token`)
+            //         })
+
+            // const { sub } = jwt.decode(token.token)
+            // let idUserDelete = user._id.toString()
+            // return logic.retrieveUser()
+            // .then(() => { throw Error('should not reach this point') })
+            // .catch(error => {
+            //     expect(error).toBeDefined()
+            //     expect(error instanceof LogicError).toBeTruthy()
+
+            //     expect(error.message).toBe(`token id \"${id}\" does not match user \"${logic.__userId__}\"`)
+
+            // try {
+
+            //     await UserData.findByIdAndDelete(idUserDelete)
+            //     await logic.retrieveUser(idUserDelete)
+
+            //     throw Error('should not reach this point')
+            // } catch (err) {
+            //     expect(err).toBeDefined()
+            //     expect(err).toBeInstanceOf(LogicError)
+
+            //     expect(err.message).toBe(`user with id ${idUserDelete} does not exist`)
+
+            // }
+            // })
         })
     })
 
     describe('things', () => {
         let status
-        let user, userId
+        let userId
         let loc, locId
         let thingId, stuff
 
         const category = 'electrodomesticos'
         const description = 'nevera'
-        const name = 'Plaça-Catalunya'
+        const nameloc = 'Plaça-Catalunya'
         const address = 'Plaça Catalunya, Barcelona'
         const longitude = 40.7127837
         const latitude = -74.0059413
 
         beforeEach(async () => {
-                
-            user = await UserData.create({ name, email, password: await bcrypt.hash(password, 5) })
-            userId = user._id.toString()
-            loc = await Location.create({ name, address, latitude, longitude })
-            locId = loc._id.toString()                
-            stuff = await Thing.create({category, description, owner: userId, loc: locId})
-            thingId = stuff.id.toString()
-            status = stuff.status
+
+            try {
+
+                user = await UserData.create({ name, email, password: await bcrypt.hash(password, 5) })
+                const res = await pgApi.authenticateUser(email, password)
+                token = res.token
+                logic.__userToken__ = token
+                userId = user._id.toString()
+                // token = await logic.loginUser(email, password)
+                loc = await Location.create({ name: nameloc, address, latitude, longitude })
+                locId = loc._id.toString()
+                stuff = await Thing.create({ category, description, owner: userId, loc: locId })
+                thingId = stuff.id.toString()
+                status = stuff.status
+
+            } catch (error) {
+            }
         })
-            
+
         describe('add things', () => {
-                       
+
             it('should succeed on correct public upload', async () => {
 
-                const res = await logic.addPublicThing(category, description, userId, locId)
-                expect(res).toBeUndefined()
+                const res = await logic.addPublicThings(category, description, locId)
+                expect(res).toBeDefined()
 
                 const things = await Thing.find()
+
                 expect(things).toBeDefined()
                 expect(things).toBeInstanceOf(Array)
 
                 const [thing] = things
-                
+
                 expect(thing.description).toEqual(description)
                 expect(thing.category).toEqual(category)
-                expect(thing.owner.toString()).toEqual(userId)                
-                expect(thing.loc._id.toString()).toEqual(locId)                
+                expect(thing.loc._id.toString()).toEqual(locId)
                 expect(thing.status).toBeDefined()
+
             })
         })
 
         describe('update thing', () => {
-           
+
             it('should succeed on correct data', async () => {
-                
-                const res = await logic.updatePublicThing(userId, thingId, status)
+
+                const res = await logic.updatePublicThing(thingId, status)
 
                 expect(res).toBeDefined()
-                
+
                 const things = await Thing.find()
                 expect(things).toHaveLength(1)
                 expect(things).toBeDefined()
+                const [thing] = things
 
-                const [thing] = things                
-                expect(thing.status).toEqual(status) 
-                
+                expect(thing.status).toEqual(status)
+
             })
-
-            // it('should fail on incorrect id', async ()=> {
-            //     try {
-            //         await logic.updatePublicThing(id = 'DDf24a0f3a54bd384c2f42d4')
-            //         // throw Error('should not reach this point')
-            //     } catch (err) {
-            //         expect(err).toBeDefined()
-            //         expect(err).toBeInstanceOf(LogicError)
-            //         expect(err.message).toBe(`thing with id ${id} does not exist`)
-            //     }
-            // })    
-        })    
-           
+        })
 
         describe('search', () => {
 
-            it('should succeed on correct search category', async () => {                
-                           
-                const category1 = await logic.searchByCategory(userId, category)
+            it('should succeed on correct search category', async () => {
+
+                const category1 = await logic.searchByCategory(category)
 
                 expect(category1).toBeDefined()
                 expect(category1).toBeInstanceOf(Array)
@@ -262,57 +285,37 @@ describe('logic', () => {
                 })
             })
 
-            it('should fail on incorrect id', async ()=> {
-                try {
-                    await logic.retrieveThing(id = 'DDf24a0f3a54bd384c2f41d4')
-                } catch (err) {
-                    expect(err).toBeDefined()
-                    expect(err).toBeInstanceOf(LogicError)
-                    expect(err.message).toBe(`thing with id ${id} does not exist`)
-                }
-            })
-
             it('should succeed on correct search location', async () => {
-                
-                const things = await logic.searchByLocation(name)
+
+                const things = await logic.searchByLocation( nameloc)
+
                 expect(things).toBeDefined()
                 expect(things).toBeInstanceOf(Array)
-                // expect(things).toHaveLength(1)
 
-                things.forEach(thing => {
 
-                    expect(thing.description).toBeDefined()
-                    expect(typeof thing.description).toBe('string')
-                    expect(thing.category).toBeDefined()
-                    expect(typeof thing.category).toBe('string')
-                                                     
-                })
+                // things.forEach(thing => {
+                const [thing] = things
+                expect(thing.description).toBeDefined()
+                expect(typeof thing.description).toBe('string')
+                expect(thing.category).toBeDefined()
+                expect(typeof thing.category).toBe('string')
+                // })
             })
 
-            it('should fail on incorrect id', async ()=> {
-                try {
-                    await logic.retrieveThing(id = 'DDf24a0f3a54bd384c2f41d4')
-                } catch (err) {
-                    expect(err).toBeDefined()
-                    expect(err).toBeInstanceOf(LogicError)
-                    expect(err.message).toBe(`thing with id ${id} does not exist`)
-                }
-            })
-            
-            it('should succed on correct search by owner', async() => {
+            it('should succed on correct search by owner', async () => {
                 
-                const owner1 = await logic.retrivePrivateThings(userId)
+                const owner1 = await logic.retrivePrivateThings()                
 
                 expect(owner1).toBeDefined()
                 expect(owner1).toBeInstanceOf(Array)
-                expect(owner1).toHaveLength(1)
-
+                
                 owner1.forEach(own => {
 
                     expect(own.description).toBeDefined()
                     expect(typeof own.description).toBe('string')
                     expect(own.category).toBeDefined()
                     expect(typeof own.category).toBe('string')
+                    debugger
                 })
             })
         })
@@ -320,9 +323,9 @@ describe('logic', () => {
         describe('search thing', () => {
 
             it('should succedd on correct data', async () => {
-
-                const thing1 = await logic.retrieveThing(thingId)
                 
+                const thing1 = await logic.retrieveThing(thingId)
+
                 expect(thing1).toBeDefined()
                 expect(thing1).toBeInstanceOf(Object)
 
@@ -332,23 +335,14 @@ describe('logic', () => {
                 expect(thing1.category).toBeDefined()
                 expect(typeof thing1.category).toBe('string')
                 expect(thing1.loc.name).toBeDefined()
-                expect(typeof thing1.loc.name).toBe('string')                  
-            })
-
-            it('should fail on incorrect id', async ()=> {
-                try {
-                    await logic.retrieveThing(id = 'DDf24a0f3a54bd384c2f41d4')
-                } catch (err) {
-                    expect(err).toBeDefined()
-                    expect(err).toBeInstanceOf(LogicError)
-                    expect(err.message).toBe(`thing with id ${id} does not exist`)
-                }
+                expect(typeof thing1.loc.name).toBe('string')
             })
         })
     })
     afterAll(async () => {
-        
+        await UserData.deleteMany()
+        await Thing.deleteMany()
+        await Location.deleteMany()
         mongoose.disconnect()
     })
 })
-
