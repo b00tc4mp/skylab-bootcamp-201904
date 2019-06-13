@@ -1,6 +1,31 @@
 # PUT&GET
-You could leave the thing you don't have use for them anymore (not broken) in a specific locations in Barcelona in order to other people on need of them could pick them up.
+You could leave the thing you don't have use for them anymore (not broken) in a specific locations in Barcelona in order to other people on need of them could pick them up.!
+<!-- [](name-of-giphy.gif) -->
 
-# Planning
+# Use cases 
+![use cases](./images/Usecases.png)
 
-[Trello](https://trello.com/b/RQLtBUhu/final-project)
+# Flowcharts
+![flowcahrts](./images/flowchart.png)
+
+# Technical Description
+
+## Blocks
+![blocks](./images/Blocks.png)
+
+## Components
+![components](./images/Components.png)
+
+## React Components
+![reactcomp](./images/ReactComp.png)
+
+## Data Model
+![datamodel](./images/Datamodel.png)
+
+## Code Coverage
+![codecoverage](./images/coverage.jpg)
+
+
+
+
+

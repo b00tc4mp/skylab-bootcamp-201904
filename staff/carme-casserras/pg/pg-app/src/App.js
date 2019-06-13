@@ -1,63 +1,38 @@
-import React, { Component } from 'react'
-import logic from './logic'
-import Register from './components/Register'
-import Login from './components/Login'
-
-import { Route, withRouter, Redirect, Switch } from 'react-router-dom'
-
+import React from 'react'
+import { Route, Redirect, withRouter } from 'react-router-dom'
 import './index.sass'
+import logic from './logic'
+import Login from './components/Login'
+import Register from './components/Register'
+import CategorySearch from './components/Categorysearch'
+import CategoryResults from './components/Categoryresults'
+import AddThing from './components/Addthing'
+import LocationSearch from './components/Locationsearch'
+import LocationResults from './components/Locationresults'
+import RetrieveThing from './components/Retrievething'
+import UserThings from './components/Userthings'
+import Nav from './components/Nav'
+import Footer from './components/Footer'
 
-// export default function App() {
-//   const [name, setName] = useState('')
-//   const [email, setEmail] = useState('')
-//   const [password, setPassword] = useState('')
-// }
+function App() {
+  
+  return (
+    <div className="App">
+      <Nav/>
+      <Footer />
+      <Route exact path='/register' component={Register} />
+      <Route exact path='/login' component={Login} />
+      <Route exact path='/search/category' component={CategorySearch} />
+      <Route exact path='/things' component={AddThing} />
+      <Route path='/search/locations/:locationPoint' render={(props) => logic.isUserLoggedIn ? <LocationResults locationPoint={props.match.params.locationPoint}/>: <Redirect to="/Login"/> } />
+      <Route exact path='/search/locations' render={() => logic.isUserLoggedIn ? <LocationSearch/> : <Redirect to="/Login"/> } />
+      <Route exact path='/search/category/:category' component={CategoryResults} />
+      <Route exact path='/thing/:id' component={RetrieveThing} />
+      <Route exact path='/search/user/things' render={() => logic.isUserLoggedIn ? <UserThings/> : <Redirect to="/Login"/>} />
 
-class App extends Component {
+    </div>
+  )
 
-  state = { error: null, name: null }
+}
 
-  handleRegister(name, email, password) {
-    try {
-      logic.registerUser(name, email, password)
-        .then(() =>
-        this.props.history.push('/login')
-        )
-        .catch(error =>
-          this.setState({ error: error.message })
-        )
-    } catch ({ message }) {
-      this.setState({ error: message })
-    }
-  }
-
-  handleLogin = (email, password) => {
-    try {
-      logic.loginUser(email, password)
-        .then(() =>
-          logic.retrieveUser()
-        )
-    } catch ({ message }) {
-      this.setState({ error: message })
-    }
-  }
-
-  render() {
-    const {
-      state: { error },
-      handleRegister,
-      handleLogin
-      } = this
-
-      return <>
-          {/* <Route exact path="/" render={() => logic.isUserLoggedIn ? <Redirect to="/home" /> : <Login onLogin={handleLogin} />} /> */}
-          <Route exact path="/register" render={() => <Register onRegister={handleRegister} error={error}/>} />
-          <Route exact path="/login" render={() => <Login onLogin={handleLogin} error={error}/>} />
-          {/* <Route exact path='/register' component={Register} /> */}
-      
-      </>
-
-    }
-
-  }
-  export default withRouter(App);
+export default withRouter(App)

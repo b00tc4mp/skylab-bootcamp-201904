@@ -1,11 +1,20 @@
 import validate from 'pg-validate'
 import call from 'pg-call'
 
-
 const pgApi = {
 
-    __url__: 'http://localhost:8080/api',
+    __url__: 'https://salty-ridge-23134.herokuapp.com/api',
+    // __url__: ' http://localhost:8080/api',
     __timeout__: 0,
+
+/**
+ * * Register user
+ * 
+ * @param {string} name 
+ * @param {string } email 
+ * @param {string} password 
+ * 
+ */
 
     registerUser(name, email, password) {
 
@@ -18,12 +27,24 @@ const pgApi = {
         validate.email(email)
         
         return call(`${this.__url__}/users`, {
+            
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({name, email, password}),
+            body: {name, email, password},
             timeout: this.__timeout__
         })
+        
     },
+
+      /**
+     * Verify if it is the correct user
+     * 
+     * @param {string} email 
+     * @param {string} password 
+     * 
+     * @returns {string} user id
+     * 
+     */
 
     authenticateUser(email, password) {
 
@@ -37,14 +58,22 @@ const pgApi = {
         return call(`${this.__url__}/users/auth`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({email, password}),
+            body: {email, password},
             timeout: this.__timeout__
         })
-
         
         // con axios no es necesario
         // .then(res => res)
     },
+
+    /**
+     * Returns some information of user
+     * 
+     * @param {*} id user
+     * 
+     * @returns {object} userid, name, email
+     * 
+     */
 
     retrieveUser(token) {
 
@@ -61,25 +90,42 @@ const pgApi = {
         // .then(res => res.json())
     },
 
-    addPublicThing(category, description, token, locId) {
+    /**
+     * Add an item to container
+     * 
+     * @param {object} buffer 
+     * @param {string} category 
+     * @param {string} description 
+     * @param {string} userId 
+     * @param {string} locId 
+     * 
+     */
+
+    addPublicThing(formData, token) {
 
         validate.arguments([
-            // { name: 'image', value: image, type: 'object', notEmpty: true },
-            { name: 'category', value: category, type: 'string', notEmpty: true },
-            { name: 'description', value: description, type: 'string', notEmpty: true },
-            { name: 'token', value: token, type: 'string', notEmpty: true },
-            { name: 'locId', value: locId, type: 'string', notEmpty: true },
+            { name: 'formData', value: formData, type: 'object', optional: false },          
+            { name: 'token', value: token, type: 'string', notEmpty: true },            
         ])
 
         return call(`${this.__url__}/things`, {
             method: 'POST',
             headers: { 
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'},
-            body: JSON.stringify({category, description, locId}),
+                'Content-Type': 'multipart/form-data'},
+            body: formData,
             timeout: this.__timeout__
         })
     },
+
+    /**
+     * Update if the item is or not in the container
+     * 
+     * @param {*} userId 
+     * @param {*} id 
+     * @param {*} status 
+     * 
+     */
 
     updatePublicThing(token, id, status) {
 
@@ -94,10 +140,20 @@ const pgApi = {
             headers: { 
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'},
-            body: JSON.stringify({id, status}),
+            body: ({id, status}),
             timeout: this.__timeout__
         })
     },
+
+    /**
+     * Seach all the items by category
+     * 
+     * @param {*} userId 
+     * @param {*} category 
+     * 
+     * @returns {array} for each item returns: status, image, category, description, location, address 
+     * 
+     */
 
     searchByCategory(token, category) {
 
@@ -114,6 +170,15 @@ const pgApi = {
         })
     },
 
+    /**
+     * Seach all the items by location
+     * 
+     * @param {*} location 
+     * 
+     * @returns {array} for each item returns: status, image, category, description, location, address 
+     * 
+     */
+
     searchByLocation(token, location) {
 
         validate.arguments([           
@@ -129,6 +194,15 @@ const pgApi = {
         })
     },
 
+    /**
+     * Retrieve all the items's user
+     * 
+     * @param {*} userId 
+     * 
+     * @returns {array} for each item returns: image, category, description, location
+     * 
+     */
+
     retrivePrivateThings(token) { 
         validate.arguments([
             { name: 'token', value: token, type: 'string', notEmpty: true },
@@ -139,6 +213,14 @@ const pgApi = {
             timeout: this.__timeout__
         })
     },
+
+    /**
+     * Retrieve all the information on an item
+     * 
+     * @param {*} thingId 
+     * 
+     * @returns {array} image, category, description, location, address 
+     */
     
     retrieveThing(token, thingId) {
         

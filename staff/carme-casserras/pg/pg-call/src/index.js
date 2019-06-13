@@ -1,6 +1,6 @@
-const validate = require('pg-validate')
-const { ConnectionError, HttpError } = require('pg-errors')
-const axios = require('axios')
+import validate from 'pg-validate'
+import { ConnectionError, HttpError } from 'pg-errors'
+import axios from 'axios'
 
 /**
  * Makes an HTTP call.
@@ -13,18 +13,19 @@ const axios = require('axios')
  */
 function call(url, options = {}) {
     const { method = 'GET', headers, body, timeout = 0 } = options
-
+    
     validate.arguments([
         { name: 'url', value: url, type: 'string', notEmpty: true },
         { name: 'method', value: method, type: 'string', notEmpty: true },
         { name: 'headers', value: headers, type: 'object', optional: true },
-        { name: 'body', value: body, type: 'string',notEmpty: true, optional: true },
+        { name: 'body', value: body, type: 'object', optional: true },
         { name: 'timeout', value: timeout, type: 'number', notEmpty: true, optional: true },
     ])
 
     validate.url(url)
-
+    
     return (async () => {
+        
         try {
             const response = await axios({
                 url,
@@ -34,7 +35,7 @@ function call(url, options = {}) {
                 timeout
 
             })
-
+            
             return response.data
         } catch (error) {
             if (error.code === 'ENOTFOUND') throw new ConnectionError('cannot connect')
@@ -55,5 +56,5 @@ function call(url, options = {}) {
         }
     })()
 }
-
-module.exports = call
+export default call
+// module.exports = call
